@@ -2855,6 +2855,595 @@ footer {
   justify-content: center;
   flex-shrink: 0;
 }
+
+
+/* ===================================================
+   USER PROFILE / PERSONAL GARAGE
+=================================================== */
+.profile-trigger {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  min-width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  transition: all 0.2s;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  position: relative;
+}
+.profile-trigger:hover,
+.profile-trigger.has-alerts {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  background: var(--accent-orange-dim);
+}
+.profile-alert-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: var(--accent-red);
+  color: #fff;
+  border: 2px solid var(--bg-primary);
+  font-size: 10px;
+  line-height: 13px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+.profile-trigger.has-alerts .profile-alert-dot { display: flex; }
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9700;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+}
+.profile-overlay.open { display: flex; }
+.profile-modal {
+  width: min(1120px, 100%);
+  max-height: 88vh;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 70px rgba(0,0,0,.55);
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+.profile-modal-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.profile-modal-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 5px;
+}
+.profile-modal-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: .95;
+  color: var(--text-primary);
+}
+.profile-modal-title span { color: var(--accent-orange); }
+.profile-modal-subtitle {
+  color: var(--text-secondary);
+  font-size: 13px;
+  max-width: 720px;
+  line-height: 1.65;
+  margin-top: 8px;
+}
+.profile-close {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.profile-close:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+.profile-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.profile-tabs::-webkit-scrollbar { display: none; }
+.profile-tab {
+  background: transparent;
+  border: 0;
+  color: var(--text-muted);
+  padding: 13px 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.profile-tab:hover { color: var(--text-primary); }
+.profile-tab.active { color: var(--accent-orange); border-bottom-color: var(--accent-orange); }
+.profile-body {
+  overflow-y: auto;
+  padding: 24px 28px 30px;
+}
+.profile-panel { display: none; animation: fadeIn .2s ease; }
+.profile-panel.active { display: block; }
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.profile-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.profile-card-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.profile-card-title i { color: var(--accent-orange); }
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.profile-field { display: flex; flex-direction: column; gap: 6px; }
+.profile-field.full { grid-column: 1 / -1; }
+.profile-field label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.profile-field input,
+.profile-field textarea,
+.profile-field select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  padding: 11px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+}
+.profile-field textarea { min-height: 88px; resize: vertical; }
+.profile-field input:focus,
+.profile-field textarea:focus,
+.profile-field select:focus { border-color: var(--accent-orange); }
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.profile-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.profile-btn.primary { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; }
+.profile-btn.danger { border-color: rgba(239,68,68,.35); color: #fca5a5; background: var(--accent-red-dim); }
+.profile-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+.profile-btn.primary:hover { color:#fff; background:#ea6c0a; }
+.profile-summary-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.profile-stat {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 15px;
+}
+.profile-stat span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.profile-stat strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--accent-orange);
+  line-height: 1;
+}
+.garage-list,
+.repair-list,
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.garage-item,
+.repair-item,
+.vehicle-alert-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-orange);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.garage-item.active { border-color: var(--accent-orange); box-shadow: var(--shadow-orange); }
+.garage-title,
+.repair-title,
+.vehicle-alert-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+.garage-meta,
+.repair-meta,
+.vehicle-alert-meta {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vehicle-alert-item.warning { border-left-color: var(--accent-yellow); }
+.vehicle-alert-item.danger { border-left-color: var(--accent-red); }
+.vehicle-alert-item.success { border-left-color: var(--accent-green); }
+.vehicle-alert-item.warning .vehicle-alert-title { color: #fde68a; }
+.vehicle-alert-item.danger .vehicle-alert-title { color: #fca5a5; }
+.vehicle-alert-item.success .vehicle-alert-title { color: #86efac; }
+.profile-empty {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  color: var(--text-secondary);
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+.profile-empty i { color: var(--accent-orange); font-size: 24px; display:block; margin-bottom: 10px; }
+.profile-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+@media (max-width: 900px) {
+  .profile-grid,
+  .profile-form-grid,
+  .profile-summary-row { grid-template-columns: 1fr; }
+  .profile-modal-header { padding: 20px; }
+  .profile-body { padding: 20px; }
+  .profile-trigger span.profile-trigger-label { display: none; }
+}
+
+
+
+/* ===================================================
+   PERFIL VEHÍCULO - FOTO Y GUÍAS ASOCIADAS
+=================================================== */
+.profile-photo-upload {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+.profile-photo-preview,
+.garage-photo {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+.profile-photo-preview {
+  width: 112px;
+  height: 82px;
+}
+.profile-photo-preview img,
+.garage-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profile-photo-preview i { color: var(--accent-orange); font-size: 22px; }
+.profile-photo-help { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.garage-item-with-photo {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.garage-photo {
+  width: 112px;
+  height: 82px;
+}
+.repair-planner-box {
+  grid-column: 1 / -1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-orange);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+.repair-planner-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.repair-planner-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.repair-planner-title i { color: var(--accent-orange); }
+.repair-plan-result {
+  margin-top: 10px;
+}
+.repair-plan-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.repair-plan-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+  margin-bottom: 5px;
+}
+.repair-plan-title {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.repair-plan-description {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.repair-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.repair-chip {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 2px;
+  padding: 4px 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.repair-chip i { color: var(--accent-orange); margin-right: 5px; }
+.repair-guide-link {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-orange);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+}
+.repair-guide-link:hover { background:#ea6c0a; text-decoration: none; }
+.repair-associated-guide {
+  margin-top: 12px;
+  background: rgba(249,115,22,.08);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+@media (max-width: 640px) {
+  .profile-photo-upload,
+  .garage-item-with-photo { grid-template-columns: 1fr; }
+  .profile-photo-preview,
+  .garage-photo { width: 100%; height: 170px; }
+}
+
+
+/* ===================================================
+   VEHICLE-BASED SHOP PERSONALIZATION
+=================================================== */
+.vehicle-shop-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-orange);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 22px;
+}
+.vehicle-shop-panel h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.vehicle-shop-panel p { color: var(--text-secondary); font-size: 13px; line-height: 1.65; margin-bottom: 14px; }
+.vehicle-shop-controls { display: grid; grid-template-columns: 1.1fr .9fr .8fr; gap: 10px; align-items: center; }
+.vehicle-shop-select, .vehicle-shop-sort, .vehicle-shop-need {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  outline: none;
+}
+.vehicle-shop-select:focus, .vehicle-shop-sort:focus, .vehicle-shop-need:focus { border-color: var(--accent-orange); }
+.vehicle-need-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+.vehicle-need-chip {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.vehicle-need-chip strong { color: var(--accent-orange); font-weight: 500; }
+.vehicle-fit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  background: var(--accent-green-dim);
+  border: 1px solid rgba(34,197,94,.28);
+  color: #86efac;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.vehicle-fit-badge.secondary {
+  background: var(--accent-orange-dim);
+  border-color: var(--border-accent);
+  color: var(--accent-orange);
+}
+.local-product-warning {
+  background: rgba(59,130,246,.10);
+  border: 1px solid rgba(59,130,246,.28);
+  color: #93c5fd;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 10px 0 14px;
+}
+.product-card[data-vehicle-match="true"] {
+  border-color: rgba(34,197,94,.35);
+  box-shadow: 0 0 0 1px rgba(34,197,94,.08), var(--shadow);
+}
+@media (max-width: 900px) { .vehicle-shop-controls { grid-template-columns: 1fr; } }
+
+</style>
+
+<style id="auto-compatibility-style">
+.vehicle-auto-compatibility {
+  margin-top: 14px;
+  background: rgba(59,130,246,.10);
+  border: 1px solid rgba(59,130,246,.32);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  color: #93c5fd;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: flex-start;
+}
+.vehicle-auto-compatibility i { margin-top: 3px; color: #60a5fa; }
+.vehicle-auto-compatibility strong { color: var(--text-primary); display: block; margin-bottom: 4px; }
+.vehicle-auto-compatibility small { display: block; color: var(--text-secondary); line-height: 1.55; }
+.vehicle-auto-compatibility-actions { margin-top: 10px; display:flex; gap:8px; flex-wrap:wrap; }
+.vehicle-auto-btn {
+  border: 1px solid rgba(96,165,250,.35);
+  background: rgba(59,130,246,.10);
+  color: #bfdbfe;
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.vehicle-auto-btn:hover { border-color:#60a5fa; color:#fff; }
+.vehicle-fit-badge.estimated {
+  background: rgba(59,130,246,.10);
+  border-color: rgba(59,130,246,.32);
+  color: #93c5fd;
+}
 </style>
 </head>
 <body>
@@ -3031,6 +3620,11 @@ footer {
       <a data-section="normativa" onclick="navigate('normativa')">Normativa</a>
     </nav>
     <div class="header-actions">
+      <button class="profile-trigger" id="profileTrigger" title="Mi perfil y garaje" onclick="openProfilePanel()">
+        <i class="fa-solid fa-user-gear"></i>
+        <span class="profile-trigger-label">Perfil</span>
+        <span class="profile-alert-dot" id="profileAlertDot">0</span>
+      </button>
       <button class="theme-toggle" id="themeToggle" title="Cambiar tema" onclick="toggleTheme()">
         <i class="fa-solid fa-moon" id="themeIcon"></i>
       </button>
@@ -6045,6 +6639,1374 @@ document.addEventListener('DOMContentLoaded', updateCartCounter);
 
   window.currentStoreSort = currentStoreSort;
   window.currentStockFilter = currentStockFilter;
+})();
+</script>
+
+
+
+<!-- USER PROFILE / PERSONAL GARAGE -->
+<div class="profile-overlay" id="profileOverlay" aria-hidden="true">
+  <div class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <div class="profile-modal-header">
+      <div>
+        <div class="profile-modal-kicker">Experiencia personalizada</div>
+        <div class="profile-modal-title" id="profileModalTitle">Mi perfil <span>AutoRepara</span></div>
+        <p class="profile-modal-subtitle">Crea tu perfil, registra tus vehículos, controla reparaciones, kilometraje, vencimiento de ITV y avisos de mantenimiento desde este navegador.</p>
+      </div>
+      <button class="profile-close" type="button" onclick="closeProfilePanel()" aria-label="Cerrar perfil"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="profile-tabs" role="tablist">
+      <button class="profile-tab active" type="button" data-profile-tab="resumen" onclick="switchProfileTab('resumen')"><i class="fa-solid fa-gauge-high"></i> Resumen</button>
+      <button class="profile-tab" type="button" data-profile-tab="vehiculos" onclick="switchProfileTab('vehiculos')"><i class="fa-solid fa-car-side"></i> Vehículos</button>
+      <button class="profile-tab" type="button" data-profile-tab="reparaciones" onclick="switchProfileTab('reparaciones')"><i class="fa-solid fa-screwdriver-wrench"></i> Reparaciones</button>
+      <button class="profile-tab" type="button" data-profile-tab="alertas" onclick="switchProfileTab('alertas')"><i class="fa-solid fa-bell"></i> Alertas</button>
+    </div>
+
+    <div class="profile-body">
+      <section class="profile-panel active" id="profile-panel-resumen">
+        <div class="profile-summary-row" id="profileSummaryStats"></div>
+        <div class="profile-grid">
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-id-card"></i> Datos del perfil</span></div>
+            <form id="profileOwnerForm" class="profile-form-grid" onsubmit="saveOwnerProfile(event)">
+              <div class="profile-field">
+                <label for="profileOwnerName">Nombre</label>
+                <input id="profileOwnerName" autocomplete="name" placeholder="Tu nombre">
+              </div>
+              <div class="profile-field">
+                <label for="profileOwnerEmail">Email</label>
+                <input id="profileOwnerEmail" type="email" autocomplete="email" placeholder="email@ejemplo.com">
+              </div>
+              <div class="profile-field full">
+                <label for="profileOwnerNotes">Notas personales</label>
+                <textarea id="profileOwnerNotes" placeholder="Preferencias de mantenimiento, taller habitual, tipo de conducción..."></textarea>
+              </div>
+              <div class="profile-actions">
+                <button class="profile-btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar perfil</button>
+                <button class="profile-btn" type="button" onclick="requestProfileNotifications()"><i class="fa-solid fa-bell"></i> Activar recordatorios</button>
+              </div>
+            </form>
+          </div>
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-triangle-exclamation"></i> Próximos avisos</span></div>
+            <div id="profileQuickAlerts" class="alert-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-panel" id="profile-panel-vehiculos">
+        <div class="profile-grid">
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-car"></i> Crear / editar vehículo</span></div>
+            <form id="profileVehicleForm" class="profile-form-grid" onsubmit="saveVehicleProfile(event)">
+              <input id="vehicleEditId" type="hidden">
+              <div class="profile-field">
+                <label for="vehicleBrand">Marca</label>
+                <input id="vehicleBrand" required placeholder="SEAT, Volkswagen, Peugeot...">
+              </div>
+              <div class="profile-field">
+                <label for="vehicleModel">Modelo</label>
+                <input id="vehicleModel" required placeholder="León, Golf, 308...">
+              </div>
+              <div class="profile-field">
+                <label for="vehiclePlate">Matrícula</label>
+                <input id="vehiclePlate" required placeholder="0000 ABC" style="text-transform:uppercase">
+              </div>
+              <div class="profile-field">
+                <label for="vehicleYear">Año</label>
+                <input id="vehicleYear" type="number" min="1980" max="2100" placeholder="2005">
+              </div>
+              <div class="profile-field">
+                <label for="vehicleMileage">Kilometraje actual</label>
+                <input id="vehicleMileage" type="number" min="0" step="1" required placeholder="145000">
+              </div>
+              <div class="profile-field">
+                <label for="vehicleItvDate">Caducidad ITV</label>
+                <input id="vehicleItvDate" type="date">
+              </div>
+              <div class="profile-field full">
+                <label for="vehiclePhoto">Foto del vehículo</label>
+                <div class="profile-photo-upload">
+                  <div class="profile-photo-preview" id="vehiclePhotoPreview"><i class="fa-solid fa-camera"></i></div>
+                  <div>
+                    <input id="vehiclePhoto" type="file" accept="image/*" onchange="handleVehiclePhotoChange(event)">
+                    <input id="vehiclePhotoData" type="hidden">
+                    <p class="profile-photo-help">Sube una foto propia de tu coche para personalizar el garaje. Se guarda localmente en este navegador junto con el perfil.</p>
+                    <button class="profile-btn" type="button" onclick="clearVehiclePhoto()" style="margin-top:8px"><i class="fa-solid fa-xmark"></i> Quitar foto</button>
+                  </div>
+                </div>
+              </div>
+              <div class="profile-field">
+                <label for="vehicleOilInterval">Intervalo aceite/km</label>
+                <input id="vehicleOilInterval" type="number" min="1000" step="500" value="15000">
+              </div>
+              <div class="profile-field">
+                <label for="vehicleGeneralInterval">Revisión general/km</label>
+                <input id="vehicleGeneralInterval" type="number" min="1000" step="500" value="30000">
+              </div>
+              <div class="profile-field full">
+                <label for="vehicleNotes">Notas del vehículo</label>
+                <textarea id="vehicleNotes" placeholder="Motor, versión, averías conocidas, neumáticos, referencias de aceite..."></textarea>
+              </div>
+              <div class="profile-actions">
+                <button class="profile-btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar vehículo</button>
+                <button class="profile-btn" type="button" onclick="resetVehicleForm()"><i class="fa-solid fa-plus"></i> Nuevo</button>
+              </div>
+            </form>
+          </div>
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-warehouse"></i> Mi garaje</span></div>
+            <div id="profileGarageList" class="garage-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-panel" id="profile-panel-reparaciones">
+        <div class="profile-grid">
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-clipboard-list"></i> Añadir reparación</span></div>
+            <form id="profileRepairForm" class="profile-form-grid" onsubmit="saveRepairLog(event)">
+              <div class="profile-field full">
+                <label for="repairVehicleId">Vehículo</label>
+                <select id="repairVehicleId" required></select>
+              </div>
+              <div class="repair-planner-box">
+                <div class="repair-planner-head">
+                  <div class="repair-planner-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Planificar reparación</div>
+                </div>
+                <div class="profile-field full">
+                  <label for="repairPlanQuery">Tipo de reparación a realizar</label>
+                  <input id="repairPlanQuery" placeholder="Ej: cambio de aceite, filtro de aire, purgar refrigerante, diagnosis MAF..." oninput="updateRepairPlanSuggestion()">
+                  <input id="repairGuideId" type="hidden">
+                  <input id="repairGuideTitle" type="hidden">
+                  <input id="repairGuideTools" type="hidden">
+                  <input id="repairGuideParts" type="hidden">
+                </div>
+                <div id="repairPlanResult" class="repair-plan-result"></div>
+              </div>
+              <div class="profile-field">
+                <label for="repairDate">Fecha</label>
+                <input id="repairDate" type="date" required>
+              </div>
+              <div class="profile-field">
+                <label for="repairMileage">Kilometraje</label>
+                <input id="repairMileage" type="number" min="0" step="1" required>
+              </div>
+              <div class="profile-field">
+                <label for="repairCategory">Tipo</label>
+                <select id="repairCategory" required>
+                  <option value="Aceite y filtros">Aceite y filtros</option>
+                  <option value="Revisión general">Revisión general</option>
+                  <option value="Frenos">Frenos</option>
+                  <option value="Neumáticos">Neumáticos</option>
+                  <option value="Distribución">Distribución</option>
+                  <option value="Diagnosis">Diagnosis</option>
+                  <option value="ITV">ITV</option>
+                  <option value="Otra reparación">Otra reparación</option>
+                </select>
+              </div>
+              <div class="profile-field">
+                <label for="repairCost">Coste estimado/real</label>
+                <input id="repairCost" type="number" min="0" step="0.01" placeholder="0.00">
+              </div>
+              <div class="profile-field full">
+                <label for="repairTitle">Título</label>
+                <input id="repairTitle" required placeholder="Cambio de aceite 5W30 + filtro">
+              </div>
+              <div class="profile-field full">
+                <label for="repairNotes">Notas</label>
+                <textarea id="repairNotes" placeholder="Piezas usadas, referencias, taller, síntomas, par de apriete, observaciones..."></textarea>
+              </div>
+              <div class="profile-actions">
+                <button class="profile-btn primary" type="submit"><i class="fa-solid fa-plus"></i> Guardar reparación</button>
+              </div>
+            </form>
+          </div>
+          <div class="profile-card">
+            <div class="profile-card-title"><span><i class="fa-solid fa-clock-rotate-left"></i> Historial</span></div>
+            <div id="profileRepairList" class="repair-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-panel" id="profile-panel-alertas">
+        <div class="profile-card">
+          <div class="profile-card-title"><span><i class="fa-solid fa-bell"></i> Alertas de mantenimiento</span></div>
+          <div id="profileAlertsList" class="alert-list"></div>
+          <p class="profile-hint">Los recordatorios se muestran al abrir la página y pueden mostrarse como notificación del navegador si das permiso. Para avisos por email o móvil incluso con la web cerrada haría falta añadir autenticación y almacenamiento de perfiles en Supabase.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<script id="profile-garage-script">
+(function(){
+  const STORAGE_KEY = 'autorepara_user_profile_v1';
+  const LAST_NOTIFY_KEY = 'autorepara_profile_last_notify_v1';
+  const DEFAULT_PROFILE = { owner: { name: '', email: '', notes: '' }, selectedVehicleId: '', vehicles: [], repairs: [] };
+  let profileState = loadProfileState();
+
+  function uid(prefix){ return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8); }
+  function todayISO(){ return new Date().toISOString().slice(0,10); }
+  function parseDate(value){ if(!value) return null; const d = new Date(value + 'T00:00:00'); return Number.isNaN(d.getTime()) ? null : d; }
+  function daysUntil(value){ const d = parseDate(value); if(!d) return null; const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); return Math.ceil((d - today) / 86400000); }
+  function money(value){ const n = Number(value || 0); return n ? n.toLocaleString('es-ES',{style:'currency',currency:'EUR'}) : '—'; }
+  function escapeProfileHtml(value){ return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+  function normalizePlate(value){ return String(value || '').toUpperCase().replace(/\s+/g,' ').trim(); }
+
+  function loadProfileState(){
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if(!saved || typeof saved !== 'object') return structuredClone(DEFAULT_PROFILE);
+      return {
+        owner: { ...DEFAULT_PROFILE.owner, ...(saved.owner || {}) },
+        selectedVehicleId: saved.selectedVehicleId || '',
+        vehicles: Array.isArray(saved.vehicles) ? saved.vehicles : [],
+        repairs: Array.isArray(saved.repairs) ? saved.repairs : []
+      };
+    } catch(e){ return structuredClone(DEFAULT_PROFILE); }
+  }
+  function saveProfileState(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(profileState));
+    updateProfileBadge();
+  }
+  function selectedVehicle(){
+    return profileState.vehicles.find(v => v.id === profileState.selectedVehicleId) || profileState.vehicles[0] || null;
+  }
+  function repairsFor(vehicleId){
+    return profileState.repairs.filter(r => r.vehicleId === vehicleId).sort((a,b) => String(b.date).localeCompare(String(a.date)) || Number(b.mileage||0)-Number(a.mileage||0));
+  }
+  function lastRepairMileage(vehicleId, categoryIncludes){
+    const terms = Array.isArray(categoryIncludes) ? categoryIncludes : [categoryIncludes];
+    const match = repairsFor(vehicleId).find(r => terms.some(t => String(r.category || '').toLowerCase().includes(String(t).toLowerCase())));
+    return match ? Number(match.mileage || 0) : 0;
+  }
+  function getVehicleAlerts(vehicle){
+    if(!vehicle) return [];
+    const alerts = [];
+    const km = Number(vehicle.mileage || 0);
+    const itvDays = daysUntil(vehicle.itvDate);
+    if(itvDays !== null){
+      if(itvDays < 0) alerts.push({level:'danger', title:'ITV caducada', text:`La ITV de ${vehicle.brand} ${vehicle.model} venció hace ${Math.abs(itvDays)} días. Conviene resolverlo antes de circular.`, meta:`${vehicle.plate} · ${vehicle.itvDate}`});
+      else if(itvDays <= 30) alerts.push({level:'danger', title:'ITV próxima a caducar', text:`Quedan ${itvDays} días para la caducidad de la ITV. Reserva cita y revisa luces, neumáticos, frenos, emisiones y niveles.`, meta:`${vehicle.plate} · ${vehicle.itvDate}`});
+      else if(itvDays <= 60) alerts.push({level:'warning', title:'Preparar ITV', text:`La ITV caduca en ${itvDays} días. Es buen momento para revisar fallos visibles, diagnosis OBD y desgaste de neumáticos.`, meta:`${vehicle.plate} · ${vehicle.itvDate}`});
+    }
+    const oilInterval = Number(vehicle.oilInterval || 15000);
+    const lastOil = lastRepairMileage(vehicle.id, 'aceite');
+    if(lastOil){
+      const nextOil = lastOil + oilInterval;
+      const remaining = nextOil - km;
+      if(remaining <= 0) alerts.push({level:'danger', title:'Cambio de aceite vencido', text:`El último cambio registrado fue a ${lastOil.toLocaleString('es-ES')} km. Ya corresponde cambiar aceite y filtro.`, meta:`${vehicle.plate} · próximo: ${nextOil.toLocaleString('es-ES')} km`});
+      else if(remaining <= 1500) alerts.push({level:'warning', title:'Cambio de aceite próximo', text:`Faltan aproximadamente ${remaining.toLocaleString('es-ES')} km para el cambio de aceite y filtro.`, meta:`${vehicle.plate} · próximo: ${nextOil.toLocaleString('es-ES')} km`});
+    } else if(km >= oilInterval) {
+      alerts.push({level:'warning', title:'Registrar mantenimiento de aceite', text:'No hay cambio de aceite registrado. Añade el último mantenimiento para calcular avisos precisos.', meta:`${vehicle.plate} · ${km.toLocaleString('es-ES')} km`});
+    }
+    const generalInterval = Number(vehicle.generalInterval || 30000);
+    const lastGeneral = lastRepairMileage(vehicle.id, ['revisión general','revision general']);
+    if(lastGeneral){
+      const nextGeneral = lastGeneral + generalInterval;
+      const remaining = nextGeneral - km;
+      if(remaining <= 0) alerts.push({level:'warning', title:'Revisión general recomendada', text:'Por kilometraje, conviene revisar frenos, suspensión, neumáticos, fugas, batería, luces, filtros y diagnosis.', meta:`${vehicle.plate} · objetivo: ${nextGeneral.toLocaleString('es-ES')} km`});
+      else if(remaining <= 3000) alerts.push({level:'warning', title:'Revisión general próxima', text:`Faltan aproximadamente ${remaining.toLocaleString('es-ES')} km para la próxima revisión general.`, meta:`${vehicle.plate} · objetivo: ${nextGeneral.toLocaleString('es-ES')} km`});
+    }
+    const lastBrakes = lastRepairMileage(vehicle.id, 'frenos');
+    if(lastBrakes && km - lastBrakes >= 45000) alerts.push({level:'warning', title:'Revisar sistema de frenos', text:'Han pasado bastantes kilómetros desde la última intervención de frenos. Revisa pastillas, discos, líquido y tacto del pedal.', meta:`${vehicle.plate} · desde ${lastBrakes.toLocaleString('es-ES')} km`});
+    const lastTyres = lastRepairMileage(vehicle.id, ['neumáticos','neumaticos']);
+    if(lastTyres && km - lastTyres >= 35000) alerts.push({level:'warning', title:'Revisar neumáticos', text:'Comprueba profundidad de dibujo, desgaste irregular, fecha DOT, presiones y alineación.', meta:`${vehicle.plate} · desde ${lastTyres.toLocaleString('es-ES')} km`});
+    if(!alerts.length) alerts.push({level:'success', title:'Sin avisos urgentes', text:'No hay mantenimientos críticos pendientes según la información guardada. Mantén el kilometraje actualizado para recibir avisos útiles.', meta:`${vehicle.plate} · ${km.toLocaleString('es-ES')} km`});
+    return alerts;
+  }
+  function allAlerts(){ return profileState.vehicles.flatMap(v => getVehicleAlerts(v).filter(a => a.level !== 'success').map(a => ({...a, vehicleId:v.id}))); }
+
+  function fillOwnerForm(){
+    const owner = profileState.owner || {};
+    const set = (id, value) => { const el = document.getElementById(id); if(el) el.value = value || ''; };
+    set('profileOwnerName', owner.name);
+    set('profileOwnerEmail', owner.email);
+    set('profileOwnerNotes', owner.notes);
+  }
+  function updateSummary(){
+    const repairs = profileState.repairs.length;
+    const vehicles = profileState.vehicles.length;
+    const activeAlerts = allAlerts().length;
+    const selected = selectedVehicle();
+    const summary = document.getElementById('profileSummaryStats');
+    if(summary){
+      summary.innerHTML = `
+        <div class="profile-stat"><span>Vehículos</span><strong>${vehicles}</strong></div>
+        <div class="profile-stat"><span>Reparaciones</span><strong>${repairs}</strong></div>
+        <div class="profile-stat"><span>Avisos</span><strong>${activeAlerts}</strong></div>
+        <div class="profile-stat"><span>Kilometraje</span><strong>${selected ? Number(selected.mileage || 0).toLocaleString('es-ES') : '—'}</strong></div>`;
+    }
+  }
+  function renderGarage(){
+    const list = document.getElementById('profileGarageList');
+    if(!list) return;
+    if(!profileState.vehicles.length){
+      list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-car-side"></i>Aún no hay vehículos guardados. Crea el primero para activar el historial y las alertas.</div>';
+      return;
+    }
+    list.innerHTML = profileState.vehicles.map(v => {
+      const isActive = v.id === (profileState.selectedVehicleId || selectedVehicle()?.id);
+      const alertCount = getVehicleAlerts(v).filter(a => a.level !== 'success').length;
+      return `<div class="garage-item ${isActive ? 'active' : ''}">
+        <div class="garage-title">${escapeProfileHtml(v.brand)} ${escapeProfileHtml(v.model)}</div>
+        <div class="garage-meta"><span>${escapeProfileHtml(v.plate)}</span><span>${Number(v.mileage || 0).toLocaleString('es-ES')} km</span><span>ITV: ${escapeProfileHtml(v.itvDate || 'sin fecha')}</span><span>${alertCount} avisos</span></div>
+        ${v.notes ? `<p class="profile-hint">${escapeProfileHtml(v.notes)}</p>` : ''}
+        <div class="profile-actions">
+          <button class="profile-btn primary" type="button" onclick="selectProfileVehicle('${v.id}')"><i class="fa-solid fa-check"></i> Seleccionar</button>
+          <button class="profile-btn" type="button" onclick="editProfileVehicle('${v.id}')"><i class="fa-solid fa-pen"></i> Editar</button>
+          <button class="profile-btn danger" type="button" onclick="deleteProfileVehicle('${v.id}')"><i class="fa-solid fa-trash"></i> Eliminar</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  function fillRepairVehicleSelect(){
+    const select = document.getElementById('repairVehicleId');
+    if(!select) return;
+    if(!profileState.vehicles.length){ select.innerHTML = '<option value="">Crea primero un vehículo</option>'; return; }
+    const selectedId = profileState.selectedVehicleId || selectedVehicle()?.id || '';
+    select.innerHTML = profileState.vehicles.map(v => `<option value="${v.id}" ${v.id === selectedId ? 'selected' : ''}>${escapeProfileHtml(v.brand)} ${escapeProfileHtml(v.model)} · ${escapeProfileHtml(v.plate)}</option>`).join('');
+  }
+  function renderRepairs(){
+    const list = document.getElementById('profileRepairList');
+    if(!list) return;
+    const selected = selectedVehicle();
+    const repairs = selected ? repairsFor(selected.id) : [];
+    if(!selected){ list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-clipboard-list"></i>Crea un vehículo para empezar a registrar reparaciones.</div>'; return; }
+    if(!repairs.length){ list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-screwdriver-wrench"></i>No hay reparaciones registradas para el vehículo seleccionado.</div>'; return; }
+    list.innerHTML = repairs.map(r => `<div class="repair-item">
+      <div class="repair-title">${escapeProfileHtml(r.title)}</div>
+      <div class="repair-meta"><span>${escapeProfileHtml(r.category)}</span><span>${escapeProfileHtml(r.date)}</span><span>${Number(r.mileage || 0).toLocaleString('es-ES')} km</span><span>${money(r.cost)}</span></div>
+      ${r.notes ? `<p class="profile-hint">${escapeProfileHtml(r.notes)}</p>` : ''}
+      <div class="profile-actions"><button class="profile-btn danger" type="button" onclick="deleteRepairLog('${r.id}')"><i class="fa-solid fa-trash"></i> Eliminar</button></div>
+    </div>`).join('');
+  }
+  function alertMarkup(alert){
+    return `<div class="vehicle-alert-item ${escapeProfileHtml(alert.level)}">
+      <div class="vehicle-alert-title">${escapeProfileHtml(alert.title)}</div>
+      <div class="vehicle-alert-meta"><span>${escapeProfileHtml(alert.meta || '')}</span></div>
+      <p class="profile-hint">${escapeProfileHtml(alert.text)}</p>
+    </div>`;
+  }
+  function renderAlerts(){
+    const selected = selectedVehicle();
+    const quick = document.getElementById('profileQuickAlerts');
+    const full = document.getElementById('profileAlertsList');
+    if(!selected){
+      const empty = '<div class="profile-empty"><i class="fa-solid fa-bell"></i>Añade un vehículo para generar alertas por ITV, kilometraje y mantenimiento.</div>';
+      if(quick) quick.innerHTML = empty;
+      if(full) full.innerHTML = empty;
+      return;
+    }
+    const selectedAlerts = getVehicleAlerts(selected);
+    if(quick) quick.innerHTML = selectedAlerts.slice(0,3).map(alertMarkup).join('');
+    if(full){
+      full.innerHTML = profileState.vehicles.map(v => {
+        const alerts = getVehicleAlerts(v);
+        return `<div style="margin-bottom:18px"><div class="profile-card-title" style="font-size:18px;margin-bottom:10px"><span>${escapeProfileHtml(v.brand)} ${escapeProfileHtml(v.model)} · ${escapeProfileHtml(v.plate)}</span></div>${alerts.map(alertMarkup).join('')}</div>`;
+      }).join('');
+    }
+  }
+  function updateProfileBadge(){
+    const alerts = allAlerts().length;
+    const btn = document.getElementById('profileTrigger');
+    const dot = document.getElementById('profileAlertDot');
+    if(btn) btn.classList.toggle('has-alerts', alerts > 0);
+    if(dot) dot.textContent = alerts > 9 ? '9+' : String(alerts);
+  }
+  function renderProfilePanel(){
+    fillOwnerForm();
+    updateSummary();
+    renderGarage();
+    fillRepairVehicleSelect();
+    renderRepairs();
+    renderAlerts();
+    updateProfileBadge();
+  }
+
+  window.openProfilePanel = function(){
+    const overlay = document.getElementById('profileOverlay');
+    if(!overlay) return;
+    renderProfilePanel();
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+  };
+  window.closeProfilePanel = function(){
+    const overlay = document.getElementById('profileOverlay');
+    if(!overlay) return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+  };
+  window.switchProfileTab = function(tab){
+    document.querySelectorAll('.profile-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.profileTab === tab));
+    document.querySelectorAll('.profile-panel').forEach(panel => panel.classList.toggle('active', panel.id === 'profile-panel-' + tab));
+    renderProfilePanel();
+  };
+  window.saveOwnerProfile = function(event){
+    event.preventDefault();
+    profileState.owner = {
+      name: document.getElementById('profileOwnerName')?.value.trim() || '',
+      email: document.getElementById('profileOwnerEmail')?.value.trim() || '',
+      notes: document.getElementById('profileOwnerNotes')?.value.trim() || ''
+    };
+    saveProfileState();
+    renderProfilePanel();
+    if(typeof showToast === 'function') showToast('Perfil guardado correctamente', 'success');
+  };
+  window.saveVehicleProfile = function(event){
+    event.preventDefault();
+    const id = document.getElementById('vehicleEditId')?.value || uid('veh');
+    const vehicle = {
+      id,
+      brand: document.getElementById('vehicleBrand')?.value.trim() || '',
+      model: document.getElementById('vehicleModel')?.value.trim() || '',
+      plate: normalizePlate(document.getElementById('vehiclePlate')?.value || ''),
+      year: document.getElementById('vehicleYear')?.value || '',
+      mileage: Number(document.getElementById('vehicleMileage')?.value || 0),
+      itvDate: document.getElementById('vehicleItvDate')?.value || '',
+      oilInterval: Number(document.getElementById('vehicleOilInterval')?.value || 15000),
+      generalInterval: Number(document.getElementById('vehicleGeneralInterval')?.value || 30000),
+      notes: document.getElementById('vehicleNotes')?.value.trim() || '',
+      updatedAt: new Date().toISOString()
+    };
+    const index = profileState.vehicles.findIndex(v => v.id === id);
+    if(index >= 0) profileState.vehicles[index] = vehicle; else profileState.vehicles.push(vehicle);
+    profileState.selectedVehicleId = id;
+    saveProfileState();
+    resetVehicleForm();
+    renderProfilePanel();
+    window.switchProfileTab('vehiculos');
+    if(typeof showToast === 'function') showToast('Vehículo guardado en tu garaje', 'success');
+  };
+  window.resetVehicleForm = function(){
+    const form = document.getElementById('profileVehicleForm');
+    if(form) form.reset();
+    const edit = document.getElementById('vehicleEditId'); if(edit) edit.value = '';
+    const oil = document.getElementById('vehicleOilInterval'); if(oil) oil.value = 15000;
+    const gen = document.getElementById('vehicleGeneralInterval'); if(gen) gen.value = 30000;
+  };
+  window.editProfileVehicle = function(id){
+    const v = profileState.vehicles.find(item => item.id === id);
+    if(!v) return;
+    window.switchProfileTab('vehiculos');
+    const set = (field, value) => { const el = document.getElementById(field); if(el) el.value = value || ''; };
+    set('vehicleEditId', v.id);
+    set('vehicleBrand', v.brand);
+    set('vehicleModel', v.model);
+    set('vehiclePlate', v.plate);
+    set('vehicleYear', v.year);
+    set('vehicleMileage', v.mileage);
+    set('vehicleItvDate', v.itvDate);
+    set('vehicleOilInterval', v.oilInterval || 15000);
+    set('vehicleGeneralInterval', v.generalInterval || 30000);
+    set('vehicleNotes', v.notes);
+  };
+  window.selectProfileVehicle = function(id){
+    profileState.selectedVehicleId = id;
+    saveProfileState();
+    renderProfilePanel();
+    if(typeof showToast === 'function') showToast('Vehículo seleccionado', 'info');
+  };
+  window.deleteProfileVehicle = function(id){
+    const vehicle = profileState.vehicles.find(v => v.id === id);
+    if(!vehicle) return;
+    if(!confirm(`¿Eliminar ${vehicle.brand} ${vehicle.model} y sus reparaciones asociadas?`)) return;
+    profileState.vehicles = profileState.vehicles.filter(v => v.id !== id);
+    profileState.repairs = profileState.repairs.filter(r => r.vehicleId !== id);
+    if(profileState.selectedVehicleId === id) profileState.selectedVehicleId = profileState.vehicles[0]?.id || '';
+    saveProfileState();
+    renderProfilePanel();
+  };
+  window.saveRepairLog = function(event){
+    event.preventDefault();
+    const vehicleId = document.getElementById('repairVehicleId')?.value;
+    if(!vehicleId){ if(typeof showToast === 'function') showToast('Crea primero un vehículo', 'info'); return; }
+    const repair = {
+      id: uid('rep'),
+      vehicleId,
+      date: document.getElementById('repairDate')?.value || todayISO(),
+      mileage: Number(document.getElementById('repairMileage')?.value || 0),
+      category: document.getElementById('repairCategory')?.value || 'Otra reparación',
+      title: document.getElementById('repairTitle')?.value.trim() || 'Reparación registrada',
+      cost: Number(document.getElementById('repairCost')?.value || 0),
+      notes: document.getElementById('repairNotes')?.value.trim() || '',
+      createdAt: new Date().toISOString()
+    };
+    profileState.repairs.push(repair);
+    const v = profileState.vehicles.find(item => item.id === vehicleId);
+    if(v && repair.mileage > Number(v.mileage || 0)) v.mileage = repair.mileage;
+    profileState.selectedVehicleId = vehicleId;
+    saveProfileState();
+    const form = document.getElementById('profileRepairForm'); if(form) form.reset();
+    const date = document.getElementById('repairDate'); if(date) date.value = todayISO();
+    renderProfilePanel();
+    if(typeof showToast === 'function') showToast('Reparación añadida al historial', 'success');
+  };
+  window.deleteRepairLog = function(id){
+    if(!confirm('¿Eliminar esta reparación del historial?')) return;
+    profileState.repairs = profileState.repairs.filter(r => r.id !== id);
+    saveProfileState();
+    renderProfilePanel();
+  };
+  window.requestProfileNotifications = async function(){
+    if(!('Notification' in window)) { if(typeof showToast === 'function') showToast('Tu navegador no soporta notificaciones', 'info'); return; }
+    const permission = await Notification.requestPermission();
+    if(permission === 'granted') {
+      new Notification('AutoRepara', { body: 'Recordatorios activados para este navegador.' });
+      if(typeof showToast === 'function') showToast('Recordatorios activados', 'success');
+    } else if(typeof showToast === 'function') showToast('Permiso de notificaciones no concedido', 'info');
+  };
+  function maybeNotifyAlerts(){
+    if(!('Notification' in window) || Notification.permission !== 'granted') return;
+    const alerts = allAlerts();
+    if(!alerts.length) return;
+    const today = todayISO();
+    if(localStorage.getItem(LAST_NOTIFY_KEY) === today) return;
+    const first = alerts[0];
+    new Notification('AutoRepara · Aviso de mantenimiento', { body: `${first.title}: ${first.text}` });
+    localStorage.setItem(LAST_NOTIFY_KEY, today);
+  }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') window.closeProfilePanel(); });
+  document.addEventListener('click', e => { const overlay = document.getElementById('profileOverlay'); if(e.target === overlay) window.closeProfilePanel(); });
+  document.addEventListener('DOMContentLoaded', () => {
+    const date = document.getElementById('repairDate'); if(date && !date.value) date.value = todayISO();
+    updateProfileBadge();
+    maybeNotifyAlerts();
+  });
+})();
+</script>
+
+
+<script id="profile-vehicle-personalization-script">
+(function(){
+  const STORAGE_KEY = 'autorepara_user_profile_v1';
+  const DEFAULT_PROFILE = { owner: { name: '', email: '', notes: '' }, selectedVehicleId: '', vehicles: [], repairs: [] };
+  const REPAIR_GUIDE_RULES = [
+    { guideId:'g-aceite', category:'Aceite y filtros', terms:['aceite','filtro aceite','cambio aceite','lubricacion','lubricación','5w30','0w30','0w20'] },
+    { guideId:'g-filtro-aire', category:'Aceite y filtros', terms:['filtro aire','aire','admision','admisión','caja filtro'] },
+    { guideId:'g-maf', category:'Diagnosis', terms:['maf','sensor maf','caudalimetro','caudalímetro','diagnosis','obd','mezcla','fallo motor','testigo motor'] },
+    { guideId:'g-cuerpo-aceleracion', category:'Diagnosis', terms:['cuerpo aceleracion','cuerpo de aceleracion','cuerpo de aceleración','mariposa','ralenti','ralentí','limpieza admision'] },
+    { guideId:'g-purga-refrigeracion', category:'Revisión general', terms:['refrigerante','anticongelante','purga','purgar','circuito refrigeracion','circuito refrigeración','liquido refrigerante','líquido refrigerante'] },
+    { guideId:'g-termostato', category:'Revisión general', terms:['termostato','temperatura baja','temperatura alta','no calienta','calienta mucho'] },
+    { guideId:'g-sobrecalentamiento', category:'Diagnosis', terms:['sobrecalentamiento','se calienta','temperatura','calenton','calentón','radiador','ventilador'] },
+    { guideId:'g-ruido-cadena', category:'Distribución', terms:['ruido cadena','cadena','traqueteo','arranque frio','arranque frío','tensor cadena'] },
+    { guideId:'g-cuando-cadena', category:'Distribución', terms:['distribucion','distribución','cambiar cadena','kit distribucion','kit distribución','correa','cadena distribucion'] }
+  ];
+
+  function uid(prefix){ return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8); }
+  function todayISO(){ return new Date().toISOString().slice(0,10); }
+  function escapeHtml(value){ return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+  function normalizePlate(value){ return String(value || '').toUpperCase().replace(/\s+/g,' ').trim(); }
+  function money(value){ const n = Number(value || 0); return n ? n.toLocaleString('es-ES',{style:'currency',currency:'EUR'}) : '—'; }
+  function safeToast(message, type='success'){
+    if(typeof showToast !== 'function') return;
+    try { showToast(type, type === 'success' ? 'fa-check-circle' : 'fa-circle-info', message); }
+    catch(e){ try { showToast(message, type); } catch(_){} }
+  }
+  function loadState(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if(!saved || typeof saved !== 'object') return structuredClone(DEFAULT_PROFILE);
+      return {
+        owner: { ...DEFAULT_PROFILE.owner, ...(saved.owner || {}) },
+        selectedVehicleId: saved.selectedVehicleId || '',
+        vehicles: Array.isArray(saved.vehicles) ? saved.vehicles : [],
+        repairs: Array.isArray(saved.repairs) ? saved.repairs : []
+      };
+    } catch(e){ return structuredClone(DEFAULT_PROFILE); }
+  }
+  function saveState(state){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); updateBadge(state); }
+  function selectedVehicle(state){ return state.vehicles.find(v => v.id === state.selectedVehicleId) || state.vehicles[0] || null; }
+  function repairsFor(state, vehicleId){ return state.repairs.filter(r => r.vehicleId === vehicleId).sort((a,b) => String(b.date).localeCompare(String(a.date)) || Number(b.mileage||0)-Number(a.mileage||0)); }
+  function guideById(id){ return (Array.isArray(window.guidesData) ? window.guidesData : (typeof guidesData !== 'undefined' ? guidesData : [])).find(g => g.id === id) || null; }
+  function allGuides(){ return Array.isArray(window.guidesData) ? window.guidesData : (typeof guidesData !== 'undefined' ? guidesData : []); }
+  function suggestGuide(query, category){
+    const q = String(query || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+    const cat = String(category || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    let best = null;
+    REPAIR_GUIDE_RULES.forEach(rule => {
+      let score = 0;
+      rule.terms.forEach(term => {
+        const t = term.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        if(q.includes(t)) score += t.length > 8 ? 4 : 2;
+        if(cat && rule.category.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(cat)) score += 1;
+      });
+      if(!best || score > best.score) best = { ...rule, score };
+    });
+    if(best && best.score > 0) return guideById(best.guideId);
+    const guides = allGuides();
+    return guides.find(g => String(g.title + ' ' + (g.description||'') + ' ' + (g.tags||'')).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q)) || null;
+  }
+  function guideTools(guide){ return [...new Set([...(guide?.tools || []), ...((guide?.steps || []).flatMap(s => s.tools || []))])].filter(Boolean); }
+  function guideParts(guide){ return [...new Set([...(guide?.parts || [])])].filter(Boolean); }
+  function setHiddenPlan(guide){
+    const tools = guideTools(guide);
+    const parts = guideParts(guide);
+    const set = (id, value) => { const el = document.getElementById(id); if(el) el.value = value || ''; };
+    set('repairGuideId', guide?.id || '');
+    set('repairGuideTitle', guide?.title || '');
+    set('repairGuideTools', JSON.stringify(tools));
+    set('repairGuideParts', JSON.stringify(parts));
+  }
+  function planMarkup(guide){
+    if(!guide) return `<div class="repair-plan-card"><div class="repair-plan-kicker">Sin coincidencia exacta</div><div class="repair-plan-title">Escribe una reparación más concreta</div><p class="repair-plan-description">Prueba con términos como cambio de aceite, filtro de aire, sensor MAF, purga de refrigerante, termostato o distribución.</p></div>`;
+    const tools = guideTools(guide);
+    const parts = guideParts(guide);
+    return `<div class="repair-plan-card">
+      <div class="repair-plan-kicker">Guía recomendada</div>
+      <div class="repair-plan-title">${escapeHtml(guide.title)}</div>
+      <p class="repair-plan-description">${escapeHtml(guide.description || 'Guía asociada a esta reparación para conservarla dentro del historial del vehículo.')}</p>
+      ${tools.length ? `<div class="repair-chip-row">${tools.slice(0,8).map(t=>`<span class="repair-chip"><i class="fa-solid fa-screwdriver-wrench"></i>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+      ${parts.length ? `<div class="repair-chip-row">${parts.slice(0,8).map(t=>`<span class="repair-chip"><i class="fa-solid fa-box-open"></i>${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+      <button class="repair-guide-link" type="button" onclick="openAssociatedGuide('${guide.id}')"><i class="fa-solid fa-book-open"></i> Abrir guía</button>
+    </div>`;
+  }
+  window.updateRepairPlanSuggestion = function(){
+    const query = document.getElementById('repairPlanQuery')?.value || document.getElementById('repairTitle')?.value || '';
+    const category = document.getElementById('repairCategory')?.value || '';
+    const guide = suggestGuide(query, category);
+    setHiddenPlan(guide);
+    const result = document.getElementById('repairPlanResult');
+    if(result) result.innerHTML = query.trim() ? planMarkup(guide) : '';
+  };
+  window.openAssociatedGuide = function(guideId){
+    if(!guideId) return;
+    if(typeof closeProfilePanel === 'function') closeProfilePanel();
+    if(typeof navigate === 'function') navigate('guias');
+    setTimeout(() => { if(typeof openGuide === 'function') openGuide(guideId); }, 100);
+  };
+  function renderPhotoPreview(data){
+    const preview = document.getElementById('vehiclePhotoPreview');
+    if(!preview) return;
+    preview.innerHTML = data ? `<img src="${data}" alt="Foto del vehículo">` : '<i class="fa-solid fa-camera"></i>';
+  }
+  window.handleVehiclePhotoChange = function(event){
+    const file = event.target.files && event.target.files[0];
+    if(!file) return;
+    if(!file.type.startsWith('image/')) { safeToast('El archivo debe ser una imagen', 'info'); return; }
+    if(file.size > 2.5 * 1024 * 1024) { safeToast('Usa una imagen menor de 2,5 MB para que se guarde correctamente', 'info'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const data = String(reader.result || '');
+      const hidden = document.getElementById('vehiclePhotoData');
+      if(hidden) hidden.value = data;
+      renderPhotoPreview(data);
+    };
+    reader.readAsDataURL(file);
+  };
+  window.clearVehiclePhoto = function(){
+    const hidden = document.getElementById('vehiclePhotoData'); if(hidden) hidden.value = '';
+    const file = document.getElementById('vehiclePhoto'); if(file) file.value = '';
+    renderPhotoPreview('');
+  };
+  function updateBadge(state){
+    const dot = document.getElementById('profileAlertDot');
+    const trigger = document.getElementById('profileTrigger');
+    if(!dot || !trigger) return;
+    const count = state.vehicles.reduce((acc,v)=>acc + getAlerts(state, v).filter(a=>a.level !== 'success').length, 0);
+    trigger.classList.toggle('has-alerts', count > 0);
+    dot.textContent = count > 9 ? '9+' : String(count);
+  }
+  function daysUntil(value){ const d = value ? new Date(value + 'T00:00:00') : null; if(!d || Number.isNaN(d.getTime())) return null; const n = new Date(); const today = new Date(n.getFullYear(), n.getMonth(), n.getDate()); return Math.ceil((d - today) / 86400000); }
+  function lastMileage(state, vehicleId, terms){
+    const list = repairsFor(state, vehicleId);
+    const arr = Array.isArray(terms) ? terms : [terms];
+    const found = list.find(r => arr.some(t => String(r.category + ' ' + r.title).toLowerCase().includes(String(t).toLowerCase())));
+    return found ? Number(found.mileage || 0) : 0;
+  }
+  function getAlerts(state, vehicle){
+    const alerts = [];
+    const km = Number(vehicle.mileage || 0);
+    const itv = daysUntil(vehicle.itvDate);
+    if(itv !== null && itv < 0) alerts.push({level:'danger', title:'ITV caducada', text:`Venció hace ${Math.abs(itv)} días.`, meta:vehicle.plate});
+    else if(itv !== null && itv <= 30) alerts.push({level:'danger', title:'ITV próxima', text:`Quedan ${itv} días para la ITV.`, meta:vehicle.plate});
+    else if(itv !== null && itv <= 60) alerts.push({level:'warning', title:'Preparar ITV', text:`La ITV caduca en ${itv} días.`, meta:vehicle.plate});
+    const oil = lastMileage(state, vehicle.id, 'aceite');
+    if(oil && km - oil >= Number(vehicle.oilInterval || 15000)) alerts.push({level:'danger', title:'Aceite vencido', text:'Corresponde cambio de aceite y filtro.', meta:vehicle.plate});
+    if(!alerts.length) alerts.push({level:'success', title:'Sin avisos urgentes', text:'Mantén actualizado el kilometraje.', meta:vehicle.plate});
+    return alerts;
+  }
+  function renderGarageEnhanced(state){
+    const list = document.getElementById('profileGarageList');
+    if(!list) return;
+    if(!state.vehicles.length){ list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-car-side"></i>Aún no hay vehículos guardados. Crea el primero para activar el historial y las alertas.</div>'; return; }
+    const selected = selectedVehicle(state);
+    list.innerHTML = state.vehicles.map(v => {
+      const active = selected && selected.id === v.id;
+      const count = getAlerts(state, v).filter(a=>a.level !== 'success').length;
+      return `<div class="garage-item ${active ? 'active' : ''}"><div class="garage-item-with-photo">
+        <div class="garage-photo">${v.photoData ? `<img src="${v.photoData}" alt="${escapeHtml(v.brand)} ${escapeHtml(v.model)}">` : '<i class="fa-solid fa-car-side"></i>'}</div>
+        <div>
+          <div class="garage-title">${escapeHtml(v.brand)} ${escapeHtml(v.model)}</div>
+          <div class="garage-meta"><span>${escapeHtml(v.plate)}</span><span>${Number(v.mileage || 0).toLocaleString('es-ES')} km</span><span>ITV: ${escapeHtml(v.itvDate || 'sin fecha')}</span><span>${count} avisos</span></div>
+          ${v.notes ? `<p class="profile-hint">${escapeHtml(v.notes)}</p>` : ''}
+          <div class="profile-actions">
+            <button class="profile-btn primary" type="button" onclick="selectProfileVehicle('${v.id}')"><i class="fa-solid fa-check"></i> Seleccionar</button>
+            <button class="profile-btn" type="button" onclick="editProfileVehicle('${v.id}')"><i class="fa-solid fa-pen"></i> Editar</button>
+            <button class="profile-btn danger" type="button" onclick="deleteProfileVehicle('${v.id}')"><i class="fa-solid fa-trash"></i> Eliminar</button>
+          </div>
+        </div>
+      </div></div>`;
+    }).join('');
+  }
+  function fillRepairVehicleSelectEnhanced(state){
+    const select = document.getElementById('repairVehicleId');
+    if(!select) return;
+    if(!state.vehicles.length){ select.innerHTML = '<option value="">Crea primero un vehículo</option>'; return; }
+    const selectedId = state.selectedVehicleId || selectedVehicle(state)?.id || '';
+    select.innerHTML = state.vehicles.map(v => `<option value="${v.id}" ${v.id === selectedId ? 'selected' : ''}>${escapeHtml(v.brand)} ${escapeHtml(v.model)} · ${escapeHtml(v.plate)}</option>`).join('');
+  }
+  function renderRepairsEnhanced(state){
+    const list = document.getElementById('profileRepairList');
+    if(!list) return;
+    const selected = selectedVehicle(state);
+    const repairs = selected ? repairsFor(state, selected.id) : [];
+    if(!selected){ list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-clipboard-list"></i>Crea un vehículo para empezar a registrar reparaciones.</div>'; return; }
+    if(!repairs.length){ list.innerHTML = '<div class="profile-empty"><i class="fa-solid fa-screwdriver-wrench"></i>No hay reparaciones registradas para el vehículo seleccionado.</div>'; return; }
+    list.innerHTML = repairs.map(r => {
+      const tools = Array.isArray(r.guideTools) ? r.guideTools : [];
+      const parts = Array.isArray(r.guideParts) ? r.guideParts : [];
+      return `<div class="repair-item">
+        <div class="repair-title">${escapeHtml(r.title)}</div>
+        <div class="repair-meta"><span>${escapeHtml(r.category)}</span><span>${escapeHtml(r.date)}</span><span>${Number(r.mileage || 0).toLocaleString('es-ES')} km</span><span>${money(r.cost)}</span></div>
+        ${r.notes ? `<p class="profile-hint">${escapeHtml(r.notes)}</p>` : ''}
+        ${r.guideId ? `<div class="repair-associated-guide"><div class="repair-plan-kicker">Guía asociada al vehículo</div><div class="repair-plan-title">${escapeHtml(r.guideTitle || 'Guía relacionada')}</div>${tools.length ? `<div class="repair-chip-row">${tools.slice(0,8).map(t=>`<span class="repair-chip"><i class="fa-solid fa-screwdriver-wrench"></i>${escapeHtml(t)}</span>`).join('')}</div>` : ''}${parts.length ? `<div class="repair-chip-row">${parts.slice(0,8).map(t=>`<span class="repair-chip"><i class="fa-solid fa-box-open"></i>${escapeHtml(t)}</span>`).join('')}</div>` : ''}<button class="repair-guide-link" type="button" onclick="openAssociatedGuide('${r.guideId}')"><i class="fa-solid fa-book-open"></i> Ver guía guardada</button></div>` : ''}
+        <div class="profile-actions"><button class="profile-btn danger" type="button" onclick="deleteRepairLog('${r.id}')"><i class="fa-solid fa-trash"></i> Eliminar</button></div>
+      </div>`;
+    }).join('');
+  }
+  function renderPanel(){
+    const state = loadState();
+    renderGarageEnhanced(state);
+    fillRepairVehicleSelectEnhanced(state);
+    renderRepairsEnhanced(state);
+    updateBadge(state);
+    window.updateRepairPlanSuggestion();
+  }
+  const originalOpen = window.openProfilePanel;
+  window.openProfilePanel = function(){ if(typeof originalOpen === 'function') originalOpen(); setTimeout(renderPanel, 40); };
+  const originalSwitch = window.switchProfileTab;
+  window.switchProfileTab = function(tab){ if(typeof originalSwitch === 'function') originalSwitch(tab); setTimeout(renderPanel, 40); };
+  window.saveVehicleProfile = function(event){
+    event.preventDefault();
+    const state = loadState();
+    const id = document.getElementById('vehicleEditId')?.value || uid('veh');
+    const previous = state.vehicles.find(v => v.id === id) || {};
+    const vehicle = {
+      ...previous,
+      id,
+      brand: document.getElementById('vehicleBrand')?.value.trim() || '',
+      model: document.getElementById('vehicleModel')?.value.trim() || '',
+      plate: normalizePlate(document.getElementById('vehiclePlate')?.value || ''),
+      year: document.getElementById('vehicleYear')?.value || '',
+      mileage: Number(document.getElementById('vehicleMileage')?.value || 0),
+      itvDate: document.getElementById('vehicleItvDate')?.value || '',
+      oilInterval: Number(document.getElementById('vehicleOilInterval')?.value || 15000),
+      generalInterval: Number(document.getElementById('vehicleGeneralInterval')?.value || 30000),
+      notes: document.getElementById('vehicleNotes')?.value.trim() || '',
+      photoData: document.getElementById('vehiclePhotoData')?.value || previous.photoData || '',
+      updatedAt: new Date().toISOString()
+    };
+    const index = state.vehicles.findIndex(v => v.id === id);
+    if(index >= 0) state.vehicles[index] = vehicle; else state.vehicles.push(vehicle);
+    state.selectedVehicleId = id;
+    saveState(state);
+    window.resetVehicleForm();
+    renderPanel();
+    safeToast('Vehículo guardado en tu garaje', 'success');
+  };
+  window.resetVehicleForm = function(){
+    const form = document.getElementById('profileVehicleForm'); if(form) form.reset();
+    const edit = document.getElementById('vehicleEditId'); if(edit) edit.value = '';
+    const photo = document.getElementById('vehiclePhotoData'); if(photo) photo.value = '';
+    const oil = document.getElementById('vehicleOilInterval'); if(oil) oil.value = 15000;
+    const gen = document.getElementById('vehicleGeneralInterval'); if(gen) gen.value = 30000;
+    renderPhotoPreview('');
+  };
+  window.editProfileVehicle = function(id){
+    const state = loadState(); const v = state.vehicles.find(item => item.id === id); if(!v) return;
+    if(typeof window.switchProfileTab === 'function') window.switchProfileTab('vehiculos');
+    setTimeout(() => {
+      const set = (field, value) => { const el = document.getElementById(field); if(el) el.value = value || ''; };
+      set('vehicleEditId', v.id); set('vehicleBrand', v.brand); set('vehicleModel', v.model); set('vehiclePlate', v.plate); set('vehicleYear', v.year); set('vehicleMileage', v.mileage); set('vehicleItvDate', v.itvDate); set('vehicleOilInterval', v.oilInterval || 15000); set('vehicleGeneralInterval', v.generalInterval || 30000); set('vehicleNotes', v.notes); set('vehiclePhotoData', v.photoData || ''); renderPhotoPreview(v.photoData || '');
+    }, 60);
+  };
+  window.selectProfileVehicle = function(id){ const state = loadState(); state.selectedVehicleId = id; saveState(state); renderPanel(); safeToast('Vehículo seleccionado', 'info'); };
+  window.deleteProfileVehicle = function(id){
+    const state = loadState(); const v = state.vehicles.find(item => item.id === id); if(!v) return;
+    if(!confirm(`¿Eliminar ${v.brand} ${v.model} y sus reparaciones asociadas?`)) return;
+    state.vehicles = state.vehicles.filter(item => item.id !== id); state.repairs = state.repairs.filter(r => r.vehicleId !== id); if(state.selectedVehicleId === id) state.selectedVehicleId = state.vehicles[0]?.id || ''; saveState(state); renderPanel();
+  };
+  window.saveRepairLog = function(event){
+    event.preventDefault();
+    const state = loadState();
+    const vehicleId = document.getElementById('repairVehicleId')?.value;
+    if(!vehicleId){ safeToast('Crea primero un vehículo', 'info'); return; }
+    const planQuery = document.getElementById('repairPlanQuery')?.value.trim() || '';
+    const suggestedGuide = suggestGuide(planQuery || document.getElementById('repairTitle')?.value || '', document.getElementById('repairCategory')?.value || '');
+    const tools = suggestedGuide ? guideTools(suggestedGuide) : [];
+    const parts = suggestedGuide ? guideParts(suggestedGuide) : [];
+    const repair = {
+      id: uid('rep'), vehicleId,
+      date: document.getElementById('repairDate')?.value || todayISO(),
+      mileage: Number(document.getElementById('repairMileage')?.value || 0),
+      category: document.getElementById('repairCategory')?.value || 'Otra reparación',
+      title: document.getElementById('repairTitle')?.value.trim() || planQuery || 'Reparación registrada',
+      cost: Number(document.getElementById('repairCost')?.value || 0),
+      notes: document.getElementById('repairNotes')?.value.trim() || '',
+      planQuery,
+      guideId: suggestedGuide?.id || '',
+      guideTitle: suggestedGuide?.title || '',
+      guideTools: tools,
+      guideParts: parts,
+      createdAt: new Date().toISOString()
+    };
+    state.repairs.push(repair);
+    const v = state.vehicles.find(item => item.id === vehicleId); if(v && repair.mileage > Number(v.mileage || 0)) v.mileage = repair.mileage;
+    state.selectedVehicleId = vehicleId;
+    saveState(state);
+    const form = document.getElementById('profileRepairForm'); if(form) form.reset();
+    const date = document.getElementById('repairDate'); if(date) date.value = todayISO();
+    const result = document.getElementById('repairPlanResult'); if(result) result.innerHTML = '';
+    renderPanel();
+    safeToast(repair.guideId ? 'Reparación guardada con guía asociada' : 'Reparación añadida al historial', 'success');
+  };
+  window.deleteRepairLog = function(id){
+    if(!confirm('¿Eliminar esta reparación del historial?')) return;
+    const state = loadState(); state.repairs = state.repairs.filter(r => r.id !== id); saveState(state); renderPanel();
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    const category = document.getElementById('repairCategory'); if(category) category.addEventListener('change', window.updateRepairPlanSuggestion);
+    const title = document.getElementById('repairTitle'); if(title) title.addEventListener('input', () => { const q = document.getElementById('repairPlanQuery'); if(q && !q.value.trim()) window.updateRepairPlanSuggestion(); });
+    renderPanel();
+  });
+})();
+</script>
+
+
+<script id="vehicle-shop-catalog-script">
+(function() {
+  const VEHICLE_SHOP_DATA = {"vehicles": {"seat-leon-fr": {"name": "SEAT León FR / León 2005", "patterns": ["seat", "leon", "cupra"], "groups": ["vag", "gasolina", "tsi"]}, "vw-golf-15-tsi": {"name": "Volkswagen Golf 1.5 TSI", "patterns": ["volkswagen", "vw", "golf"], "groups": ["vag", "gasolina", "tsi"]}, "peugeot-308-puretech": {"name": "Peugeot 308 1.2 PureTech", "patterns": ["peugeot", "308", "puretech"], "groups": ["psa", "gasolina", "puretech"]}, "renault-megane-tce": {"name": "Renault Mégane 1.3 TCe", "patterns": ["renault", "megane", "mégane", "tce"], "groups": ["renault", "gasolina", "tce"]}, "ford-focus-ecoboost": {"name": "Ford Focus 1.0 EcoBoost", "patterns": ["ford", "focus", "ecoboost"], "groups": ["ford", "gasolina", "ecoboost"]}, "toyota-corolla-hybrid": {"name": "Toyota Corolla 1.8 Hybrid", "patterns": ["toyota", "corolla", "hybrid", "hibrido", "híbrido"], "groups": ["toyota", "hibrido", "hybrid"]}, "bmw-320d": {"name": "BMW Serie 3 320d", "patterns": ["bmw", "320d", "serie 3", "b47"], "groups": ["bmw", "diesel", "b47"]}}, "products": [{"id": "kit-basico-mantenimiento-europeo", "name": "Kit básico de mantenimiento europeo", "category": "kits", "price": 42.9, "description": "Juego inicial para mantenimiento doméstico: desmontaje de filtros, pequeñas inspecciones, tornillería métrica y trabajos de revisión en coches europeos.", "features": ["universal", "métrico", "garaje doméstico"], "variants": [{"id": "kit-basico-mantenimiento-europeo__42-piezas", "label": "42 piezas", "price": 42.9, "stock": 35, "is_default": true}, {"id": "kit-basico-mantenimiento-europeo__68-piezas", "label": "68 piezas", "price": 42.9, "stock": 35, "is_default": false}, {"id": "kit-basico-mantenimiento-europeo__96-piezas", "label": "96 piezas", "price": 42.9, "stock": 35, "is_default": false}], "vehicleKeys": ["universal"], "need": "Kit inicial", "keywords": "kit-basico-mantenimiento-europeo kit básico de mantenimiento europeo kits kit inicial universal universal métrico garaje doméstico"}, {"id": "juego-vasos-metricos-8-19", "name": "Juego de vasos métricos 8–19 mm", "category": "herramientas", "price": 24.9, "description": "Vasos métricos habituales para tapas, abrazaderas, soportes, carcasas de filtro y pequeños componentes del vano motor.", "features": ["8-19 mm", "cromo vanadio", "carraca 1/4 y 3/8"], "variants": [{"id": "juego-vasos-metricos-8-19__1-4-pulgadas", "label": "1/4 pulgadas", "price": 24.9, "stock": 40, "is_default": true}, {"id": "juego-vasos-metricos-8-19__3-8-pulgadas", "label": "3/8 pulgadas", "price": 24.9, "stock": 40, "is_default": false}, {"id": "juego-vasos-metricos-8-19__mixto-1-4-3-8", "label": "mixto 1/4 + 3/8", "price": 24.9, "stock": 40, "is_default": false}], "vehicleKeys": ["universal"], "need": "Herramientas", "keywords": "juego-vasos-metricos-8-19 juego de vasos métricos 8–19 mm herramientas herramientas universal 8-19 mm cromo vanadio carraca 1/4 y 3/8"}, {"id": "torquimetro-5-60nm", "name": "Torquímetro 5–60 Nm", "category": "precision", "price": 39.9, "description": "Torquímetro para tapas, bujías, tornillería ligera, carcasas de filtros y elementos que requieren apriete controlado.", "features": ["5-60 Nm", "certificado", "evita sobreaprietes"], "variants": [{"id": "torquimetro-5-60nm__5-60-nm", "label": "5-60 Nm", "price": 39.9, "stock": 25, "is_default": true}, {"id": "torquimetro-5-60nm__10-80-nm", "label": "10-80 Nm", "price": 39.9, "stock": 25, "is_default": false}], "vehicleKeys": ["universal"], "need": "Precisión", "keywords": "torquimetro-5-60nm torquímetro 5–60 nm precision precisión universal 5-60 nm certificado evita sobreaprietes"}, {"id": "torquimetro-40-200nm", "name": "Torquímetro 40–200 Nm", "category": "precision", "price": 49.9, "description": "Herramienta para ruedas, frenos, soportes, suspensión ligera y aprietes de mayor par.", "features": ["40-200 Nm", "ruedas", "frenos"], "variants": [{"id": "torquimetro-40-200nm__40-200-nm", "label": "40-200 Nm", "price": 49.9, "stock": 25, "is_default": true}, {"id": "torquimetro-40-200nm__60-300-nm", "label": "60-300 Nm", "price": 49.9, "stock": 25, "is_default": false}], "vehicleKeys": ["universal"], "need": "Precisión", "keywords": "torquimetro-40-200nm torquímetro 40–200 nm precision precisión universal 40-200 nm ruedas frenos"}, {"id": "gato-hidraulico-2t-perfil-bajo", "name": "Gato hidráulico 2T perfil bajo", "category": "elevacion", "price": 59.9, "description": "Gato de perfil bajo para elevar compactos y berlinas de forma estable antes de colocar borriquetas.", "features": ["2 toneladas", "perfil bajo", "uso con borriquetas"], "variants": [{"id": "gato-hidraulico-2t-perfil-bajo__2t", "label": "2T", "price": 59.9, "stock": 16, "is_default": true}, {"id": "gato-hidraulico-2t-perfil-bajo__2-5t", "label": "2.5T", "price": 59.9, "stock": 16, "is_default": false}], "vehicleKeys": ["universal"], "need": "Elevación", "keywords": "gato-hidraulico-2t-perfil-bajo gato hidráulico 2t perfil bajo elevacion elevación universal 2 toneladas perfil bajo uso con borriquetas"}, {"id": "borriquetas-3t-par", "name": "Par de borriquetas 3T", "category": "elevacion", "price": 34.9, "description": "Soportes de seguridad imprescindibles para trabajar bajo el vehículo. No sustituyen puntos de apoyo correctos.", "features": ["3 toneladas", "par", "seguridad"], "variants": [{"id": "borriquetas-3t-par__3t-par", "label": "3T par", "price": 34.9, "stock": 20, "is_default": true}, {"id": "borriquetas-3t-par__6t-par", "label": "6T par", "price": 34.9, "stock": 20, "is_default": false}], "vehicleKeys": ["universal"], "need": "Elevación", "keywords": "borriquetas-3t-par par de borriquetas 3t elevacion elevación universal 3 toneladas par seguridad"}, {"id": "bandeja-recogida-aceite-10l", "name": "Bandeja recogida aceite 10 L", "category": "herramientas", "price": 12.9, "description": "Bandeja amplia para cambios de aceite, purgas y recogida de fluidos sin ensuciar el área de trabajo.", "features": ["10 L", "vertido limpio", "garaje"], "variants": [{"id": "bandeja-recogida-aceite-10l__10-l", "label": "10 L", "price": 12.9, "stock": 35, "is_default": true}, {"id": "bandeja-recogida-aceite-10l__16-l", "label": "16 L", "price": 12.9, "stock": 35, "is_default": false}], "vehicleKeys": ["universal"], "need": "Fluidos", "keywords": "bandeja-recogida-aceite-10l bandeja recogida aceite 10 l herramientas fluidos universal 10 l vertido limpio garaje"}, {"id": "embudo-flexible-fluidos", "name": "Embudo flexible para fluidos", "category": "herramientas", "price": 7.9, "description": "Embudo con cuello flexible para rellenar aceite, refrigerante o líquido limpiaparabrisas con menos derrames.", "features": ["cuello flexible", "aceite", "refrigerante"], "variants": [{"id": "embudo-flexible-fluidos__peque-o", "label": "pequeño", "price": 7.9, "stock": 50, "is_default": true}, {"id": "embudo-flexible-fluidos__grande", "label": "grande", "price": 7.9, "stock": 50, "is_default": false}, {"id": "embudo-flexible-fluidos__kit-3-unidades", "label": "kit 3 unidades", "price": 7.9, "stock": 50, "is_default": false}], "vehicleKeys": ["universal"], "need": "Fluidos", "keywords": "embudo-flexible-fluidos embudo flexible para fluidos herramientas fluidos universal cuello flexible aceite refrigerante"}, {"id": "lector-obd2-bluetooth-multimarca", "name": "Lector OBD-II Bluetooth multimarca", "category": "diagnostico", "price": 24.9, "description": "Lector OBD-II para revisar códigos de avería, sensores básicos y estado de motor en la mayoría de vehículos europeos.", "features": ["OBD-II", "Bluetooth", "Android/iOS"], "variants": [{"id": "lector-obd2-bluetooth-multimarca__bluetooth", "label": "Bluetooth", "price": 24.9, "stock": 40, "is_default": true}, {"id": "lector-obd2-bluetooth-multimarca__wifi", "label": "WiFi", "price": 24.9, "stock": 40, "is_default": false}, {"id": "lector-obd2-bluetooth-multimarca__usb", "label": "USB", "price": 24.9, "stock": 40, "is_default": false}], "vehicleKeys": ["universal"], "need": "Diagnóstico", "keywords": "lector-obd2-bluetooth-multimarca lector obd-ii bluetooth multimarca diagnostico diagnóstico universal obd-ii bluetooth android/ios"}, {"id": "multimetro-automotriz-digital", "name": "Multímetro automotriz digital", "category": "electricas", "price": 19.9, "description": "Permite comprobar batería, alternador, continuidad, fusibles, sensores sencillos y consumos eléctricos.", "features": ["12 V", "continuidad", "fusibles"], "variants": [{"id": "multimetro-automotriz-digital__est-ndar", "label": "estándar", "price": 19.9, "stock": 30, "is_default": true}, {"id": "multimetro-automotriz-digital__con-pinzas", "label": "con pinzas", "price": 19.9, "stock": 30, "is_default": false}, {"id": "multimetro-automotriz-digital__profesional", "label": "profesional", "price": 19.9, "stock": 30, "is_default": false}], "vehicleKeys": ["universal"], "need": "Electricidad", "keywords": "multimetro-automotriz-digital multímetro automotriz digital electricas electricidad universal 12 v continuidad fusibles"}, {"id": "purgador-frenos-bomba-vacio", "name": "Purgador de frenos por vacío", "category": "frenos", "price": 28.9, "description": "Kit para purgar circuito de frenos y embrague hidráulico con menos ayuda externa y mejor control del fluido.", "features": ["DOT4", "purga", "bomba de vacío"], "variants": [{"id": "purgador-frenos-bomba-vacio__manual", "label": "manual", "price": 28.9, "stock": 22, "is_default": true}, {"id": "purgador-frenos-bomba-vacio__con-dep-sito-1l", "label": "con depósito 1L", "price": 28.9, "stock": 22, "is_default": false}], "vehicleKeys": ["universal"], "need": "Frenos", "keywords": "purgador-frenos-bomba-vacio purgador de frenos por vacío frenos frenos universal dot4 purga bomba de vacío"}, {"id": "manometro-neumaticos-digital", "name": "Manómetro digital de neumáticos", "category": "itv", "price": 9.9, "description": "Comprobador de presión para ajustar neumáticos antes de viajes, ITV o revisiones periódicas.", "features": ["presión", "neumáticos", "ITV"], "variants": [{"id": "manometro-neumaticos-digital__digital", "label": "digital", "price": 9.9, "stock": 45, "is_default": true}, {"id": "manometro-neumaticos-digital__anal-gico-met-lico", "label": "analógico metálico", "price": 9.9, "stock": 45, "is_default": false}], "vehicleKeys": ["universal"], "need": "ITV", "keywords": "manometro-neumaticos-digital manómetro digital de neumáticos itv itv universal presión neumáticos itv"}, {"id": "lampara-led-inspeccion", "name": "Lámpara LED de inspección", "category": "herramientas", "price": 14.9, "description": "Lámpara recargable para inspeccionar bajos, vano motor, fugas, conectores y zonas de difícil acceso.", "features": ["recargable", "magnética", "LED"], "variants": [{"id": "lampara-led-inspeccion__compacta", "label": "compacta", "price": 14.9, "stock": 35, "is_default": true}, {"id": "lampara-led-inspeccion__profesional", "label": "profesional", "price": 14.9, "stock": 35, "is_default": false}], "vehicleKeys": ["universal"], "need": "Inspección", "keywords": "lampara-led-inspeccion lámpara led de inspección herramientas inspección universal recargable magnética led"}, {"id": "liquido-frenos-dot4-1l", "name": "Líquido de frenos DOT4 1L", "category": "fluidos", "price": 8.9, "description": "Fluido DOT4 para purgas y sustituciones periódicas en la mayoría de turismos europeos compatibles.", "features": ["DOT4", "1 litro", "frenos"], "variants": [{"id": "liquido-frenos-dot4-1l__1-l", "label": "1 L", "price": 8.9, "stock": 60, "is_default": true}, {"id": "liquido-frenos-dot4-1l__2-x-1-l", "label": "2 x 1 L", "price": 8.9, "stock": 60, "is_default": false}], "vehicleKeys": ["universal"], "need": "Frenos", "keywords": "liquido-frenos-dot4-1l líquido de frenos dot4 1l fluidos frenos universal dot4 1 litro frenos"}, {"id": "limpiador-frenos-500ml", "name": "Limpiador de frenos 500 ml", "category": "limpieza", "price": 4.9, "description": "Spray de evaporación rápida para discos, pinzas, manchas de grasa y limpieza de piezas mecánicas.", "features": ["500 ml", "evaporación rápida", "sin residuos"], "variants": [{"id": "limpiador-frenos-500ml__500-ml", "label": "500 ml", "price": 4.9, "stock": 80, "is_default": true}, {"id": "limpiador-frenos-500ml__pack-3", "label": "pack 3", "price": 4.9, "stock": 80, "is_default": false}], "vehicleKeys": ["universal"], "need": "Limpieza", "keywords": "limpiador-frenos-500ml limpiador de frenos 500 ml limpieza limpieza universal 500 ml evaporación rápida sin residuos"}, {"id": "limpiador-contactos-electricos", "name": "Limpiador de contactos eléctricos", "category": "limpieza", "price": 6.9, "description": "Spray para conectores, sensores, fusibles y bornes. Útil en diagnosis de fallos eléctricos sencillos.", "features": ["contactos", "sensores", "sin residuo"], "variants": [{"id": "limpiador-contactos-electricos__400-ml", "label": "400 ml", "price": 6.9, "stock": 50, "is_default": true}, {"id": "limpiador-contactos-electricos__pack-2", "label": "pack 2", "price": 6.9, "stock": 50, "is_default": false}], "vehicleKeys": ["universal"], "need": "Electricidad", "keywords": "limpiador-contactos-electricos limpiador de contactos eléctricos limpieza electricidad universal contactos sensores sin residuo"}, {"id": "grasa-cobre-antigripante", "name": "Grasa de cobre antigripante", "category": "limpieza", "price": 5.9, "description": "Pasta antigripante para tornillería expuesta a calor y piezas metálicas donde proceda su uso.", "features": ["alta temperatura", "tornillería", "antigripante"], "variants": [{"id": "grasa-cobre-antigripante__100-g", "label": "100 g", "price": 5.9, "stock": 40, "is_default": true}, {"id": "grasa-cobre-antigripante__250-g", "label": "250 g", "price": 5.9, "stock": 40, "is_default": false}], "vehicleKeys": ["universal"], "need": "Montaje", "keywords": "grasa-cobre-antigripante grasa de cobre antigripante limpieza montaje universal alta temperatura tornillería antigripante"}, {"id": "escobillas-limpiaparabrisas-universales", "name": "Escobillas limpiaparabrisas universales", "category": "itv", "price": 18.9, "description": "Juego de escobillas con adaptadores para mejorar visibilidad y preparar ITV.", "features": ["visibilidad", "ITV", "adaptadores"], "variants": [{"id": "escobillas-limpiaparabrisas-universales__600-400-mm", "label": "600/400 mm", "price": 18.9, "stock": 40, "is_default": true}, {"id": "escobillas-limpiaparabrisas-universales__650-450-mm", "label": "650/450 mm", "price": 18.9, "stock": 40, "is_default": false}, {"id": "escobillas-limpiaparabrisas-universales__700-450-mm", "label": "700/450 mm", "price": 18.9, "stock": 40, "is_default": false}], "vehicleKeys": ["universal"], "need": "ITV", "keywords": "escobillas-limpiaparabrisas-universales escobillas limpiaparabrisas universales itv itv universal visibilidad itv adaptadores"}, {"id": "bateria-12v-europea", "name": "Batería 12V europea", "category": "electricas", "price": 74.9, "description": "Batería de sustitución para turismos, con opciones estándar y Start-Stop según necesidad del vehículo.", "features": ["12 V", "arranque", "Start-Stop opcional"], "variants": [{"id": "bateria-12v-europea__60ah-est-ndar", "label": "60Ah estándar", "price": 74.9, "stock": 12, "is_default": true}, {"id": "bateria-12v-europea__70ah-est-ndar", "label": "70Ah estándar", "price": 74.9, "stock": 12, "is_default": false}, {"id": "bateria-12v-europea__70ah-agm-start-stop", "label": "70Ah AGM Start-Stop", "price": 74.9, "stock": 12, "is_default": false}], "vehicleKeys": ["universal"], "need": "Electricidad", "keywords": "bateria-12v-europea batería 12v europea electricas electricidad universal 12 v arranque start-stop opcional"}, {"id": "aceite-vw-504-507-0w30-5l", "name": "Aceite 0W-30 VW 504/507 5L", "category": "fluidos", "price": 39.9, "description": "Aceite homologación VW 504/507 para motores VAG compatibles, recomendado para cambios con filtro.", "features": ["VW 504/507", "0W-30", "5 L"], "variants": [{"id": "aceite-vw-504-507-0w30-5l__5-l", "label": "5 L", "price": 39.9, "stock": 30, "is_default": true}, {"id": "aceite-vw-504-507-0w30-5l__5-l-1-l", "label": "5 L + 1 L", "price": 39.9, "stock": 30, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Aceite", "keywords": "aceite-vw-504-507-0w30-5l aceite 0w-30 vw 504/507 5l fluidos aceite seat-leon-fr vw-golf-15-tsi vag universal vw 504/507 0w-30 5 l"}, {"id": "aceite-vw-508-509-0w20-5l", "name": "Aceite 0W-20 VW 508/509 5L", "category": "fluidos", "price": 42.9, "description": "Aceite de baja fricción para motores EA211 evo y otros VAG que requieren homologación VW 508/509.", "features": ["VW 508/509", "0W-20", "5 L"], "variants": [{"id": "aceite-vw-508-509-0w20-5l__5-l", "label": "5 L", "price": 42.9, "stock": 25, "is_default": true}, {"id": "aceite-vw-508-509-0w20-5l__5-l-1-l", "label": "5 L + 1 L", "price": 42.9, "stock": 25, "is_default": false}], "vehicleKeys": ["vw-golf-15-tsi", "vag"], "need": "Aceite", "keywords": "aceite-vw-508-509-0w20-5l aceite 0w-20 vw 508/509 5l fluidos aceite vw-golf-15-tsi vag vw 508/509 0w-20 5 l"}, {"id": "aceite-psa-b71-2010-0w30-5l", "name": "Aceite 0W-30 PSA B71 2010 5L", "category": "fluidos", "price": 36.9, "description": "Aceite compatible con especificaciones PSA B71 2010 para motores PureTech que requieren lubricante correcto.", "features": ["PSA B71 2010", "0W-30", "correa húmeda"], "variants": [{"id": "aceite-psa-b71-2010-0w30-5l__5-l", "label": "5 L", "price": 36.9, "stock": 28, "is_default": true}, {"id": "aceite-psa-b71-2010-0w30-5l__5-l-1-l", "label": "5 L + 1 L", "price": 36.9, "stock": 28, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Aceite", "keywords": "aceite-psa-b71-2010-0w30-5l aceite 0w-30 psa b71 2010 5l fluidos aceite peugeot-308-puretech psa psa b71 2010 0w-30 correa húmeda"}, {"id": "aceite-renault-rn17-5w30-5l", "name": "Aceite 5W-30 Renault RN17 5L", "category": "fluidos", "price": 35.9, "description": "Aceite para motores Renault modernos con especificación RN17, adecuado para mantenimientos del 1.3 TCe.", "features": ["RN17", "5W-30", "5 L"], "variants": [{"id": "aceite-renault-rn17-5w30-5l__5-l", "label": "5 L", "price": 35.9, "stock": 28, "is_default": true}, {"id": "aceite-renault-rn17-5w30-5l__5-l-1-l", "label": "5 L + 1 L", "price": 35.9, "stock": 28, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Aceite", "keywords": "aceite-renault-rn17-5w30-5l aceite 5w-30 renault rn17 5l fluidos aceite renault-megane-tce renault rn17 5w-30 5 l"}, {"id": "aceite-ford-5w20-ecoboost-5l", "name": "Aceite 5W-20 Ford EcoBoost 5L", "category": "fluidos", "price": 34.9, "description": "Aceite de especificación Ford para 1.0 EcoBoost; importante por el sistema de correa bañada en aceite.", "features": ["Ford WSS", "5W-20", "EcoBoost"], "variants": [{"id": "aceite-ford-5w20-ecoboost-5l__5-l", "label": "5 L", "price": 34.9, "stock": 25, "is_default": true}, {"id": "aceite-ford-5w20-ecoboost-5l__5-l-1-l", "label": "5 L + 1 L", "price": 34.9, "stock": 25, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Aceite", "keywords": "aceite-ford-5w20-ecoboost-5l aceite 5w-20 ford ecoboost 5l fluidos aceite ford-focus-ecoboost ford ford wss 5w-20 ecoboost"}, {"id": "aceite-toyota-0w16-hybrid-5l", "name": "Aceite 0W-16 Toyota Hybrid 5L", "category": "fluidos", "price": 38.9, "description": "Aceite de baja viscosidad para Toyota híbrido, pensado para arranques frecuentes del motor térmico.", "features": ["0W-16", "híbrido", "Toyota"], "variants": [{"id": "aceite-toyota-0w16-hybrid-5l__5-l", "label": "5 L", "price": 38.9, "stock": 25, "is_default": true}, {"id": "aceite-toyota-0w16-hybrid-5l__5-l-1-l", "label": "5 L + 1 L", "price": 38.9, "stock": 25, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Aceite", "keywords": "aceite-toyota-0w16-hybrid-5l aceite 0w-16 toyota hybrid 5l fluidos aceite toyota-corolla-hybrid toyota hybrid 0w-16 híbrido toyota"}, {"id": "aceite-bmw-ll04-5w30-5l", "name": "Aceite 5W-30 BMW LL-04 5L", "category": "fluidos", "price": 41.9, "description": "Aceite LongLife-04 para motores diésel BMW con DPF, adecuado para B47 según especificación.", "features": ["BMW LL-04", "5W-30", "diésel DPF"], "variants": [{"id": "aceite-bmw-ll04-5w30-5l__5-l", "label": "5 L", "price": 41.9, "stock": 22, "is_default": true}, {"id": "aceite-bmw-ll04-5w30-5l__7-l-pack", "label": "7 L pack", "price": 41.9, "stock": 22, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Aceite", "keywords": "aceite-bmw-ll04-5w30-5l aceite 5w-30 bmw ll-04 5l fluidos aceite bmw-320d bmw diesel bmw ll-04 5w-30 diésel dpf"}, {"id": "refrigerante-vag-g12evo-g13-5l", "name": "Refrigerante VAG G12evo/G13 5L", "category": "fluidos", "price": 18.9, "description": "Refrigerante orgánico compatible con muchas aplicaciones VAG. Usar siempre según especificación del vehículo.", "features": ["G12evo", "G13", "VAG"], "variants": [{"id": "refrigerante-vag-g12evo-g13-5l__5-l", "label": "5 L", "price": 18.9, "stock": 28, "is_default": true}, {"id": "refrigerante-vag-g12evo-g13-5l__concentrado-1-5-l", "label": "concentrado 1.5 L", "price": 18.9, "stock": 28, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Refrigeración", "keywords": "refrigerante-vag-g12evo-g13-5l refrigerante vag g12evo/g13 5l fluidos refrigeración seat-leon-fr vw-golf-15-tsi vag universal g12evo g13 vag"}, {"id": "refrigerante-psa-organico-5l", "name": "Refrigerante orgánico PSA 5L", "category": "fluidos", "price": 17.9, "description": "Refrigerante orgánico para Peugeot/Citroën compatibles, útil en purgas y sustituciones preventivas.", "features": ["PSA", "orgánico", "5 L"], "variants": [{"id": "refrigerante-psa-organico-5l__5-l", "label": "5 L", "price": 17.9, "stock": 22, "is_default": true}, {"id": "refrigerante-psa-organico-5l__concentrado-1-5-l", "label": "concentrado 1.5 L", "price": 17.9, "stock": 22, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Refrigeración", "keywords": "refrigerante-psa-organico-5l refrigerante orgánico psa 5l fluidos refrigeración peugeot-308-puretech psa psa orgánico 5 l"}, {"id": "refrigerante-renault-type-d-5l", "name": "Refrigerante Renault Type D 5L", "category": "fluidos", "price": 17.9, "description": "Refrigerante tipo D para motores Renault compatibles, pensado para mantener protección anticorrosión.", "features": ["Renault Type D", "5 L", "orgánico"], "variants": [{"id": "refrigerante-renault-type-d-5l__5-l", "label": "5 L", "price": 17.9, "stock": 22, "is_default": true}, {"id": "refrigerante-renault-type-d-5l__concentrado-1-5-l", "label": "concentrado 1.5 L", "price": 17.9, "stock": 22, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Refrigeración", "keywords": "refrigerante-renault-type-d-5l refrigerante renault type d 5l fluidos refrigeración renault-megane-tce renault renault type d 5 l orgánico"}, {"id": "refrigerante-ford-yellow-5l", "name": "Refrigerante Ford Yellow 5L", "category": "fluidos", "price": 18.9, "description": "Refrigerante para modelos Ford compatibles, adecuado para circuito de motor y protección de aluminio.", "features": ["Ford Yellow", "5 L", "protección aluminio"], "variants": [{"id": "refrigerante-ford-yellow-5l__5-l", "label": "5 L", "price": 18.9, "stock": 20, "is_default": true}, {"id": "refrigerante-ford-yellow-5l__concentrado-1-5-l", "label": "concentrado 1.5 L", "price": 18.9, "stock": 20, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Refrigeración", "keywords": "refrigerante-ford-yellow-5l refrigerante ford yellow 5l fluidos refrigeración ford-focus-ecoboost ford ford yellow 5 l protección aluminio"}, {"id": "refrigerante-toyota-sllc-5l", "name": "Refrigerante Toyota Super Long Life 5L", "category": "fluidos", "price": 22.9, "description": "Refrigerante Toyota SLLC para motor térmico y circuitos compatibles en modelos híbridos.", "features": ["Toyota SLLC", "híbrido", "5 L"], "variants": [{"id": "refrigerante-toyota-sllc-5l__5-l", "label": "5 L", "price": 22.9, "stock": 18, "is_default": true}, {"id": "refrigerante-toyota-sllc-5l__1-l-relleno", "label": "1 L relleno", "price": 22.9, "stock": 18, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Refrigeración", "keywords": "refrigerante-toyota-sllc-5l refrigerante toyota super long life 5l fluidos refrigeración toyota-corolla-hybrid toyota hybrid toyota sllc híbrido 5 l"}, {"id": "refrigerante-bmw-blue-5l", "name": "Refrigerante BMW azul 5L", "category": "fluidos", "price": 21.9, "description": "Refrigerante para BMW compatible con especificaciones de la marca, indicado para mantenimiento del circuito.", "features": ["BMW", "azul", "5 L"], "variants": [{"id": "refrigerante-bmw-blue-5l__5-l", "label": "5 L", "price": 21.9, "stock": 18, "is_default": true}, {"id": "refrigerante-bmw-blue-5l__concentrado-1-5-l", "label": "concentrado 1.5 L", "price": 21.9, "stock": 18, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Refrigeración", "keywords": "refrigerante-bmw-blue-5l refrigerante bmw azul 5l fluidos refrigeración bmw-320d bmw diesel bmw azul 5 l"}, {"id": "filtro-aceite-vag-ea888-ea211", "name": "Filtro de aceite VAG EA888/EA211", "category": "filtros", "price": 9.9, "description": "Filtro de aceite para mantenimientos VAG compatibles con motores TSI seleccionados.", "features": ["aceite", "VAG", "cartucho"], "variants": [{"id": "filtro-aceite-vag-ea888-ea211__ea888", "label": "EA888", "price": 9.9, "stock": 45, "is_default": true}, {"id": "filtro-aceite-vag-ea888-ea211__ea211", "label": "EA211", "price": 9.9, "stock": 45, "is_default": false}, {"id": "filtro-aceite-vag-ea888-ea211__kit-filtro-junta", "label": "kit filtro + junta", "price": 9.9, "stock": 45, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Filtros", "keywords": "filtro-aceite-vag-ea888-ea211 filtro de aceite vag ea888/ea211 filtros filtros seat-leon-fr vw-golf-15-tsi vag universal aceite vag cartucho"}, {"id": "filtro-aire-vag-leon-golf", "name": "Filtro de aire SEAT León / Golf", "category": "filtros", "price": 12.9, "description": "Filtro de aire para caja de admisión VAG, recomendado cada revisión o antes si hay polvo.", "features": ["admisión", "León", "Golf"], "variants": [{"id": "filtro-aire-vag-leon-golf__est-ndar", "label": "estándar", "price": 12.9, "stock": 35, "is_default": true}, {"id": "filtro-aire-vag-leon-golf__alto-flujo-lavable", "label": "alto flujo lavable", "price": 12.9, "stock": 35, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Filtros", "keywords": "filtro-aire-vag-leon-golf filtro de aire seat león / golf filtros filtros seat-leon-fr vw-golf-15-tsi vag universal admisión león golf"}, {"id": "filtro-habitaculo-vag-carbon-activo", "name": "Filtro habitáculo VAG carbón activo", "category": "filtros", "price": 13.9, "description": "Filtro de polen con carbón activo para mejorar calidad de aire interior y desempañado.", "features": ["habitáculo", "carbón activo", "VAG"], "variants": [{"id": "filtro-habitaculo-vag-carbon-activo__est-ndar", "label": "estándar", "price": 13.9, "stock": 35, "is_default": true}, {"id": "filtro-habitaculo-vag-carbon-activo__carb-n-activo", "label": "carbón activo", "price": 13.9, "stock": 35, "is_default": false}, {"id": "filtro-habitaculo-vag-carbon-activo__antibacteriano", "label": "antibacteriano", "price": 13.9, "stock": 35, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Filtros", "keywords": "filtro-habitaculo-vag-carbon-activo filtro habitáculo vag carbón activo filtros filtros seat-leon-fr vw-golf-15-tsi vag universal habitáculo carbón activo vag"}, {"id": "bujias-tsi-iridium-set4", "name": "Bujías iridio TSI juego 4", "category": "motor", "price": 31.9, "description": "Juego de bujías de iridio para motores TSI compatibles. Sustitución con par controlado.", "features": ["bujías", "iridio", "TSI"], "variants": [{"id": "bujias-tsi-iridium-set4__juego-4", "label": "juego 4", "price": 31.9, "stock": 25, "is_default": true}, {"id": "bujias-tsi-iridium-set4__juego-4-premium", "label": "juego 4 premium", "price": 31.9, "stock": 25, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Encendido", "keywords": "bujias-tsi-iridium-set4 bujías iridio tsi juego 4 motor encendido seat-leon-fr vw-golf-15-tsi vag universal bujías iridio tsi"}, {"id": "bobinas-tsi-pack4", "name": "Bobinas de encendido TSI pack 4", "category": "motor", "price": 74.9, "description": "Pack de bobinas para fallos de encendido, tirones o códigos de misfire en motores TSI compatibles.", "features": ["bobinas", "misfire", "TSI"], "variants": [{"id": "bobinas-tsi-pack4__unidad", "label": "unidad", "price": 24.9, "stock": 20, "is_default": true}, {"id": "bobinas-tsi-pack4__pack-4", "label": "pack 4", "price": 24.9, "stock": 20, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vw-golf-15-tsi", "vag", "universal"], "need": "Encendido", "keywords": "bobinas-tsi-pack4 bobinas de encendido tsi pack 4 motor encendido seat-leon-fr vw-golf-15-tsi vag universal bobinas misfire tsi"}, {"id": "pcv-ea888-repuesto", "name": "Válvula PCV EA888", "category": "motor", "price": 39.9, "description": "Separador/PCV para EA888, útil ante ralentí irregular, consumo de aceite o silbidos de admisión.", "features": ["EA888", "PCV", "admisión"], "variants": [{"id": "pcv-ea888-repuesto__pcv-completa", "label": "PCV completa", "price": 39.9, "stock": 14, "is_default": true}, {"id": "pcv-ea888-repuesto__kit-juntas", "label": "kit juntas", "price": 39.9, "stock": 14, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vag"], "need": "Motor", "keywords": "pcv-ea888-repuesto válvula pcv ea888 motor motor seat-leon-fr vag ea888 pcv admisión"}, {"id": "bomba-agua-termostato-ea888", "name": "Bomba de agua + termostato EA888", "category": "refrigeracion", "price": 109.9, "description": "Conjunto de bomba y termostato para EA888, recomendado en fugas o temperatura inestable.", "features": ["EA888", "bomba agua", "termostato"], "variants": [{"id": "bomba-agua-termostato-ea888__conjunto-completo", "label": "conjunto completo", "price": 109.9, "stock": 10, "is_default": true}, {"id": "bomba-agua-termostato-ea888__juntas-incluidas", "label": "juntas incluidas", "price": 109.9, "stock": 10, "is_default": false}], "vehicleKeys": ["seat-leon-fr", "vag"], "need": "Refrigeración", "keywords": "bomba-agua-termostato-ea888 bomba de agua + termostato ea888 refrigeracion refrigeración seat-leon-fr vag ea888 bomba agua termostato"}, {"id": "kit-correa-ea211-golf", "name": "Kit correa distribución EA211 evo", "category": "motor", "price": 129.9, "description": "Kit de correa, tensor y rodillos para mantenimiento preventivo del EA211 evo según intervalo.", "features": ["EA211", "correa", "Golf"], "variants": [{"id": "kit-correa-ea211-golf__kit-b-sico", "label": "kit básico", "price": 129.9, "stock": 8, "is_default": true}, {"id": "kit-correa-ea211-golf__kit-bomba-agua", "label": "kit + bomba agua", "price": 129.9, "stock": 8, "is_default": false}], "vehicleKeys": ["vw-golf-15-tsi", "vag"], "need": "Distribución", "keywords": "kit-correa-ea211-golf kit correa distribución ea211 evo motor distribución vw-golf-15-tsi vag ea211 correa golf"}, {"id": "filtro-aceite-puretech-eb2", "name": "Filtro de aceite PureTech EB2", "category": "filtros", "price": 8.9, "description": "Filtro de aceite para motores 1.2 PureTech, recomendable en cambios cortos y revisión de residuos.", "features": ["PureTech", "EB2", "aceite"], "variants": [{"id": "filtro-aceite-puretech-eb2__filtro", "label": "filtro", "price": 8.9, "stock": 40, "is_default": true}, {"id": "filtro-aceite-puretech-eb2__filtro-junta", "label": "filtro + junta", "price": 8.9, "stock": 40, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Filtros", "keywords": "filtro-aceite-puretech-eb2 filtro de aceite puretech eb2 filtros filtros peugeot-308-puretech psa puretech eb2 aceite"}, {"id": "filtro-aire-peugeot-308-puretech", "name": "Filtro de aire Peugeot 308 PureTech", "category": "filtros", "price": 11.9, "description": "Filtro de aire para Peugeot 308 1.2 PureTech compatible con caja de admisión estándar.", "features": ["Peugeot 308", "PureTech", "admisión"], "variants": [{"id": "filtro-aire-peugeot-308-puretech__est-ndar", "label": "estándar", "price": 11.9, "stock": 30, "is_default": true}, {"id": "filtro-aire-peugeot-308-puretech__alto-flujo", "label": "alto flujo", "price": 11.9, "stock": 30, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Filtros", "keywords": "filtro-aire-peugeot-308-puretech filtro de aire peugeot 308 puretech filtros filtros peugeot-308-puretech psa peugeot 308 puretech admisión"}, {"id": "bujias-puretech-set3", "name": "Bujías PureTech juego 3", "category": "motor", "price": 26.9, "description": "Juego de tres bujías para motor tricilíndrico PureTech. Usar par y referencia correcta.", "features": ["PureTech", "bujías", "3 cilindros"], "variants": [{"id": "bujias-puretech-set3__juego-3", "label": "juego 3", "price": 26.9, "stock": 20, "is_default": true}, {"id": "bujias-puretech-set3__juego-3-premium", "label": "juego 3 premium", "price": 26.9, "stock": 20, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Encendido", "keywords": "bujias-puretech-set3 bujías puretech juego 3 motor encendido peugeot-308-puretech psa puretech bujías 3 cilindros"}, {"id": "kit-correa-humeda-puretech", "name": "Kit correa húmeda PureTech", "category": "motor", "price": 149.9, "description": "Kit preventivo de correa húmeda para PureTech, indicado cuando aparece desgaste, fisuras o mantenimiento por edad/km.", "features": ["correa húmeda", "PureTech", "distribución"], "variants": [{"id": "kit-correa-humeda-puretech__kit-correa", "label": "kit correa", "price": 149.9, "stock": 8, "is_default": true}, {"id": "kit-correa-humeda-puretech__kit-correa-juntas", "label": "kit correa + juntas", "price": 149.9, "stock": 8, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Distribución", "keywords": "kit-correa-humeda-puretech kit correa húmeda puretech motor distribución peugeot-308-puretech psa correa húmeda puretech distribución"}, {"id": "tamiz-aspiracion-puretech", "name": "Tamiz aspiración aceite PureTech", "category": "motor", "price": 24.9, "description": "Tamiz/pick-up de aceite relacionado con residuos de correa húmeda. Revisar en mantenimientos críticos.", "features": ["tamiz", "aceite", "PureTech"], "variants": [{"id": "tamiz-aspiracion-puretech__tamiz", "label": "tamiz", "price": 24.9, "stock": 12, "is_default": true}, {"id": "tamiz-aspiracion-puretech__tamiz-junta-c-rter", "label": "tamiz + junta cárter", "price": 24.9, "stock": 12, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Lubricación", "keywords": "tamiz-aspiracion-puretech tamiz aspiración aceite puretech motor lubricación peugeot-308-puretech psa tamiz aceite puretech"}, {"id": "termostato-puretech-308", "name": "Módulo termostato PureTech", "category": "refrigeracion", "price": 54.9, "description": "Módulo termostato para control de temperatura en 1.2 PureTech compatible.", "features": ["termostato", "Peugeot", "refrigeración"], "variants": [{"id": "termostato-puretech-308__m-dulo", "label": "módulo", "price": 54.9, "stock": 10, "is_default": true}, {"id": "termostato-puretech-308__m-dulo-juntas", "label": "módulo + juntas", "price": 54.9, "stock": 10, "is_default": false}], "vehicleKeys": ["peugeot-308-puretech", "psa"], "need": "Refrigeración", "keywords": "termostato-puretech-308 módulo termostato puretech refrigeracion refrigeración peugeot-308-puretech psa termostato peugeot refrigeración"}, {"id": "filtro-aceite-h5ht-tce", "name": "Filtro de aceite H5Ht 1.3 TCe", "category": "filtros", "price": 9.9, "description": "Filtro de aceite para Renault/Nissan/Mercedes 1.3 TCe compatible.", "features": ["H5Ht", "1.3 TCe", "aceite"], "variants": [{"id": "filtro-aceite-h5ht-tce__filtro", "label": "filtro", "price": 9.9, "stock": 35, "is_default": true}, {"id": "filtro-aceite-h5ht-tce__filtro-junta", "label": "filtro + junta", "price": 9.9, "stock": 35, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Filtros", "keywords": "filtro-aceite-h5ht-tce filtro de aceite h5ht 1.3 tce filtros filtros renault-megane-tce renault h5ht 1.3 tce aceite"}, {"id": "filtro-aire-megane-tce", "name": "Filtro de aire Renault Mégane TCe", "category": "filtros", "price": 12.9, "description": "Filtro de aire para admisión del Renault Mégane 1.3 TCe.", "features": ["Mégane", "TCe", "admisión"], "variants": [{"id": "filtro-aire-megane-tce__est-ndar", "label": "estándar", "price": 12.9, "stock": 25, "is_default": true}, {"id": "filtro-aire-megane-tce__alto-flujo", "label": "alto flujo", "price": 12.9, "stock": 25, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Filtros", "keywords": "filtro-aire-megane-tce filtro de aire renault mégane tce filtros filtros renault-megane-tce renault mégane tce admisión"}, {"id": "bujias-h5ht-set4", "name": "Bujías H5Ht 1.3 TCe juego 4", "category": "motor", "price": 32.9, "description": "Juego de bujías para motor 1.3 TCe, útil en mantenimiento de encendido y tirones.", "features": ["H5Ht", "bujías", "TCe"], "variants": [{"id": "bujias-h5ht-set4__juego-4", "label": "juego 4", "price": 32.9, "stock": 20, "is_default": true}, {"id": "bujias-h5ht-set4__juego-4-premium", "label": "juego 4 premium", "price": 32.9, "stock": 20, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Encendido", "keywords": "bujias-h5ht-set4 bujías h5ht 1.3 tce juego 4 motor encendido renault-megane-tce renault h5ht bujías tce"}, {"id": "bobinas-renault-tce-pack4", "name": "Bobinas Renault TCe pack 4", "category": "motor", "price": 69.9, "description": "Bobinas para fallos de encendido en motores TCe compatibles.", "features": ["bobinas", "TCe", "misfire"], "variants": [{"id": "bobinas-renault-tce-pack4__unidad", "label": "unidad", "price": 23.9, "stock": 20, "is_default": true}, {"id": "bobinas-renault-tce-pack4__pack-4", "label": "pack 4", "price": 23.9, "stock": 20, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Encendido", "keywords": "bobinas-renault-tce-pack4 bobinas renault tce pack 4 motor encendido renault-megane-tce renault bobinas tce misfire"}, {"id": "kit-cadena-h5ht", "name": "Kit cadena distribución H5Ht", "category": "motor", "price": 139.9, "description": "Kit de cadena para intervención especializada en 1.3 TCe cuando exista ruido o desfase.", "features": ["cadena", "H5Ht", "distribución"], "variants": [{"id": "kit-cadena-h5ht__kit-cadena", "label": "kit cadena", "price": 139.9, "stock": 6, "is_default": true}, {"id": "kit-cadena-h5ht__kit-cadena-gu-as", "label": "kit cadena + guías", "price": 139.9, "stock": 6, "is_default": false}], "vehicleKeys": ["renault-megane-tce", "renault"], "need": "Distribución", "keywords": "kit-cadena-h5ht kit cadena distribución h5ht motor distribución renault-megane-tce renault cadena h5ht distribución"}, {"id": "filtro-aceite-ecoboost-1-0", "name": "Filtro de aceite Ford 1.0 EcoBoost", "category": "filtros", "price": 8.9, "description": "Filtro de aceite para Ford Focus 1.0 EcoBoost. Importante usar aceite correcto.", "features": ["EcoBoost", "aceite", "Ford"], "variants": [{"id": "filtro-aceite-ecoboost-1-0__filtro", "label": "filtro", "price": 8.9, "stock": 35, "is_default": true}, {"id": "filtro-aceite-ecoboost-1-0__filtro-junta", "label": "filtro + junta", "price": 8.9, "stock": 35, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Filtros", "keywords": "filtro-aceite-ecoboost-1-0 filtro de aceite ford 1.0 ecoboost filtros filtros ford-focus-ecoboost ford ecoboost aceite ford"}, {"id": "filtro-aire-focus-ecoboost", "name": "Filtro de aire Ford Focus EcoBoost", "category": "filtros", "price": 11.9, "description": "Filtro de aire para Ford Focus 1.0 EcoBoost compatible con caja de admisión estándar.", "features": ["Focus", "EcoBoost", "admisión"], "variants": [{"id": "filtro-aire-focus-ecoboost__est-ndar", "label": "estándar", "price": 11.9, "stock": 25, "is_default": true}, {"id": "filtro-aire-focus-ecoboost__alto-flujo", "label": "alto flujo", "price": 11.9, "stock": 25, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Filtros", "keywords": "filtro-aire-focus-ecoboost filtro de aire ford focus ecoboost filtros filtros ford-focus-ecoboost ford focus ecoboost admisión"}, {"id": "bujias-ecoboost-set3", "name": "Bujías Ford EcoBoost juego 3", "category": "motor", "price": 27.9, "description": "Juego de bujías para motor tricilíndrico EcoBoost compatible.", "features": ["EcoBoost", "bujías", "3 cilindros"], "variants": [{"id": "bujias-ecoboost-set3__juego-3", "label": "juego 3", "price": 27.9, "stock": 18, "is_default": true}, {"id": "bujias-ecoboost-set3__juego-3-premium", "label": "juego 3 premium", "price": 27.9, "stock": 18, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Encendido", "keywords": "bujias-ecoboost-set3 bujías ford ecoboost juego 3 motor encendido ford-focus-ecoboost ford ecoboost bujías 3 cilindros"}, {"id": "kit-correa-humeda-ecoboost", "name": "Kit correa húmeda EcoBoost", "category": "motor", "price": 159.9, "description": "Kit preventivo de correa húmeda para 1.0 EcoBoost. Requiere procedimiento cuidadoso.", "features": ["correa húmeda", "EcoBoost", "distribución"], "variants": [{"id": "kit-correa-humeda-ecoboost__kit-correa", "label": "kit correa", "price": 159.9, "stock": 6, "is_default": true}, {"id": "kit-correa-humeda-ecoboost__kit-completo-juntas", "label": "kit completo + juntas", "price": 159.9, "stock": 6, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Distribución", "keywords": "kit-correa-humeda-ecoboost kit correa húmeda ecoboost motor distribución ford-focus-ecoboost ford correa húmeda ecoboost distribución"}, {"id": "termostato-ecoboost-focus", "name": "Termostato Ford Focus EcoBoost", "category": "refrigeracion", "price": 44.9, "description": "Termostato para Focus EcoBoost ante temperaturas inestables o calentamiento anómalo.", "features": ["termostato", "Ford Focus", "refrigeración"], "variants": [{"id": "termostato-ecoboost-focus__termostato", "label": "termostato", "price": 44.9, "stock": 10, "is_default": true}, {"id": "termostato-ecoboost-focus__termostato-juntas", "label": "termostato + juntas", "price": 44.9, "stock": 10, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Refrigeración", "keywords": "termostato-ecoboost-focus termostato ford focus ecoboost refrigeracion refrigeración ford-focus-ecoboost ford termostato ford focus refrigeración"}, {"id": "manguitos-refrigeracion-focus", "name": "Kit manguitos refrigeración Focus", "category": "refrigeracion", "price": 38.9, "description": "Juego de manguitos seleccionados para mantenimiento del circuito de refrigeración.", "features": ["manguitos", "Focus", "refrigeración"], "variants": [{"id": "manguitos-refrigeracion-focus__kit-b-sico", "label": "kit básico", "price": 38.9, "stock": 12, "is_default": true}, {"id": "manguitos-refrigeracion-focus__kit-ampliado", "label": "kit ampliado", "price": 38.9, "stock": 12, "is_default": false}], "vehicleKeys": ["ford-focus-ecoboost", "ford"], "need": "Refrigeración", "keywords": "manguitos-refrigeracion-focus kit manguitos refrigeración focus refrigeracion refrigeración ford-focus-ecoboost ford manguitos focus refrigeración"}, {"id": "filtro-aceite-toyota-hybrid", "name": "Filtro de aceite Toyota Hybrid", "category": "filtros", "price": 8.9, "description": "Filtro de aceite para Toyota Corolla híbrido compatible con motor 2ZR-FXE.", "features": ["Toyota", "Hybrid", "aceite"], "variants": [{"id": "filtro-aceite-toyota-hybrid__filtro", "label": "filtro", "price": 8.9, "stock": 38, "is_default": true}, {"id": "filtro-aceite-toyota-hybrid__filtro-junta", "label": "filtro + junta", "price": 8.9, "stock": 38, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Filtros", "keywords": "filtro-aceite-toyota-hybrid filtro de aceite toyota hybrid filtros filtros toyota-corolla-hybrid toyota hybrid toyota hybrid aceite"}, {"id": "filtro-aire-corolla-hybrid", "name": "Filtro de aire Toyota Corolla Hybrid", "category": "filtros", "price": 12.9, "description": "Filtro de aire para admisión de Corolla híbrido.", "features": ["Corolla", "híbrido", "admisión"], "variants": [{"id": "filtro-aire-corolla-hybrid__est-ndar", "label": "estándar", "price": 12.9, "stock": 28, "is_default": true}, {"id": "filtro-aire-corolla-hybrid__alto-flujo", "label": "alto flujo", "price": 12.9, "stock": 28, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Filtros", "keywords": "filtro-aire-corolla-hybrid filtro de aire toyota corolla hybrid filtros filtros toyota-corolla-hybrid toyota hybrid corolla híbrido admisión"}, {"id": "filtro-habitaculo-corolla-carbon", "name": "Filtro habitáculo Corolla carbón activo", "category": "filtros", "price": 14.9, "description": "Filtro de habitáculo para Toyota Corolla con carbón activo.", "features": ["Corolla", "habitáculo", "carbón activo"], "variants": [{"id": "filtro-habitaculo-corolla-carbon__carb-n-activo", "label": "carbón activo", "price": 14.9, "stock": 28, "is_default": true}, {"id": "filtro-habitaculo-corolla-carbon__antibacteriano", "label": "antibacteriano", "price": 14.9, "stock": 28, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Filtros", "keywords": "filtro-habitaculo-corolla-carbon filtro habitáculo corolla carbón activo filtros filtros toyota-corolla-hybrid toyota hybrid corolla habitáculo carbón activo"}, {"id": "bujias-iridium-toyota-hybrid-set4", "name": "Bujías iridio Toyota Hybrid juego 4", "category": "motor", "price": 39.9, "description": "Bujías de iridio para motor 2ZR-FXE, de larga duración y funcionamiento estable.", "features": ["Toyota", "iridio", "2ZR-FXE"], "variants": [{"id": "bujias-iridium-toyota-hybrid-set4__juego-4", "label": "juego 4", "price": 39.9, "stock": 18, "is_default": true}, {"id": "bujias-iridium-toyota-hybrid-set4__juego-4-premium", "label": "juego 4 premium", "price": 39.9, "stock": 18, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Encendido", "keywords": "bujias-iridium-toyota-hybrid-set4 bujías iridio toyota hybrid juego 4 motor encendido toyota-corolla-hybrid toyota hybrid toyota iridio 2zr-fxe"}, {"id": "liquido-transmision-ecvt-toyota", "name": "Fluido transmisión e-CVT Toyota", "category": "fluidos", "price": 44.9, "description": "Fluido para transmisión híbrida e-CVT compatible según especificación Toyota.", "features": ["e-CVT", "Toyota", "transmisión"], "variants": [{"id": "liquido-transmision-ecvt-toyota__4-l", "label": "4 L", "price": 44.9, "stock": 14, "is_default": true}, {"id": "liquido-transmision-ecvt-toyota__4-l-arandelas", "label": "4 L + arandelas", "price": 44.9, "stock": 14, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Transmisión", "keywords": "liquido-transmision-ecvt-toyota fluido transmisión e-cvt toyota fluidos transmisión toyota-corolla-hybrid toyota hybrid e-cvt toyota transmisión"}, {"id": "pastillas-freno-corolla-hybrid", "name": "Pastillas de freno Corolla Hybrid", "category": "frenos", "price": 34.9, "description": "Juego de pastillas compatibles con uso híbrido, pensado para frenada suave y baja sonoridad.", "features": ["Corolla", "frenos", "híbrido"], "variants": [{"id": "pastillas-freno-corolla-hybrid__delanteras", "label": "delanteras", "price": 34.9, "stock": 16, "is_default": true}, {"id": "pastillas-freno-corolla-hybrid__traseras", "label": "traseras", "price": 34.9, "stock": 16, "is_default": false}, {"id": "pastillas-freno-corolla-hybrid__juego-completo", "label": "juego completo", "price": 34.9, "stock": 16, "is_default": false}], "vehicleKeys": ["toyota-corolla-hybrid", "toyota", "hybrid"], "need": "Frenos", "keywords": "pastillas-freno-corolla-hybrid pastillas de freno corolla hybrid frenos frenos toyota-corolla-hybrid toyota hybrid corolla frenos híbrido"}, {"id": "filtro-aceite-bmw-b47", "name": "Filtro de aceite BMW B47", "category": "filtros", "price": 11.9, "description": "Filtro de aceite para BMW 320d B47 con junta incluida para mantenimiento LL-04.", "features": ["BMW", "B47", "aceite"], "variants": [{"id": "filtro-aceite-bmw-b47__filtro", "label": "filtro", "price": 11.9, "stock": 30, "is_default": true}, {"id": "filtro-aceite-bmw-b47__filtro-junta", "label": "filtro + junta", "price": 11.9, "stock": 30, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Filtros", "keywords": "filtro-aceite-bmw-b47 filtro de aceite bmw b47 filtros filtros bmw-320d bmw diesel bmw b47 aceite"}, {"id": "filtro-aire-bmw-320d", "name": "Filtro de aire BMW 320d", "category": "filtros", "price": 18.9, "description": "Filtro de aire para BMW Serie 3 320d compatible con motor B47.", "features": ["BMW 320d", "B47", "admisión"], "variants": [{"id": "filtro-aire-bmw-320d__est-ndar", "label": "estándar", "price": 18.9, "stock": 20, "is_default": true}, {"id": "filtro-aire-bmw-320d__alto-flujo", "label": "alto flujo", "price": 18.9, "stock": 20, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Filtros", "keywords": "filtro-aire-bmw-320d filtro de aire bmw 320d filtros filtros bmw-320d bmw diesel bmw 320d b47 admisión"}, {"id": "filtro-gasoil-bmw-b47", "name": "Filtro de gasóleo BMW B47", "category": "filtros", "price": 24.9, "description": "Filtro de combustible para diésel BMW B47, protege bomba e inyectores common rail.", "features": ["gasóleo", "B47", "diésel"], "variants": [{"id": "filtro-gasoil-bmw-b47__filtro", "label": "filtro", "price": 24.9, "stock": 18, "is_default": true}, {"id": "filtro-gasoil-bmw-b47__filtro-juntas", "label": "filtro + juntas", "price": 24.9, "stock": 18, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Combustible", "keywords": "filtro-gasoil-bmw-b47 filtro de gasóleo bmw b47 filtros combustible bmw-320d bmw diesel gasóleo b47 diésel"}, {"id": "adblue-bmw-10l", "name": "AdBlue 10 L BMW / Euro 6", "category": "fluidos", "price": 14.9, "description": "Solución AdBlue para sistemas SCR de vehículos diésel Euro 6 compatibles.", "features": ["AdBlue", "SCR", "diésel"], "variants": [{"id": "adblue-bmw-10l__10-l", "label": "10 L", "price": 14.9, "stock": 35, "is_default": true}, {"id": "adblue-bmw-10l__20-l", "label": "20 L", "price": 14.9, "stock": 35, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Emisiones", "keywords": "adblue-bmw-10l adblue 10 l bmw / euro 6 fluidos emisiones bmw-320d bmw diesel adblue scr diésel"}, {"id": "limpiador-egr-admision-diesel", "name": "Kit limpieza EGR/admisión diésel", "category": "limpieza", "price": 22.9, "description": "Kit para limpieza preventiva de EGR y admisión diésel cuando el sistema lo permita.", "features": ["EGR", "diésel", "admisión"], "variants": [{"id": "limpiador-egr-admision-diesel__kit-b-sico", "label": "kit básico", "price": 22.9, "stock": 20, "is_default": true}, {"id": "limpiador-egr-admision-diesel__kit-profesional", "label": "kit profesional", "price": 22.9, "stock": 20, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Emisiones", "keywords": "limpiador-egr-admision-diesel kit limpieza egr/admisión diésel limpieza emisiones bmw-320d bmw diesel egr diésel admisión"}, {"id": "sensor-desgaste-freno-bmw", "name": "Sensor desgaste freno BMW", "category": "frenos", "price": 9.9, "description": "Sensor de desgaste para pastillas BMW compatible según eje y referencia.", "features": ["BMW", "sensor desgaste", "frenos"], "variants": [{"id": "sensor-desgaste-freno-bmw__delantero", "label": "delantero", "price": 9.9, "stock": 25, "is_default": true}, {"id": "sensor-desgaste-freno-bmw__trasero", "label": "trasero", "price": 9.9, "stock": 25, "is_default": false}, {"id": "sensor-desgaste-freno-bmw__par-delantero-trasero", "label": "par delantero+trasero", "price": 9.9, "stock": 25, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Frenos", "keywords": "sensor-desgaste-freno-bmw sensor desgaste freno bmw frenos frenos bmw-320d bmw diesel bmw sensor desgaste frenos"}, {"id": "pastillas-freno-bmw-320d", "name": "Pastillas de freno BMW 320d", "category": "frenos", "price": 44.9, "description": "Pastillas de freno para BMW 320d con compuesto equilibrado para carretera.", "features": ["BMW 320d", "frenos", "pastillas"], "variants": [{"id": "pastillas-freno-bmw-320d__delanteras", "label": "delanteras", "price": 44.9, "stock": 14, "is_default": true}, {"id": "pastillas-freno-bmw-320d__traseras", "label": "traseras", "price": 44.9, "stock": 14, "is_default": false}, {"id": "pastillas-freno-bmw-320d__juego-completo", "label": "juego completo", "price": 44.9, "stock": 14, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Frenos", "keywords": "pastillas-freno-bmw-320d pastillas de freno bmw 320d frenos frenos bmw-320d bmw diesel bmw 320d frenos pastillas"}, {"id": "kit-cadena-bmw-b47", "name": "Kit cadena distribución BMW B47", "category": "motor", "price": 189.9, "description": "Kit de cadena para intervención especializada en B47. Requiere diagnóstico y mano de obra avanzada.", "features": ["B47", "cadena", "distribución"], "variants": [{"id": "kit-cadena-bmw-b47__kit-b-sico", "label": "kit básico", "price": 189.9, "stock": 4, "is_default": true}, {"id": "kit-cadena-bmw-b47__kit-completo", "label": "kit completo", "price": 189.9, "stock": 4, "is_default": false}], "vehicleKeys": ["bmw-320d", "bmw", "diesel"], "need": "Distribución", "keywords": "kit-cadena-bmw-b47 kit cadena distribución bmw b47 motor distribución bmw-320d bmw diesel b47 cadena distribución"}, {"id": "discos-freno-compacto-europeo", "name": "Discos de freno turismo europeo", "category": "frenos", "price": 54.9, "description": "Discos de freno por eje para turismos europeos. Elegir medida según vehículo y ficha técnica.", "features": ["discos", "frenos", "ITV"], "variants": [{"id": "discos-freno-compacto-europeo__delanteros-280-300-mm", "label": "delanteros 280-300 mm", "price": 54.9, "stock": 20, "is_default": true}, {"id": "discos-freno-compacto-europeo__delanteros-300-330-mm", "label": "delanteros 300-330 mm", "price": 54.9, "stock": 20, "is_default": false}, {"id": "discos-freno-compacto-europeo__traseros-250-280-mm", "label": "traseros 250-280 mm", "price": 54.9, "stock": 20, "is_default": false}], "vehicleKeys": ["universal"], "need": "Frenos", "keywords": "discos-freno-compacto-europeo discos de freno turismo europeo frenos frenos universal discos frenos itv"}, {"id": "kit-pastillas-universal-europeo", "name": "Pastillas de freno turismo europeo", "category": "frenos", "price": 29.9, "description": "Pastillas por eje para mantenimiento de frenos. Seleccionar referencia compatible con tu vehículo.", "features": ["pastillas", "frenos", "ITV"], "variants": [{"id": "kit-pastillas-universal-europeo__delanteras", "label": "delanteras", "price": 29.9, "stock": 24, "is_default": true}, {"id": "kit-pastillas-universal-europeo__traseras", "label": "traseras", "price": 29.9, "stock": 24, "is_default": false}], "vehicleKeys": ["universal"], "need": "Frenos", "keywords": "kit-pastillas-universal-europeo pastillas de freno turismo europeo frenos frenos universal pastillas frenos itv"}]};
+  const STORE_VEHICLE_KEY = 'autorepara_store_vehicle_filter_v1';
+  const STORE_NEED_KEY = 'autorepara_store_need_filter_v1';
+  const STORE_SORT_KEY = 'autorepara_store_sort_v1';
+  const PROFILE_KEY = 'autorepara_user_profile_v1';
+  const originalLoadStoreProducts = window.loadStoreProducts || loadStoreProducts;
+  const originalRenderProductCard = window.renderProductCard || renderProductCard;
+
+  function normalizeText(value) {
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+  function readProfileState() {
+    try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}'); } catch { return {}; }
+  }
+  function garageVehicles() {
+    const state = readProfileState();
+    return Array.isArray(state.vehicles) ? state.vehicles : [];
+  }
+  function profileVehicleLabel(vehicle) {
+    const label = [vehicle.brand, vehicle.model].filter(Boolean).join(' ').trim() || 'Vehículo sin nombre';
+    return `${label}${vehicle.plate ? ' · ' + vehicle.plate : ''}`;
+  }
+  function detectVehicleKey(vehicle) {
+    if (!vehicle) return '';
+    const text = normalizeText(`${vehicle.brand || ''} ${vehicle.model || ''} ${vehicle.plate || ''} ${vehicle.notes || ''}`);
+    for (const [key, config] of Object.entries(VEHICLE_SHOP_DATA.vehicles)) {
+      if ((config.patterns || []).some(pattern => text.includes(normalizeText(pattern)))) return key;
+    }
+    return '';
+  }
+  function getKnownVehicleOptions() {
+    return Object.entries(VEHICLE_SHOP_DATA.vehicles).map(([key, v]) => ({ value: key, label: v.name, type: 'known' }));
+  }
+  function getProfileVehicleOptions() {
+    return garageVehicles().map(vehicle => {
+      const detected = detectVehicleKey(vehicle);
+      return { value: `profile:${vehicle.id}:${detected || 'generic'}`, label: profileVehicleLabel(vehicle), type: 'profile', detected, raw: vehicle };
+    });
+  }
+
+  function selectedProfileVehicle(value = currentVehicleSelection()) {
+    if (!value || !value.startsWith('profile:')) return null;
+    const parts = value.split(':');
+    const id = parts[1];
+    return garageVehicles().find(v => String(v.id) === String(id)) || null;
+  }
+  function isGenericProfileSelection(value = currentVehicleSelection()) {
+    return Boolean(value && value.startsWith('profile:') && value.split(':')[2] === 'generic');
+  }
+  function tokenListFromText(text) {
+    const stop = new Set(['con','del','los','las','para','vehiculo','vehículo','modelo','marca','motor','diesel','diésel','gasolina','hibrido','híbrido']);
+    return normalizeText(text).split(/[^a-z0-9]+/).filter(t => t.length >= 3 && !stop.has(t));
+  }
+  function inferredProfileVehicleTokens(vehicle) {
+    if (!vehicle) return ['universal'];
+    const raw = `${vehicle.brand || ''} ${vehicle.model || ''} ${vehicle.year || ''} ${vehicle.notes || ''}`;
+    const text = normalizeText(raw);
+    const tokens = new Set(['universal', ...tokenListFromText(raw)]);
+    if (/diesel|di[eé]sel|tdi|hdi|dci|cdti|cdi|bluehdi|d4d/.test(text)) tokens.add('diesel');
+    if (/gasolina|tsi|tfsi|tce|puretech|ecoboost|vti|mpi|gdi/.test(text)) tokens.add('gasolina');
+    if (/hybrid|hibrido|h[ií]brido|hev|phev/.test(text)) { tokens.add('hybrid'); tokens.add('hibrido'); }
+    if (/opel|vauxhall|peugeot|citroen|citro[eë]n|ds/.test(text)) tokens.add('psa');
+    if (/seat|skoda|volkswagen|vw|audi/.test(text)) tokens.add('vag');
+    if (/bmw|mini/.test(text)) tokens.add('bmw');
+    if (/renault|nissan|dacia/.test(text)) tokens.add('renault');
+    if (/ford/.test(text)) tokens.add('ford');
+    if (/toyota|lexus/.test(text)) tokens.add('toyota');
+    return Array.from(tokens).filter(Boolean);
+  }
+  function profileSpecificScore(product, value = currentVehicleSelection()) {
+    if (!isGenericProfileSelection(value)) return 0;
+    const vehicle = selectedProfileVehicle(value);
+    if (!vehicle) return 0;
+    const text = productText(product);
+    const tokens = inferredProfileVehicleTokens(vehicle).filter(t => t !== 'universal');
+    let score = 0;
+    tokens.forEach(token => {
+      const t = normalizeText(token);
+      if (!t) return;
+      if (text.includes(t)) score += ['diesel','gasolina','hybrid','hibrido','psa','vag','bmw','renault','ford','toyota'].includes(t) ? 8 : 14;
+    });
+    return score;
+  }
+  function productIsUniversal(product) {
+    return productText(product).includes('universal');
+  }
+  function buildAutoCompatibilityNotice(products, vehicleValue) {
+    if (vehicleValue === 'all') return '';
+    const vehicle = selectedProfileVehicle(vehicleValue);
+    const key = selectedKnownKey(vehicleValue);
+    if (key) return '';
+    const estimated = (products || []).filter(p => profileSpecificScore(p, vehicleValue) > 0 && !productIsUniversal(p)).length;
+    const universal = (products || []).filter(productIsUniversal).length;
+    if (!vehicle) return '';
+    return `
+      <div class="vehicle-auto-compatibility">
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        <div>
+          <strong>Búsqueda automática de compatibilidad</strong>
+          <small>Este vehículo no tiene catálogo específico cerrado. La tienda analiza marca, modelo, año, notas y posibles palabras de motor para mostrar coincidencias estimadas dentro del stock, además de herramientas universales útiles.</small>
+          <small><strong>${estimated}</strong> coincidencias estimadas · <strong>${universal}</strong> productos universales. Verifica siempre referencias OEM, medidas y homologaciones antes de montar filtros, frenos, aceite o piezas críticas.</small>
+          <div class="vehicle-auto-compatibility-actions">
+            <button class="vehicle-auto-btn" onclick="autoCompatibilitySearch()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buscar automáticamente</button>
+            <button class="vehicle-auto-btn" onclick="setVehicleShopNeed('all')"><i class="fa-solid fa-layer-group"></i> Ver todo compatible</button>
+          </div>
+        </div>
+      </div>`;
+  }
+  function currentVehicleSelection() {
+    return localStorage.getItem(STORE_VEHICLE_KEY) || 'all';
+  }
+  function currentNeedSelection() {
+    return localStorage.getItem(STORE_NEED_KEY) || 'all';
+  }
+  function currentSortSelection() {
+    return localStorage.getItem(STORE_SORT_KEY) || 'recommended';
+  }
+  function selectedKnownKey(value = currentVehicleSelection()) {
+    if (!value || value === 'all') return '';
+    if (value.startsWith('profile:')) return value.split(':')[2] === 'generic' ? '' : value.split(':')[2];
+    return value;
+  }
+  function selectedVehicleLabel(value = currentVehicleSelection()) {
+    if (value === 'all') return 'Todos los vehículos';
+    const known = VEHICLE_SHOP_DATA.vehicles[value];
+    if (known) return known.name;
+    const profile = getProfileVehicleOptions().find(v => v.value === value);
+    return profile ? profile.label : 'Vehículo seleccionado';
+  }
+  function vehicleTokensForSelection(value = currentVehicleSelection()) {
+    if (value === 'all') return ['universal'];
+    const key = selectedKnownKey(value);
+    if (key) {
+      const cfg = VEHICLE_SHOP_DATA.vehicles[key] || {};
+      return [key, ...(cfg.groups || []), 'universal'];
+    }
+    const profile = selectedProfileVehicle(value);
+    return inferredProfileVehicleTokens(profile);
+  }
+  function productText(product) {
+    return normalizeText(`${product.id} ${product.name} ${product.category} ${product.keywords} ${product.description} ${(product.features || []).join(' ')}`);
+  }
+  function productMatchesVehicle(product, value = currentVehicleSelection()) {
+    if (value === 'all') return true;
+    const key = selectedKnownKey(value);
+    const text = productText(product);
+    if (key) {
+      const tokens = vehicleTokensForSelection(value).map(normalizeText);
+      return tokens.some(token => token && text.includes(token));
+    }
+    if (profileSpecificScore(product, value) > 0) return true;
+    return productIsUniversal(product);
+  }
+  function productIsDirectFit(product, value = currentVehicleSelection()) {
+    if (value === 'all') return false;
+    const key = selectedKnownKey(value);
+    const text = productText(product);
+    if (key) return text.includes(normalizeText(key));
+    return profileSpecificScore(product, value) > 0;
+  }
+  function inferNeed(product) {
+    const text = productText(product);
+    if (text.includes('aceite') || text.includes('filtro de aceite')) return 'Aceite';
+    if (text.includes('refrigerante') || text.includes('termostato') || text.includes('bomba agua') || text.includes('refrigeracion')) return 'Refrigeración';
+    if (text.includes('freno') || text.includes('dot4') || text.includes('pastillas') || text.includes('discos')) return 'Frenos';
+    if (text.includes('buj') || text.includes('bobina') || text.includes('encendido')) return 'Encendido';
+    if (text.includes('correa') || text.includes('cadena') || text.includes('distribucion')) return 'Distribución';
+    if (text.includes('obd') || text.includes('multimetro') || text.includes('diagnostico')) return 'Diagnóstico';
+    if (text.includes('egr') || text.includes('dpf') || text.includes('adblue') || text.includes('emisiones')) return 'Emisiones';
+    if (text.includes('itv') || text.includes('escobillas') || text.includes('neumaticos')) return 'ITV';
+    return product.need || 'General';
+  }
+  function mergeVehicleCatalog(dbProducts) {
+    const byId = new Map((dbProducts || []).map(p => [String(p.id), p]));
+    VEHICLE_SHOP_DATA.products.forEach(p => {
+      if (!byId.has(p.id)) {
+        byId.set(p.id, {
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          price: Number(p.price),
+          keywords: p.keywords,
+          description: p.description,
+          features: p.features || [],
+          active: true,
+          localOnly: true,
+          vehicleKeys: p.vehicleKeys || [],
+          need: p.need || inferNeed(p),
+          variants: (p.variants || []).map(v => ({
+            id: v.id,
+            product_id: p.id,
+            label: v.label,
+            price: Number(v.price),
+            stock: Number(v.stock || 0),
+            is_default: Boolean(v.is_default)
+          }))
+        });
+      } else {
+        const existing = byId.get(p.id);
+        existing.vehicleKeys = p.vehicleKeys || existing.vehicleKeys || [];
+        existing.need = p.need || inferNeed(existing);
+        existing.keywords = `${existing.keywords || ''} ${p.keywords || ''}`;
+      }
+    });
+    return Array.from(byId.values());
+  }
+  function stockTotal(product) { return (product.variants || []).reduce((sum, v) => sum + Number(v.stock || 0), 0); }
+  function priority(product, vehicleValue) {
+    if (vehicleValue === 'all') return 0;
+    const text = productText(product);
+    const key = selectedKnownKey(vehicleValue);
+    if (key && text.includes(normalizeText(key))) return 40;
+    const groups = key && VEHICLE_SHOP_DATA.vehicles[key] ? VEHICLE_SHOP_DATA.vehicles[key].groups || [] : [];
+    if (groups.some(g => text.includes(normalizeText(g)))) return 25;
+    const autoScore = profileSpecificScore(product, vehicleValue);
+    if (autoScore > 0) return 18 + autoScore;
+    if (productIsUniversal(product)) return 10;
+    return 0;
+  }
+  function buildVehicleShopOptions() {
+    const value = currentVehicleSelection();
+    const known = getKnownVehicleOptions();
+    const profiles = getProfileVehicleOptions();
+    return `
+      <option value="all" ${value === 'all' ? 'selected' : ''}>Todos los vehículos</option>
+      <optgroup label="Mi garaje">${profiles.length ? profiles.map(v => `<option value="${escapeHtml(v.value)}" ${value === v.value ? 'selected' : ''}>${escapeHtml(v.label)}${v.detected ? ' · catálogo compatible' : ' · universal'}</option>`).join('') : '<option disabled>No hay vehículos guardados</option>'}</optgroup>
+      <optgroup label="Modelos documentados">${known.map(v => `<option value="${escapeHtml(v.value)}" ${value === v.value ? 'selected' : ''}>${escapeHtml(v.label)}</option>`).join('')}</optgroup>
+    `;
+  }
+  function buildNeedOptions(products) {
+    const current = currentNeedSelection();
+    const needs = Array.from(new Set((products || []).map(inferNeed))).sort((a,b)=>a.localeCompare(b,'es'));
+    return `<option value="all" ${current === 'all' ? 'selected' : ''}>Todas las necesidades</option>${needs.map(n => `<option value="${escapeHtml(n)}" ${current === n ? 'selected' : ''}>${escapeHtml(n)}</option>`).join('')}`;
+  }
+  function buildNeedStrip(products, vehicleValue) {
+    const counts = {};
+    products.forEach(p => { const n = inferNeed(p); counts[n] = (counts[n] || 0) + 1; });
+    const items = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+    return `<div class="vehicle-need-strip"><span class="vehicle-need-chip"><strong>${escapeHtml(selectedVehicleLabel(vehicleValue))}</strong></span>${items.map(([name,count]) => `<span class="vehicle-need-chip">${escapeHtml(name)} · ${count}</span>`).join('')}</div>`;
+  }
+  function renderProductCardEnhanced(product) {
+    const html = originalRenderProductCard(product);
+    const vehicleValue = currentVehicleSelection();
+    const direct = productIsDirectFit(product, vehicleValue);
+    const universal = vehicleValue !== 'all' && productIsUniversal(product);
+    const estimated = isGenericProfileSelection(vehicleValue) && direct;
+    const badgeClass = estimated ? 'estimated' : (direct && !universal ? '' : 'secondary');
+    const icon = estimated ? 'fa-magnifying-glass-chart' : (direct && !universal ? 'fa-circle-check' : 'fa-wrench');
+    const label = vehicleValue === 'all'
+      ? inferNeed(product)
+      : estimated
+        ? 'Coincidencia estimada'
+        : direct && !universal
+          ? 'Específico'
+          : 'Universal compatible';
+    const badge = vehicleValue !== 'all'
+      ? `<div class="vehicle-fit-badge ${badgeClass}"><i class="fa-solid ${icon}"></i>${label} · ${escapeHtml(inferNeed(product))}</div>`
+      : `<div class="vehicle-fit-badge secondary"><i class="fa-solid fa-layer-group"></i>${escapeHtml(inferNeed(product))}</div>`;
+    let out = html.replace('<h3>', `${badge}<h3>`).replace('class="product-card"', `class="product-card" data-vehicle-match="${direct ? 'true' : 'false'}"`);
+    if (estimated) {
+      out = out.replace('<p class="product-description">', '<p class="product-description"><strong style="color:#93c5fd">Compatibilidad estimada: </strong>');
+    }
+    if (product.localOnly) {
+      out = out.replace(/<button class="btn-cart"[\s\S]*?<\/button>/, '<div class="local-product-warning"><i class="fa-solid fa-database"></i> Producto preparado para el catálogo ampliado. Ejecuta <strong>supabase_vehicle_shop_catalog.sql</strong> en Supabase para activar compra, stock y pedidos.</div>');
+    }
+    return out;
+  }
+  async function renderStoreEnhanced(query = '', category = 'all') {
+    const container = document.getElementById('tienda-container');
+    if (!container) return;
+    window.currentStoreQuery = query || '';
+    window.currentStoreCategory = category || 'all';
+    container.innerHTML = `
+      <div class="page-header"><div class="page-header-label">Tienda AutoRepara · Catálogo por vehículo</div><h1>Recambios, líquidos<br>y herramientas</h1><p>AutoRepara.es / tienda</p></div>
+      <div class="store-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Organizando catálogo por vehículo…</div>`;
+    try {
+      const dbProducts = await originalLoadStoreProducts(query, category);
+      let products = mergeVehicleCatalog(dbProducts);
+      const vehicleValue = currentVehicleSelection();
+      const needValue = currentNeedSelection();
+      const q = normalizeText(query);
+      products = products.filter(p => {
+        const matchesQ = !q || productText(p).includes(q);
+        const matchesCat = category === 'all' || p.category === category;
+        const matchesVehicle = productMatchesVehicle(p, vehicleValue);
+        const matchesNeed = needValue === 'all' || inferNeed(p) === needValue;
+        return matchesQ && matchesCat && matchesVehicle && matchesNeed;
+      });
+      const sort = currentSortSelection();
+      products.sort((a,b) => {
+        if (sort === 'price-asc') return Number((a.variants?.[0]?.price) || a.price) - Number((b.variants?.[0]?.price) || b.price);
+        if (sort === 'price-desc') return Number((b.variants?.[0]?.price) || b.price) - Number((a.variants?.[0]?.price) || a.price);
+        if (sort === 'stock-desc') return stockTotal(b) - stockTotal(a);
+        return priority(b, vehicleValue) - priority(a, vehicleValue) || inferNeed(a).localeCompare(inferNeed(b),'es') || a.name.localeCompare(b.name,'es');
+      });
+      window.shopProductsCache = products;
+      const localOnlyCount = products.filter(p => p.localOnly).length;
+      const allNeedsForSelection = mergeVehicleCatalog(dbProducts).filter(p => productMatchesVehicle(p, vehicleValue));
+      container.innerHTML = `
+        <div class="page-header">
+          <div class="page-header-label">Tienda AutoRepara · Catálogo por vehículo</div>
+          <h1>Recambios, líquidos<br>y herramientas</h1>
+          <p>AutoRepara.es / tienda</p>
+        </div>
+        <div class="vehicle-shop-panel">
+          <h3><i class="fa-solid fa-car-side" style="color:var(--accent-orange)"></i> Organizar tienda por vehículo</h3>
+          <p>Selecciona un coche documentado o uno guardado en tu perfil. Si no existe un catálogo específico para ese modelo, la tienda buscará automáticamente coincidencias en el stock y mostrará productos universales útiles para mantenimiento y diagnóstico.</p>
+          <div class="vehicle-shop-controls">
+            <select class="vehicle-shop-select" id="vehicle-shop-select" onchange="setVehicleShopFilter(this.value)">${buildVehicleShopOptions()}</select>
+            <select class="vehicle-shop-need" id="vehicle-shop-need" onchange="setVehicleShopNeed(this.value)">${buildNeedOptions(allNeedsForSelection)}</select>
+            <select class="vehicle-shop-sort" id="vehicle-shop-sort" onchange="setVehicleShopSort(this.value)">
+              <option value="recommended" ${sort === 'recommended' ? 'selected' : ''}>Recomendados primero</option>
+              <option value="price-asc" ${sort === 'price-asc' ? 'selected' : ''}>Precio: menor a mayor</option>
+              <option value="price-desc" ${sort === 'price-desc' ? 'selected' : ''}>Precio: mayor a menor</option>
+              <option value="stock-desc" ${sort === 'stock-desc' ? 'selected' : ''}>Mayor stock</option>
+            </select>
+          </div>
+          ${buildNeedStrip(allNeedsForSelection, vehicleValue)}
+          ${buildAutoCompatibilityNotice(allNeedsForSelection, vehicleValue)}
+        </div>
+        <div class="shop-status-bar">
+          <div class="shop-status-chip"><i class="fa-solid fa-car-burst"></i>${products.length} productos visibles · ${escapeHtml(selectedVehicleLabel(vehicleValue))}</div>
+          <button class="shop-cart-button" onclick="openCartModal()"><i class="fa-solid fa-cart-shopping"></i> Carrito <span class="cart-count-badge" data-cart-count>0</span></button>
+        </div>
+        ${localOnlyCount ? `<div class="alert alert-info"><i class="fa-solid fa-database"></i><div><strong>${localOnlyCount} productos del catálogo ampliado están pendientes de activar en Supabase.</strong> Ejecuta el archivo SQL incluido para que se puedan comprar y entren en el flujo de pedidos con stock.</div></div>` : ''}
+        <div class="product-toolbar">
+          <input class="store-search" id="store-search" value="${escapeHtml(query)}" placeholder="Buscar aceite, filtro, frenos, refrigerante…" oninput="renderStore(this.value, document.getElementById('store-filter').value)">
+          <select class="store-filter" id="store-filter" onchange="renderStore(document.getElementById('store-search').value, this.value)">
+            ${['all','kits','herramientas','diagnostico','precision','elevacion','fluidos','limpieza','electricas','filtros','frenos','motor','refrigeracion','itv'].map(c => `<option value="${c}" ${c===category?'selected':''}>${c === 'all' ? 'Todas' : c}</option>`).join('')}
+          </select>
+        </div>
+        ${products.length ? `<div class="store-grid">${products.map(renderProductCardEnhanced).join('')}</div>` : `<div class="store-empty">No hay productos para este filtro. Prueba con otro vehículo, necesidad o categoría.</div>`}
+      `;
+      updateCartCounter();
+    } catch (error) {
+      console.error(error);
+      container.innerHTML = `<div class="page-header"><div class="page-header-label">Tienda AutoRepara · Error</div><h1>No se pudo cargar<br>la tienda</h1><p>AutoRepara.es / tienda</p></div><div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Error:</strong> ${escapeHtml(error.message || error)}.</div></div>`;
+    }
+  }
+  window.autoCompatibilitySearch = function() {
+    localStorage.setItem(STORE_NEED_KEY, 'all');
+    localStorage.setItem(STORE_SORT_KEY, 'recommended');
+    renderStore('', 'all');
+  };
+  window.setVehicleShopFilter = function(value) { localStorage.setItem(STORE_VEHICLE_KEY, value || 'all'); renderStore(document.getElementById('store-search')?.value || '', document.getElementById('store-filter')?.value || 'all'); };
+  window.setVehicleShopNeed = function(value) { localStorage.setItem(STORE_NEED_KEY, value || 'all'); renderStore(document.getElementById('store-search')?.value || '', document.getElementById('store-filter')?.value || 'all'); };
+  window.setVehicleShopSort = function(value) { localStorage.setItem(STORE_SORT_KEY, value || 'recommended'); renderStore(document.getElementById('store-search')?.value || '', document.getElementById('store-filter')?.value || 'all'); };
+  window.renderStore = renderStoreEnhanced;
+  window.renderProductCard = renderProductCardEnhanced;
+})();
+</script>
+
+
+
+<script id="profile-summary-live-sync">
+(function(){
+  const PROFILE_KEY = 'autorepara_user_profile_v1';
+
+  function readProfileState(){
+    try {
+      const state = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+      return {
+        owner: state.owner || {},
+        selectedVehicleId: state.selectedVehicleId || '',
+        vehicles: Array.isArray(state.vehicles) ? state.vehicles : [],
+        repairs: Array.isArray(state.repairs) ? state.repairs : []
+      };
+    } catch(e){
+      return { owner:{}, selectedVehicleId:'', vehicles:[], repairs:[] };
+    }
+  }
+
+  function parseDate(value){
+    if(!value) return null;
+    const date = new Date(value + 'T00:00:00');
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  function daysUntil(value){
+    const date = parseDate(value);
+    if(!date) return null;
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Math.ceil((date - today) / 86400000);
+  }
+
+  function normalize(value){
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function selectedVehicle(state){
+    return state.vehicles.find(v => String(v.id) === String(state.selectedVehicleId)) || state.vehicles[0] || null;
+  }
+
+  function vehicleRepairs(state, vehicleId){
+    return state.repairs
+      .filter(repair => String(repair.vehicleId) === String(vehicleId))
+      .sort((a,b) => String(b.date || '').localeCompare(String(a.date || '')) || Number(b.mileage || 0) - Number(a.mileage || 0));
+  }
+
+  function lastRepairMileage(state, vehicleId, terms){
+    const searchTerms = Array.isArray(terms) ? terms : [terms];
+    const repairs = vehicleRepairs(state, vehicleId);
+    const match = repairs.find(repair => {
+      const text = normalize(`${repair.category || ''} ${repair.title || ''} ${repair.planQuery || ''} ${repair.notes || ''}`);
+      return searchTerms.some(term => text.includes(normalize(term)));
+    });
+    return match ? Number(match.mileage || 0) : 0;
+  }
+
+  function vehicleAlerts(state, vehicle){
+    if(!vehicle) return [];
+    const alerts = [];
+    const mileage = Number(vehicle.mileage || 0);
+    const itvDays = daysUntil(vehicle.itvDate);
+
+    if(itvDays !== null){
+      if(itvDays < 0) alerts.push({ level:'danger', title:'ITV caducada' });
+      else if(itvDays <= 30) alerts.push({ level:'danger', title:'ITV próxima' });
+      else if(itvDays <= 60) alerts.push({ level:'warning', title:'Preparar ITV' });
+    }
+
+    const oilInterval = Number(vehicle.oilInterval || 15000);
+    const lastOil = lastRepairMileage(state, vehicle.id, ['aceite', 'filtro aceite']);
+    if(lastOil){
+      const remaining = (lastOil + oilInterval) - mileage;
+      if(remaining <= 0) alerts.push({ level:'danger', title:'Cambio de aceite vencido' });
+      else if(remaining <= 1500) alerts.push({ level:'warning', title:'Cambio de aceite próximo' });
+    } else if(mileage >= oilInterval){
+      alerts.push({ level:'warning', title:'Registrar aceite' });
+    }
+
+    const generalInterval = Number(vehicle.generalInterval || 30000);
+    const lastGeneral = lastRepairMileage(state, vehicle.id, ['revision general', 'revisión general']);
+    if(lastGeneral){
+      const remaining = (lastGeneral + generalInterval) - mileage;
+      if(remaining <= 0) alerts.push({ level:'warning', title:'Revisión general recomendada' });
+      else if(remaining <= 3000) alerts.push({ level:'warning', title:'Revisión general próxima' });
+    }
+
+    const lastBrakes = lastRepairMileage(state, vehicle.id, ['frenos', 'pastillas', 'discos']);
+    if(lastBrakes && mileage - lastBrakes >= 45000) alerts.push({ level:'warning', title:'Revisar frenos' });
+
+    const lastTyres = lastRepairMileage(state, vehicle.id, ['neumaticos', 'neumáticos', 'ruedas']);
+    if(lastTyres && mileage - lastTyres >= 35000) alerts.push({ level:'warning', title:'Revisar neumáticos' });
+
+    return alerts;
+  }
+
+  function activeAlertCount(state){
+    return state.vehicles.reduce((total, vehicle) => total + vehicleAlerts(state, vehicle).length, 0);
+  }
+
+  function updateProfileSummaryStats(){
+    const state = readProfileState();
+    const selected = selectedVehicle(state);
+    const summary = document.getElementById('profileSummaryStats');
+    if(summary){
+      summary.innerHTML = `
+        <div class="profile-stat"><span>Vehículos</span><strong>${state.vehicles.length}</strong></div>
+        <div class="profile-stat"><span>Reparaciones</span><strong>${state.repairs.length}</strong></div>
+        <div class="profile-stat"><span>Avisos</span><strong>${activeAlertCount(state)}</strong></div>
+        <div class="profile-stat"><span>Kilometraje</span><strong>${selected ? Number(selected.mileage || 0).toLocaleString('es-ES') : '—'}</strong></div>`;
+    }
+
+    const trigger = document.getElementById('profileTrigger');
+    const dot = document.getElementById('profileAlertDot');
+    const alerts = activeAlertCount(state);
+    if(trigger) trigger.classList.toggle('has-alerts', alerts > 0);
+    if(dot) dot.textContent = alerts > 9 ? '9+' : String(alerts);
+  }
+
+  function refreshSoon(){
+    window.setTimeout(updateProfileSummaryStats, 30);
+    window.setTimeout(updateProfileSummaryStats, 160);
+  }
+
+  function wrapProfileAction(name){
+    const original = window[name];
+    if(typeof original !== 'function' || original.__profileSummaryWrapped) return;
+    const wrapped = function(...args){
+      const result = original.apply(this, args);
+      refreshSoon();
+      return result;
+    };
+    wrapped.__profileSummaryWrapped = true;
+    window[name] = wrapped;
+  }
+
+  const originalSetItem = localStorage.setItem.bind(localStorage);
+  localStorage.setItem = function(key, value){
+    const result = originalSetItem(key, value);
+    if(key === PROFILE_KEY) refreshSoon();
+    return result;
+  };
+
+  function installWrappers(){
+    [
+      'openProfilePanel',
+      'switchProfileTab',
+      'saveOwnerProfile',
+      'saveVehicleProfile',
+      'selectProfileVehicle',
+      'editProfileVehicle',
+      'deleteProfileVehicle',
+      'saveRepairLog',
+      'deleteRepairLog',
+      'resetVehicleForm'
+    ].forEach(wrapProfileAction);
+    updateProfileSummaryStats();
+  }
+
+  window.refreshUserProfileSummary = updateProfileSummaryStats;
+  document.addEventListener('DOMContentLoaded', () => {
+    installWrappers();
+    window.setTimeout(installWrappers, 300);
+  });
 })();
 </script>
 
