@@ -3683,3 +3683,14 @@ footer {
   font-size: 20px;
   margin-top: 6px;
 }
+.profile-auth-help{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.profile-btn[disabled], .profile-auth-form button[disabled]{
+  opacity: .55;
+  cursor: not-allowed;
+  filter: grayscale(.25);
+}

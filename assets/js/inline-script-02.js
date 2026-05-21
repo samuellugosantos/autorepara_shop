@@ -404,6 +404,289 @@ const guidesData = [
       }
     ]
   }
+
+  ,
+  {
+    id: 'g-filtro-habitaculo',
+    title: 'Sustitución del filtro de habitáculo',
+    description: 'El filtro de habitáculo retiene polvo, polen, hollín, humedad y partículas que entran al interior del vehículo. Cuando está saturado reduce el caudal del climatizador, genera malos olores y puede empañar los cristales con más facilidad. Es una operación sencilla que mejora mucho el confort interior.',
+    icon: 'fa-fan',
+    badge: 'free',
+    difficulty: 1,
+    time: '20 min',
+    system: 'Climatización',
+    tags: 'filtro habitaculo polen climatizador aire acondicionado mantenimiento interior',
+    tools: ['Destornillador Torx T20 o T25 según modelo', 'Linterna', 'Aspirador pequeño', 'Guantes de nitrilo'],
+    parts: ['Filtro de habitáculo compatible', 'Filtro de carbón activo si el usuario circula mucho en ciudad'],
+    steps: [
+      {
+        title: 'Localizar el alojamiento del filtro',
+        desc: 'En muchos vehículos europeos el filtro de habitáculo se encuentra detrás de la guantera, bajo el parabrisas o en la zona inferior del salpicadero del lado del acompañante. Consulta la tapa o el manual del vehículo para confirmar el acceso. Antes de desmontar, retira alfombrillas u objetos que puedan molestar y coloca una linterna apuntando a la zona de trabajo.',
+        note: 'Si el coche tiene airbag de rodilla o cableado visible, no tires de piezas sin localizar primero sus grapas o tornillos.'
+      },
+      {
+        title: 'Retirar tapa, grapas o guantera si es necesario',
+        desc: 'Desmonta la tapa de acceso siguiendo el sentido de las grapas. En algunos modelos hay que abrir la guantera, liberar dos topes laterales y dejarla caer suavemente. Evita forzar plásticos en frío porque se rompen con facilidad. Si notas resistencia, busca un tornillo oculto o una pestaña adicional.',
+        tools: ['Destornillador Torx', 'Linterna']
+      },
+      {
+        title: 'Extraer el filtro antiguo sin vaciar suciedad',
+        desc: 'Tira del filtro antiguo manteniéndolo horizontal para que hojas, polvo y residuos no caigan dentro del ventilador. Observa la flecha de flujo de aire marcada en el marco del filtro. Esa orientación es importante para que el nuevo filtro trabaje correctamente.',
+        note: 'Si sale muy deformado o húmedo, revisa que no haya entrada de agua por la zona del parabrisas o desagües obstruidos.'
+      },
+      {
+        title: 'Limpiar el alojamiento',
+        desc: 'Aspira el interior del alojamiento y retira hojas o restos. No introduzcas herramientas largas hacia el ventilador porque podrías dañar las aspas. Si hay olor persistente, puedes aplicar un limpiador de circuito de climatización siguiendo las instrucciones del producto, nunca directamente sobre resistencias o electrónica.',
+        tools: ['Aspirador pequeño']
+      },
+      {
+        title: 'Instalar el filtro nuevo',
+        desc: 'Introduce el filtro nuevo respetando la flecha de flujo. Debe entrar recto, sin arrugarse ni doblarse. Si cuesta demasiado, revisa que no lo estés insertando invertido. Coloca de nuevo la tapa hasta escuchar el cierre de las grapas.',
+        note: 'Los filtros de carbón activo suelen ser algo más rígidos. Presiona de forma uniforme, no solo desde una esquina.'
+      },
+      {
+        title: 'Prueba del climatizador',
+        desc: 'Arranca el vehículo, activa ventilación en varias velocidades y comprueba que no haya vibraciones, ruidos de roce ni falta de caudal. Prueba desempañado del parabrisas y aire acondicionado durante unos minutos. Si el caudal sigue siendo bajo, puede haber suciedad en el ventilador o problema en la resistencia del climatizador.'
+      }
+    ]
+  },
+  {
+    id: 'g-pastillas-freno',
+    title: 'Sustitución de pastillas de freno delanteras',
+    description: 'Las pastillas de freno son un elemento de seguridad crítico. Esta guía explica una sustitución básica de pastillas delanteras, incluyendo inspección de discos, limpieza de soporte, retroceso del pistón y comprobación final. Si hay dudas, vibraciones, fugas o desgaste irregular severo, la intervención debe hacerla un taller.',
+    icon: 'fa-car-burst',
+    badge: 'free',
+    difficulty: 3,
+    time: '1h 30 min',
+    system: 'Frenos',
+    tags: 'frenos pastillas delanteras desgaste seguridad discos pinza limpiar mantenimiento',
+    tools: ['Gato hidráulico', 'Borriquetas', 'Llave de rueda', 'Carraca y vasos', 'Llave Allen/Torx según pinza', 'Reposicionador de pistón', 'Cepillo metálico', 'Limpiador de frenos', 'Llave dinamométrica'],
+    parts: ['Juego de pastillas delanteras compatibles', 'Grasa cerámica para puntos de apoyo', 'Sensor de desgaste si aplica'],
+    steps: [
+      {
+        title: 'Preparación segura del vehículo',
+        desc: 'Trabaja en suelo plano, engrana una marcha o coloca la palanca en P y acciona el freno de estacionamiento. Afloja ligeramente los tornillos de la rueda antes de levantar el coche. Eleva el vehículo por el punto de apoyo correcto y colócalo sobre borriquetas. Nunca trabajes únicamente con el gato hidráulico.',
+        tools: ['Gato hidráulico', 'Borriquetas', 'Llave de rueda']
+      },
+      {
+        title: 'Retirar la rueda e inspeccionar el conjunto',
+        desc: 'Quita la rueda y observa el estado general: grosor de pastillas, marcas en el disco, color azulado por sobrecalentamiento, grietas, fugas en latiguillos y estado de guardapolvos. Si el disco tiene reborde excesivo o surcos profundos, conviene sustituir discos junto con pastillas.',
+        note: 'Cambiar pastillas nuevas sobre discos muy dañados reduce la eficacia y puede generar ruidos o vibraciones.'
+      },
+      {
+        title: 'Desmontar la pinza',
+        desc: 'Localiza los tornillos guía de la pinza. Retíralos con la llave adecuada y separa la pinza del soporte sin colgarla del latiguillo. Apóyala con un gancho o cuerda. Retira las pastillas usadas y observa si una está mucho más gastada que la otra, señal de guías agarrotadas o pistón con retorno deficiente.',
+        tools: ['Carraca y vasos', 'Llave Allen/Torx']
+      },
+      {
+        title: 'Limpiar soporte y guías',
+        desc: 'Limpia las zonas donde apoyan las pastillas con cepillo metálico y limpiador de frenos. Las pastillas deben deslizar suavemente en sus carriles, sin quedar bloqueadas. Revisa los pasadores guía: si están secos o sucios, límpialos y lubrícalos con grasa compatible con frenos.',
+        tools: ['Cepillo metálico', 'Limpiador de frenos']
+      },
+      {
+        title: 'Retroceder el pistón',
+        desc: 'Antes de colocar las pastillas nuevas, retrocede el pistón de la pinza con una herramienta adecuada. Abre el depósito de líquido de frenos y vigila que no rebose. Si el líquido está muy oscuro o sobre el máximo, extrae un poco con una jeringa limpia.',
+        note: 'Algunos frenos traseros requieren girar el pistón y desactivar freno eléctrico con diagnosis. Esta guía es para pastillas delanteras convencionales.',
+        tools: ['Reposicionador de pistón']
+      },
+      {
+        title: 'Montar pastillas nuevas',
+        desc: 'Coloca las pastillas nuevas respetando posición interior/exterior y sensor de desgaste si existe. Aplica una capa muy fina de grasa cerámica solo en puntos de apoyo metálico, nunca en el material de fricción ni en el disco. Monta de nuevo la pinza y aprieta al par indicado por fabricante.',
+        tools: ['Llave dinamométrica']
+      },
+      {
+        title: 'Prueba de pedal y rodaje',
+        desc: 'Antes de mover el coche, pisa el pedal de freno varias veces hasta que se ponga firme. Monta la rueda, baja el vehículo y aprieta los tornillos en cruz al par correcto. Durante los primeros 200 km evita frenadas muy bruscas salvo emergencia para permitir el asentamiento de las pastillas.'
+      }
+    ]
+  },
+  {
+    id: 'g-discos-freno',
+    title: 'Sustitución de discos de freno delanteros',
+    description: 'Los discos deben sustituirse cuando están por debajo del espesor mínimo, presentan grietas, alabeo, vibración o surcos profundos. Esta guía complementa el cambio de pastillas y explica cómo retirar el disco, limpiar el buje y evitar vibraciones posteriores.',
+    icon: 'fa-circle-dot',
+    badge: 'pro',
+    difficulty: 3,
+    time: '2h',
+    system: 'Frenos',
+    tags: 'discos freno vibracion alabeo buje pastillas seguridad',
+    tools: ['Gato hidráulico', 'Borriquetas', 'Carraca y vasos', 'Llave dinamométrica', 'Cepillo metálico', 'Limpiador de frenos', 'Martillo de nylon', 'Comparador opcional'],
+    parts: ['Discos delanteros compatibles', 'Pastillas nuevas', 'Tornillos de fijación de disco si aplica'],
+    steps: [
+      { title: 'Comprobación previa del problema', desc: 'Antes de desmontar, identifica por qué se cambian los discos: vibración al frenar, espesor bajo, surcos, óxido severo o pastillas cristalizadas. Si hay vibración, comprueba también rótulas, silentblocks y neumáticos, porque no toda vibración procede del disco.', tools: [] },
+      { title: 'Desmontar rueda, pinza y soporte', desc: 'Eleva el vehículo de forma segura y retira la rueda. Desmonta la pinza y cuélgala sin tensión en el latiguillo. Retira el soporte de pinza, normalmente sujeto con tornillos de mayor par. Estos tornillos suelen estar duros y pueden necesitar aflojatodo.', tools: ['Gato hidráulico', 'Borriquetas', 'Carraca y vasos'] },
+      { title: 'Retirar el disco usado', desc: 'Quita el tornillo de fijación del disco si lo tiene. Si el disco está pegado al buje por óxido, golpea suavemente con martillo de nylon por la zona del sombrerete, girándolo poco a poco. No golpees la superficie de fricción si vas a medirla o reutilizarla.', tools: ['Martillo de nylon'] },
+      { title: 'Limpiar el buje', desc: 'Este paso es crítico. Limpia perfectamente la cara del buje con cepillo metálico y limpiador de frenos. Cualquier resto de óxido o suciedad entre buje y disco puede provocar alabeo aparente y vibración al frenar, aunque el disco sea nuevo.', note: 'No apliques grasa espesa entre buje y disco. Si usas protección anticorrosión, debe ser una película muy fina y compatible.', tools: ['Cepillo metálico', 'Limpiador de frenos'] },
+      { title: 'Montar el disco nuevo', desc: 'Limpia el disco nuevo con limpiador de frenos para retirar la película protectora. Colócalo en el buje y monta el tornillo de fijación si existe. Reinstala el soporte de pinza y aprieta los tornillos al par indicado por fabricante.', tools: ['Limpiador de frenos', 'Llave dinamométrica'] },
+      { title: 'Montar pastillas y prueba', desc: 'Instala pastillas nuevas; no es recomendable montar discos nuevos con pastillas viejas. Recoloca la pinza, pisa el pedal hasta que se ponga firme y realiza una prueba de conducción suave. Durante el rodaje evita frenadas largas y fuertes para no transferir material irregularmente.' }
+    ]
+  },
+  {
+    id: 'g-bateria-12v',
+    title: 'Sustitución y comprobación de batería 12V',
+    description: 'Una batería débil causa arranques lentos, fallos eléctricos aleatorios y errores de módulos. Esta guía explica cómo comprobar tensión, sustituir la batería con seguridad y realizar la adaptación básica cuando el vehículo lo requiera.',
+    icon: 'fa-car-battery',
+    badge: 'free',
+    difficulty: 2,
+    time: '35 min',
+    system: 'Eléctrico',
+    tags: 'bateria 12v arranque electricidad multimetro codificacion agm efb',
+    tools: ['Multímetro digital', 'Llave de 10 mm', 'Guantes', 'Cepillo para bornes', 'Lector OBD-II compatible si requiere adaptación'],
+    parts: ['Batería compatible AGM/EFB/plomo según vehículo', 'Grasa protectora de bornes opcional'],
+    steps: [
+      { title: 'Comprobar síntomas y tensión', desc: 'Con el coche apagado al menos 30 minutos, mide la tensión entre bornes. Una batería sana suele marcar 12,5–12,8 V. Por debajo de 12,2 V está descargada y por debajo de 12,0 V puede estar muy deteriorada. Durante arranque no debería caer de forma prolongada por debajo de 9,6 V.', tools: ['Multímetro digital'] },
+      { title: 'Confirmar tipo y capacidad', desc: 'Antes de comprar la batería, revisa medidas, polaridad, amperios hora, corriente de arranque y tecnología. Muchos coches con Start/Stop usan AGM o EFB. No sustituyas una AGM por una batería convencional porque puede fallar prematuramente.', note: 'Anota Ah, A/EN, tecnología y código BEM si aparece en etiqueta.' },
+      { title: 'Desconexión segura', desc: 'Apaga todo consumo eléctrico, retira llave o tarjeta y espera unos minutos. Desconecta primero el borne negativo y después el positivo. Evita tocar simultáneamente positivo y masa con herramientas metálicas.', tools: ['Llave de 10 mm'] },
+      { title: 'Retirada e instalación', desc: 'Afloja la brida de sujeción y extrae la batería con cuidado, pesa bastante. Limpia la bandeja y los bornes si hay sulfato. Coloca la batería nueva, fija la brida y conecta primero positivo y después negativo.', tools: ['Cepillo para bornes'] },
+      { title: 'Adaptación o registro de batería', desc: 'Algunos vehículos, especialmente VAG, BMW y modelos con gestión inteligente de carga, requieren registrar la batería nueva con diagnosis. Esto informa a la centralita de capacidad, tecnología y estado nuevo para cargar correctamente.', tools: ['Lector OBD-II compatible'] },
+      { title: 'Verificación final', desc: 'Arranca el motor y mide tensión de carga. Debe estar aproximadamente entre 13,8 y 14,8 V según sistema. Revisa que no queden testigos permanentes; algunos sistemas como elevalunas o dirección pueden necesitar reaprendizaje básico.' }
+    ]
+  },
+  {
+    id: 'g-bujias',
+    title: 'Sustitución de bujías en motor gasolina',
+    description: 'Las bujías influyen en arranque, consumo, suavidad y rendimiento. Una bujía gastada puede provocar tirones, misfire y daños en bobinas o catalizador. Esta guía cubre el cambio básico en motores gasolina modernos.',
+    icon: 'fa-bolt',
+    badge: 'free',
+    difficulty: 2,
+    time: '50 min',
+    system: 'Encendido',
+    tags: 'bujias encendido gasolina misfire bobinas par apriete mantenimiento',
+    tools: ['Vaso de bujía con goma o imán', 'Carraca y alargador', 'Llave dinamométrica', 'Aire comprimido o aspirador', 'Extractor de bobinas opcional'],
+    parts: ['Juego de bujías compatibles', 'Grasa dieléctrica opcional en botas de bobina'],
+    steps: [
+      { title: 'Motor frío y acceso', desc: 'Realiza el cambio con el motor frío para evitar dañar roscas de culata. Retira tapas superiores y localiza bobinas. Haz fotos antes de desconectar conectores para recordar orientación y clips.', note: 'En culatas de aluminio, una bujía extraída en caliente aumenta el riesgo de dañar la rosca.' },
+      { title: 'Retirar bobinas', desc: 'Desconecta cada bobina presionando su pestaña. Extrae la bobina tirando recto, sin girar demasiado el conector. Si está muy pegada, usa un extractor adecuado o movimientos suaves.', tools: ['Extractor de bobinas opcional'] },
+      { title: 'Limpiar pozos de bujía', desc: 'Antes de aflojar bujías, limpia alrededor con aire comprimido o aspirador para que no caiga suciedad dentro del cilindro. Es un paso simple que evita problemas serios.', tools: ['Aire comprimido o aspirador'] },
+      { title: 'Extraer bujías usadas', desc: 'Introduce el vaso de bujía bien alineado y afloja con suavidad. Si una bujía ofrece mucha resistencia, no fuerces: aprieta ligeramente y vuelve a aflojar poco a poco. Observa el color de las bujías para detectar mezcla rica, pobre, aceite o sobrecalentamiento.', tools: ['Vaso de bujía', 'Carraca'] },
+      { title: 'Instalar bujías nuevas', desc: 'Comprueba referencia y separación de electrodo si el fabricante lo permite. Enrosca cada bujía a mano varias vueltas para evitar cruzar rosca. Aprieta con dinamométrica al par indicado por fabricante, normalmente entre 18 y 30 Nm según motor y bujía.', tools: ['Llave dinamométrica'] },
+      { title: 'Reinstalar bobinas y probar', desc: 'Coloca las bobinas hasta que asienten, conecta los clips y arranca. El motor debe funcionar redondo desde el primer momento. Si aparece misfire, revisa conectores, bobinas mal asentadas o referencia incorrecta de bujía.' }
+    ]
+  },
+  {
+    id: 'g-filtro-combustible-diesel',
+    title: 'Sustitución del filtro de combustible diésel',
+    description: 'El filtro de combustible diésel protege la bomba de alta presión y los inyectores. Un filtro saturado provoca falta de potencia, arranque difícil y daños caros en el sistema common rail. La sustitución exige limpieza extrema y purgado correcto.',
+    icon: 'fa-gas-pump',
+    badge: 'pro',
+    difficulty: 3,
+    time: '1h',
+    system: 'Combustible',
+    tags: 'diesel filtro combustible gasoleo common rail purga bomba alta presion',
+    tools: ['Guantes', 'Trapos sin pelusa', 'Recipiente para gasóleo', 'Jeringa o pera de cebado si aplica', 'Lector OBD-II para activar bomba si compatible'],
+    parts: ['Filtro de combustible diésel compatible', 'Juntas nuevas incluidas en kit'],
+    steps: [
+      { title: 'Preparar zona limpia', desc: 'El sistema common rail es muy sensible a suciedad. Limpia la zona alrededor del portafiltro antes de abrir. Ten preparados trapos sin pelusa y evita que polvo o arena entren en tuberías.', note: 'Una pequeña partícula puede dañar inyectores o bomba de alta presión.' },
+      { title: 'Identificar conexiones', desc: 'Haz una foto de las tuberías antes de desconectar. Algunas tienen entrada, salida, retorno y sensor de agua. Marca conectores si es necesario para no cruzarlos.', tools: ['Móvil o cámara'] },
+      { title: 'Retirar filtro usado', desc: 'Desconecta conectores y tuberías con cuidado. Recoge el gasóleo que pueda salir. Retira el cartucho o carcasa según diseño. No vacíes suciedad del filtro antiguo sobre la zona de trabajo.', tools: ['Recipiente para gasóleo'] },
+      { title: 'Montar filtro nuevo y juntas', desc: 'Sustituye juntas tóricas incluidas. Lubrícalas con gasóleo limpio y monta el filtro respetando posición. Aprieta tapas o tornillos al par recomendado, sin deformar plásticos.', note: 'Nunca rellenes el filtro con gasóleo sucio o de origen dudoso.' },
+      { title: 'Purgar el sistema', desc: 'Según modelo, purga con pera manual, dando contacto varias veces para activar bomba eléctrica o usando diagnosis para cebado. No insistas con el motor de arranque si no llega combustible; puedes dañar la bomba o descargar batería.', tools: ['Pera de cebado o lector OBD-II'] },
+      { title: 'Arranque y revisión de fugas', desc: 'Arranca y deja al ralentí. Revisa todas las conexiones durante varios minutos. Si el motor se para o ratea, vuelve a purgar. Tras prueba de conducción, revisa de nuevo fugas y olor a gasóleo.' }
+    ]
+  },
+  {
+    id: 'g-cambio-rueda',
+    title: 'Cambio de rueda y revisión de neumáticos',
+    description: 'Cambiar una rueda parece sencillo, pero muchos problemas vienen de puntos de apoyo incorrectos, tornillos mal apretados o neumáticos con presión inadecuada. Esta guía cubre cambio seguro, inspección básica y reapriete.',
+    icon: 'fa-circle',
+    badge: 'free',
+    difficulty: 1,
+    time: '25 min',
+    system: 'Ruedas',
+    tags: 'rueda neumatico pinchazo presion tornillos gato seguridad reapriete',
+    tools: ['Gato del vehículo o hidráulico', 'Llave de rueda', 'Llave dinamométrica', 'Manómetro', 'Chaleco reflectante', 'Triángulo o luz V16'],
+    parts: ['Rueda de repuesto o kit antipinchazos', 'Tapones de válvula si faltan'],
+    steps: [
+      { title: 'Detenerse con seguridad', desc: 'Si el pinchazo ocurre en carretera, reduce velocidad suavemente y busca una zona segura. Coloca chaleco antes de salir y señaliza según normativa. No cambies la rueda en un arcén estrecho si hay riesgo: llama a asistencia.', tools: ['Chaleco reflectante', 'Luz V16 o triángulo'] },
+      { title: 'Aflojar tornillos antes de levantar', desc: 'Con el coche en el suelo, afloja los tornillos media vuelta. Si está elevado, la rueda girará y será más peligroso. No retires los tornillos todavía.', tools: ['Llave de rueda'] },
+      { title: 'Elevar por el punto correcto', desc: 'Coloca el gato en el punto de apoyo indicado por el fabricante, normalmente marcado en el faldón o bajo el larguero. Eleva solo lo necesario para que la rueda quede libre.', note: 'No coloques el gato en plásticos, suelo de habitáculo o brazos de suspensión salvo indicación específica.' },
+      { title: 'Cambiar la rueda', desc: 'Retira los tornillos, quita la rueda y coloca la de repuesto alineando agujeros. Rosca los tornillos a mano para no dañar roscas y apriétalos ligeramente en cruz antes de bajar el coche.' },
+      { title: 'Apretar al par y revisar presión', desc: 'Baja el vehículo y aprieta los tornillos en cruz con llave dinamométrica al par especificado. Revisa presión de la rueda montada. Si es rueda de emergencia, respeta su límite de velocidad y distancia.', tools: ['Llave dinamométrica', 'Manómetro'] },
+      { title: 'Reapriete y reparación definitiva', desc: 'Tras 50–100 km, vuelve a comprobar el par de apriete. Repara o sustituye el neumático dañado cuanto antes; una rueda temporal no es una solución permanente.' }
+    ]
+  },
+  {
+    id: 'g-pre-itv',
+    title: 'Revisión previa a ITV',
+    description: 'Una revisión previa reduce mucho el riesgo de rechazo en ITV. Esta guía agrupa comprobaciones sencillas de luces, neumáticos, frenos, emisiones visibles, limpiaparabrisas, cinturones y documentación.',
+    icon: 'fa-clipboard-check',
+    badge: 'free',
+    difficulty: 1,
+    time: '40 min',
+    system: 'ITV',
+    tags: 'itv inspeccion luces neumaticos emisiones frenos documentacion revision previa',
+    tools: ['Manómetro', 'Linterna', 'Lector OBD-II', 'Paño y limpiacristales'],
+    parts: ['Bombillas compatibles', 'Escobillas limpiaparabrisas si están gastadas', 'Limpiador de frenos opcional'],
+    steps: [
+      { title: 'Documentación y testigos', desc: 'Comprueba permiso de circulación, ficha técnica y seguro. Arranca el coche y verifica que no quede encendido un testigo rojo o amarillo permanente, especialmente motor, ABS, airbag o ESP. Un testigo de avería puede ser motivo de rechazo.', tools: ['Lector OBD-II'] },
+      { title: 'Luces exteriores', desc: 'Revisa posición, cruce, carretera, intermitentes, emergencia, freno, marcha atrás, antiniebla y matrícula. Pide ayuda a otra persona o usa una pared/cristal para ver reflejos. Sustituye bombillas fundidas antes de acudir.', tools: ['Linterna'] },
+      { title: 'Neumáticos', desc: 'Comprueba dibujo mínimo legal de 1,6 mm, desgaste uniforme, ausencia de cortes, bultos o lonas visibles. Revisa presión en frío y que las medidas coincidan con ficha técnica o equivalencias aceptadas.', tools: ['Manómetro'] },
+      { title: 'Frenos y dirección', desc: 'En una zona segura, frena suavemente y comprueba que el coche no se desvía. Revisa nivel de líquido de frenos, fugas visibles y ruidos metálicos. Gira dirección de lado a lado para detectar golpes o holguras evidentes.' },
+      { title: 'Visibilidad y limpiaparabrisas', desc: 'Limpia parabrisas, revisa escobillas y comprueba que los surtidores de lavaparabrisas funcionan. Una escobilla rota, un parabrisas muy dañado o falta de líquido pueden provocar defecto.', tools: ['Paño y limpiacristales'] },
+      { title: 'Emisiones visibles y calentamiento', desc: 'Antes de la ITV, realiza un trayecto suficiente para que motor y catalizador/DPF alcancen temperatura. No acudas con el motor completamente frío. Si hay humo excesivo, olor a combustible o fallos de encendido, soluciona antes de ir.' }
+    ]
+  },
+  {
+    id: 'g-escobillas',
+    title: 'Sustitución de escobillas limpiaparabrisas',
+    description: 'Las escobillas en mal estado reducen visibilidad, rayan el parabrisas y suelen ser motivo de defecto en ITV. Su sustitución es rápida, barata y recomendable al menos una vez al año o cuando dejan marcas.',
+    icon: 'fa-cloud-rain',
+    badge: 'free',
+    difficulty: 1,
+    time: '10 min',
+    system: 'Visibilidad',
+    tags: 'limpiaparabrisas escobillas lluvia visibilidad itv parabrisas mantenimiento',
+    tools: ['Paño de microfibra', 'Limpiacristales'],
+    parts: ['Juego de escobillas compatibles delanteras', 'Escobilla trasera si aplica'],
+    steps: [
+      { title: 'Identificar medida y anclaje', desc: 'Compra escobillas con la longitud y tipo de anclaje correctos. Los sistemas más comunes son gancho, botón lateral, bayoneta o adaptador específico. Revisa ambos lados: conductor y acompañante suelen tener medidas distintas.' },
+      { title: 'Levantar brazo con cuidado', desc: 'Levanta el brazo del limpiaparabrisas y coloca un paño sobre el cristal. Si el brazo se suelta sin escobilla puede golpear el parabrisas y romperlo.', tools: ['Paño de microfibra'] },
+      { title: 'Retirar escobilla vieja', desc: 'Libera el clip o pestaña y desliza la escobilla fuera del anclaje. Observa la posición del adaptador antes de retirarla para montar la nueva igual.' },
+      { title: 'Montar escobilla nueva', desc: 'Introduce la escobilla nueva hasta escuchar el clic de bloqueo. Tira suavemente para comprobar que queda fijada. Baja el brazo con cuidado sobre el cristal.' },
+      { title: 'Limpiar y probar', desc: 'Limpia el parabrisas y activa lavaparabrisas. Las escobillas deben barrer sin saltos, ruidos ni franjas. Si vibran, revisa que el protector de goma esté retirado y que el brazo no esté torcido.', tools: ['Limpiacristales'] }
+    ]
+  },
+  {
+    id: 'g-adblue',
+    title: 'Relleno de AdBlue y advertencias SCR',
+    description: 'Muchos diésel Euro 6 usan AdBlue para reducir NOx. Si el depósito se agota, el coche puede impedir el arranque tras cierto kilometraje. Esta guía explica rellenado correcto, precauciones y cuándo no basta con añadir líquido.',
+    icon: 'fa-flask',
+    badge: 'free',
+    difficulty: 1,
+    time: '15 min',
+    system: 'Emisiones',
+    tags: 'adblue scr diesel nox euro6 urea emisiones aviso rellenar',
+    tools: ['Embudo compatible o garrafa con boquilla', 'Guantes', 'Agua para limpiar derrames'],
+    parts: ['AdBlue ISO 22241', 'Garrafa sellada de calidad'],
+    steps: [
+      { title: 'Confirmar aviso y capacidad', desc: 'Lee el mensaje del cuadro: normalmente indica autonomía restante antes de bloqueo de arranque. Consulta capacidad aproximada del depósito para no sobrellenar. Usa solo AdBlue conforme a ISO 22241.', note: 'No mezcles AdBlue con gasóleo ni lo introduzcas en el depósito de combustible.' },
+      { title: 'Localizar boca de llenado', desc: 'Puede estar junto al tapón de combustible, en el maletero o bajo el capó. Limpia la zona antes de abrir para que no entre suciedad en el sistema.', tools: ['Paño'] },
+      { title: 'Rellenar lentamente', desc: 'Usa una boquilla adecuada y vierte despacio. El AdBlue cristaliza al secarse y es corrosivo para algunos acabados, por lo que conviene limpiar cualquier derrame inmediatamente con agua.', tools: ['Embudo', 'Guantes'] },
+      { title: 'Esperar reconocimiento del nivel', desc: 'Tras rellenar, pon contacto sin arrancar durante 30–60 segundos. Algunos vehículos tardan varios minutos o kilómetros en actualizar autonomía. No rellenes por encima del máximo.' },
+      { title: 'Cuándo diagnosticar', desc: 'Si tras rellenar persiste el aviso, aparecen códigos de NOx, presión o calefacción del depósito, puede haber fallo en inyector AdBlue, sensor NOx, bomba o calentador. En ese caso se necesita diagnóstico OBD avanzado.', tools: ['Lector OBD-II'] }
+    ]
+  },
+  {
+    id: 'g-liquido-frenos',
+    title: 'Comprobación y cambio básico de líquido de frenos',
+    description: 'El líquido de frenos absorbe humedad con el tiempo. Esto baja su punto de ebullición y puede provocar pedal esponjoso o pérdida de eficacia en frenadas exigentes. Debe sustituirse normalmente cada 2 años.',
+    icon: 'fa-droplet',
+    badge: 'pro',
+    difficulty: 3,
+    time: '1h 30 min',
+    system: 'Frenos',
+    tags: 'liquido frenos dot4 purga pedal esponjoso humedad seguridad',
+    tools: ['Probador de líquido de frenos', 'Kit de purga', 'Llave de purgadores', 'Tubo transparente', 'Recipiente', 'Guantes'],
+    parts: ['Líquido de frenos DOT 4 o especificación indicada por fabricante'],
+    steps: [
+      { title: 'Comprobar especificación y estado', desc: 'Consulta el tapón del depósito o manual para confirmar DOT 4, DOT 4 LV u otra especificación. Usa un tester de humedad si tienes. Si el líquido está oscuro o tiene más de 2 años, conviene sustituirlo.', tools: ['Probador de líquido de frenos'] },
+      { title: 'Preparar purga', desc: 'Coloca el coche en zona estable y accede a purgadores. Protege pintura: el líquido de frenos puede dañarla. Mantén siempre el depósito por encima del mínimo durante todo el proceso.', note: 'Si entra aire en el ABS puede hacer falta diagnosis para purga completa.' },
+      { title: 'Orden de purga', desc: 'El orden habitual es empezar por la rueda más alejada del cilindro maestro, pero algunos fabricantes indican secuencia específica. Conecta tubo transparente al purgador y abre/cierra mientras otra persona pisa el pedal o usando kit de presión.', tools: ['Kit de purga', 'Llave de purgadores'] },
+      { title: 'Renovar hasta líquido limpio', desc: 'Continúa hasta que salga líquido claro y sin burbujas. Repite en cada rueda, rellenando depósito continuamente. No reutilices líquido viejo.', tools: ['Recipiente'] },
+      { title: 'Verificación final', desc: 'Con todo cerrado, pisa el pedal varias veces: debe quedar firme. Revisa fugas en purgadores y depósito. Realiza prueba a baja velocidad antes de circular normalmente.', note: 'Si el pedal queda esponjoso, no uses el coche hasta purgar correctamente.' }
+    ]
+  }
+
 ];
 
 

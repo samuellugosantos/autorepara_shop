@@ -7,6 +7,9 @@
   let currentUser = null;
   let cloudState = { owner: { name:'', email:'', notes:'' }, selectedVehicleId:'', vehicles: [], repairs: [] };
   let pendingVehiclePhotoFile = null;
+  let authRequestInFlight = false;
+  const SIGNUP_RATE_LIMIT_KEY = 'autorepara_signup_rate_limit_until_v1';
+  const SIGNUP_COOLDOWN_MS = 65 * 60 * 1000;
 
   function getClient(){
     if(authClient) return authClient;
@@ -30,6 +33,23 @@
       }
     } catch(e) {}
   }
+  function signupCooldownRemaining(){
+    const until = Number(localStorage.getItem(SIGNUP_RATE_LIMIT_KEY) || 0);
+    return Math.max(0, until - Date.now());
+  }
+  function setSignupCooldown(ms = SIGNUP_COOLDOWN_MS){
+    localStorage.setItem(SIGNUP_RATE_LIMIT_KEY, String(Date.now() + ms));
+  }
+  function clearSignupCooldown(){
+    localStorage.removeItem(SIGNUP_RATE_LIMIT_KEY);
+  }
+  function formatMinutes(ms){
+    return Math.max(1, Math.ceil(ms / 60000));
+  }
+  function isRateLimitError(error){
+    const msg = String(error?.message || error || '').toLowerCase();
+    return msg.includes('rate limit') || msg.includes('rate_limit') || msg.includes('too many') || msg.includes('over email send rate limit');
+  }
   function setAuthStatus(message, kind='info'){
     const status = document.getElementById('profileAuthStatus');
     if(!status) return;
@@ -37,7 +57,11 @@
     status.innerHTML = `<i class="fa-solid ${icon}"></i><span>${escapeHtml(message)}</span>`;
   }
   function setAuthBusy(isBusy){
-    ['profileLoginBtn','profileRegisterBtn'].forEach(id => { const btn = document.getElementById(id); if(btn) btn.disabled = !!isBusy; });
+    authRequestInFlight = !!isBusy;
+    ['profileLoginBtn','profileRegisterBtn'].forEach(id => {
+      const btn = document.getElementById(id);
+      if(btn) btn.disabled = !!isBusy;
+    });
   }
   function readAuthCredentials(){
     const email = document.getElementById('profileAuthEmail')?.value.trim();
@@ -62,6 +86,7 @@
         <button id="profileLoginBtn" type="submit" class="profile-btn primary"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
         <button id="profileRegisterBtn" type="button" class="profile-btn"><i class="fa-solid fa-user-plus"></i> Crear cuenta</button>
       </form>
+      <div class="profile-auth-help" id="profileAuthHelp">Si Supabase limita los registros por email, crea el usuario desde Authentication → Users y usa Entrar.</div>
       <div class="profile-auth-actions" id="profileAuthActions" style="display:none">
         <button type="button" class="profile-btn" onclick="importLocalProfileToSupabase()"><i class="fa-solid fa-cloud-arrow-up"></i> Importar datos locales</button>
         <button type="button" class="profile-btn" onclick="reloadCloudProfile()"><i class="fa-solid fa-rotate"></i> Sincronizar</button>
@@ -88,9 +113,18 @@
       form.style.display = 'none';
       actions.style.display = 'flex';
     } else {
+      const remaining = signupCooldownRemaining();
+      const help = document.getElementById('profileAuthHelp');
       status.innerHTML = '<i class="fa-solid fa-user-lock"></i><span>Inicia sesión o crea una cuenta para guardar tus vehículos, fotos, reparaciones, ITV y recordatorios por usuario. Sin sesión, no se guardará en la nube.</span>';
       form.style.display = 'grid';
       actions.style.display = 'none';
+      const registerBtn = document.getElementById('profileRegisterBtn');
+      if(registerBtn && !authRequestInFlight) registerBtn.disabled = remaining > 0;
+      if(help) {
+        help.textContent = remaining > 0
+          ? `Supabase ha limitado temporalmente los registros. Espera unos ${formatMinutes(remaining)} min o crea el usuario manualmente en Authentication → Users y pulsa Entrar.`
+          : 'Para pruebas, si aparece rate limit, crea el usuario desde Supabase → Authentication → Users y usa Entrar.';
+      }
     }
   }
 
@@ -110,52 +144,71 @@
   }
 
   window.loginProfileUser = async function(){
+    if(authRequestInFlight) return;
     const client = getClient();
     if(!client){ setAuthStatus('Supabase no está configurado o no se ha cargado la librería.', 'error'); return safeToast('Supabase no está configurado', 'error'); }
     const { email, password } = readAuthCredentials();
     if(!email || !password){ setAuthStatus('Introduce email y contraseña.', 'error'); return safeToast('Introduce email y contraseña', 'info'); }
     setAuthBusy(true);
     setAuthStatus('Iniciando sesión...', 'loading');
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
-    setAuthBusy(false);
-    if(error){ setAuthStatus(error.message || 'No se pudo iniciar sesión.', 'error'); return safeToast(error.message || 'No se pudo iniciar sesión', 'error'); }
-    currentUser = data?.user || null;
-    setAuthStatus('Sesión iniciada correctamente.', 'success');
-    safeToast('Sesión iniciada', 'success');
-    await reloadCloudProfile();
+    try {
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
+      if(error){
+        setAuthStatus(error.message || 'No se pudo iniciar sesión.', 'error');
+        return safeToast(error.message || 'No se pudo iniciar sesión', 'error');
+      }
+      currentUser = data?.user || null;
+      clearSignupCooldown();
+      setAuthStatus('Sesión iniciada correctamente.', 'success');
+      safeToast('Sesión iniciada', 'success');
+      await reloadCloudProfile();
+    } finally {
+      setAuthBusy(false);
+      renderAuthUi();
+    }
   };
   window.registerProfileUser = async function(){
+    if(authRequestInFlight) return;
+    const remaining = signupCooldownRemaining();
+    if(remaining > 0){
+      const msg = `Supabase ha limitado temporalmente los registros. Espera unos ${formatMinutes(remaining)} min o crea el usuario en Authentication → Users y usa Entrar.`;
+      setAuthStatus(msg, 'info');
+      return safeToast(msg, 'info');
+    }
     const client = getClient();
     if(!client){ setAuthStatus('Supabase no está configurado o no se ha cargado la librería.', 'error'); return safeToast('Supabase no está configurado', 'error'); }
     const { email, password } = readAuthCredentials();
     if(!email || !password || password.length < 6){ setAuthStatus('Usa un email válido y una contraseña de al menos 6 caracteres.', 'error'); return safeToast('Usa un email válido y una contraseña de al menos 6 caracteres', 'info'); }
     setAuthBusy(true);
     setAuthStatus('Creando cuenta...', 'loading');
-    const { data, error } = await client.auth.signUp({ email, password });
-    if(error){ setAuthBusy(false); setAuthStatus(error.message || 'No se pudo crear la cuenta.', 'error'); return safeToast(error.message || 'No se pudo crear la cuenta', 'error'); }
+    try {
+      const { data, error } = await client.auth.signUp({ email, password });
+      if(error){
+        if(isRateLimitError(error)) {
+          setSignupCooldown();
+          const msg = 'Supabase ha bloqueado temporalmente nuevos registros por límite de email. Prueba a iniciar sesión si el usuario ya existe o créalo manualmente en Authentication → Users.';
+          setAuthStatus(msg, 'error');
+          safeToast(msg, 'error');
+          return;
+        }
+        setAuthStatus(error.message || 'No se pudo crear la cuenta.', 'error');
+        return safeToast(error.message || 'No se pudo crear la cuenta', 'error');
+      }
 
-    // If email confirmation is disabled, Supabase returns a session and the user is already logged in.
-    if(data?.session?.user){
-      currentUser = data.session.user;
+      if(data?.session?.user){
+        currentUser = data.session.user;
+        clearSignupCooldown();
+        setAuthStatus('Cuenta creada y sesión iniciada correctamente.', 'success');
+        safeToast('Cuenta creada', 'success');
+        await reloadCloudProfile();
+        return;
+      }
+
+      setAuthStatus('Cuenta creada. Si tienes confirmación por email activada, confirma el correo y después pulsa Entrar. No se intentará iniciar sesión automáticamente para evitar duplicar llamadas a Supabase.', 'info');
+      safeToast('Cuenta creada. Pulsa Entrar cuando esté confirmada.', 'info');
+    } finally {
       setAuthBusy(false);
-      setAuthStatus('Cuenta creada y sesión iniciada correctamente.', 'success');
-      safeToast('Cuenta creada', 'success');
-      await reloadCloudProfile();
-      return;
-    }
-
-    // If confirmation is enabled, try a normal login. If Supabase blocks it, show a clear message.
-    const loginAttempt = await client.auth.signInWithPassword({ email, password });
-    setAuthBusy(false);
-    if(loginAttempt?.data?.user){
-      currentUser = loginAttempt.data.user;
-      setAuthStatus('Cuenta creada y sesión iniciada correctamente.', 'success');
-      safeToast('Cuenta creada', 'success');
-      await reloadCloudProfile();
-    } else {
-      const msg = loginAttempt?.error?.message || 'Cuenta creada. Revisa el email para confirmar la cuenta antes de iniciar sesión.';
-      setAuthStatus(msg, 'info');
-      safeToast(msg, 'info');
+      renderAuthUi();
     }
   };
   window.logoutProfileUser = async function(){
