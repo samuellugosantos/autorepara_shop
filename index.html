@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="es">
+<head><!-- Project refactored: CSS and JavaScript moved to /assets for easier maintenance. -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AutoRepara.es — Conocimiento mecánico para el propietario europeo</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/styles.css" rel="stylesheet"/>
+
+</head>
+<body>
+<!-- READING PROGRESS BAR -->
+<div id="reading-progress"></div>
+<!-- BACK TO TOP -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
+<i class="fa-solid fa-chevron-up"></i>
+</button>
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+<p><strong>🍪 Usamos cookies</strong> — AutoRepara.es utiliza cookies propias y de terceros para el correcto funcionamiento de la plataforma, análisis de uso anónimo y personalización de contenido. Puedes aceptar todas o configurar tus preferencias. <a onclick="showCookieModal()" style="cursor:pointer">Más información</a></p>
+<div class="cookie-btns">
+<button class="cookie-btn-config" onclick="showCookieModal()">Configurar</button>
+<button class="cookie-btn-accept" onclick="acceptCookies()"><i class="fa-solid fa-check"></i> Aceptar todas</button>
+</div>
+</div>
+<!-- COOKIE CONFIG MODAL -->
+<div class="cookie-modal-overlay" id="cookie-modal" style="display:none">
+<div class="cookie-modal">
+<h3><i class="fa-solid fa-cookie-bite" style="color:var(--accent-orange);margin-right:10px"></i>Configuración de cookies</h3>
+<p>Controla qué tipos de cookies acepta AutoRepara.es. Las cookies técnicas son necesarias para el funcionamiento básico y no pueden desactivarse.</p>
+<div class="cookie-category">
+<div class="cookie-cat-info">
+<div class="cookie-cat-name">Técnicas (necesarias)</div>
+<div class="cookie-cat-desc">Permiten la navegación, el cambio de tema claro/oscuro y el correcto funcionamiento de la plataforma. No recopilan datos personales.</div>
+</div>
+<label class="cookie-toggle"><input checked="" disabled="" type="checkbox"/><span class="cookie-toggle-track"></span></label>
+</div>
+<div class="cookie-category">
+<div class="cookie-cat-info">
+<div class="cookie-cat-name">Analíticas</div>
+<div class="cookie-cat-desc">Nos ayudan a entender cómo usan los usuarios la plataforma (páginas visitadas, guías más leídas). Datos anónimos y agregados.</div>
+</div>
+<label class="cookie-toggle"><input checked="" id="cookie-analytics" type="checkbox"/><span class="cookie-toggle-track"></span></label>
+</div>
+<div class="cookie-category">
+<div class="cookie-cat-info">
+<div class="cookie-cat-name">Preferencias</div>
+<div class="cookie-cat-desc">Recuerdan configuraciones personales como tema seleccionado, guías marcadas como favoritas y filtros de búsqueda aplicados.</div>
+</div>
+<label class="cookie-toggle"><input checked="" id="cookie-prefs" type="checkbox"/><span class="cookie-toggle-track"></span></label>
+</div>
+<div class="cookie-modal-actions">
+<button id="btn-accept-all" onclick="acceptCookies()"><i class="fa-solid fa-check"></i> Aceptar todas</button>
+<button id="btn-save-cookies" onclick="saveCookieConfig()">Guardar configuración</button>
+</div>
+</div>
+</div>
+<!-- NEWSLETTER MODAL -->
+<div class="newsletter-modal-overlay" id="newsletter-modal" style="display:none">
+<div class="newsletter-modal">
+<button class="modal-close" onclick="closeNewsletterModal()"><i class="fa-solid fa-xmark"></i></button>
+<div class="newsletter-badge"><i class="fa-solid fa-envelope"></i> Boletín técnico</div>
+<h3>Mantente al día.<br/><em>Sin ruido.</em></h3>
+<p>Recibe cada semana las nuevas guías de reparación, actualizaciones de normativa europea y alertas de problemas conocidos para los modelos más comunes del mercado.</p>
+<ul class="newsletter-benefits">
+<li><i class="fa-solid fa-circle-check"></i> Guías nuevas cada semana, solo los que merecen la pena</li>
+<li><i class="fa-solid fa-circle-check"></i> Alertas de problemas conocidos por modelo (EA888, N47, etc.)</li>
+<li><i class="fa-solid fa-circle-check"></i> Actualizaciones de normativa ITV y emisiones Euro 6</li>
+<li><i class="fa-solid fa-circle-check"></i> Sin publicidad. Sin spam. Baja cuando quieras.</li>
+</ul>
+<div class="newsletter-form" id="newsletter-form">
+<input class="newsletter-input" id="nl-name" placeholder="Tu nombre (opcional)" type="text"/>
+<input class="newsletter-input" id="nl-email" placeholder="tu@email.com" required="" type="email"/>
+<button class="newsletter-submit" onclick="submitNewsletter()">
+<i class="fa-solid fa-paper-plane"></i> Suscribirme gratis
+      </button>
+</div>
+<p class="newsletter-no-spam"><i class="fa-solid fa-lock" style="margin-right:4px"></i>Tu email no se comparte con terceros · RGPD compliant</p>
+</div>
+</div>
+<!-- ABOUT MODAL -->
+<div class="about-modal-overlay" id="about-modal" style="display:none">
+<div class="about-modal">
+<button class="modal-close" onclick="closeModal('about-modal')"><i class="fa-solid fa-xmark"></i></button>
+<h3>Sobre <span>AutoRepara</span>.es</h3>
+<p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.7">AutoRepara.es nació en 2022 como proyecto personal de documentación mecánica para propietarios de coches europeos que querían entender su vehículo más allá de lo que les cuenta el taller. Lo que empezó como notas personales sobre el EA888 Gen3 se convirtió en una plataforma colaborativa con guías, mapas de sistemas y normativa de homologación.</p>
+<p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.7">Toda la información está redactada por mecánicos y técnicos con experiencia real en taller y validada con la normativa vigente europea (UE 2018/858, Euro 6d, ITV). No somos un taller, no vendemos nada de lo que no recomendamos.</p>
+<div class="about-team">
+<div class="team-card">
+<div class="team-avatar">JM</div>
+<div class="team-name">Javier M.</div>
+<div class="team-role">Fundador · Técnico VAG</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">AL</div>
+<div class="team-name">Ana L.</div>
+<div class="team-role">Normativa EU · Legal</div>
+</div>
+<div class="team-card">
+<div class="team-avatar">RC</div>
+<div class="team-name">Rafa C.</div>
+<div class="team-role">Colaborador · BMW/PSA</div>
+</div>
+</div>
+<div class="about-changelog">
+<div class="section-title" style="font-size:14px;margin-bottom:14px">Historial de actualizaciones</div>
+<div class="changelog-entry">
+<span class="changelog-version">v3.2</span>
+<div class="changelog-text"><strong>Dic 2024</strong> — Nuevos perfiles BMW 320d F30, Peugeot 308 GTi y Ford Focus ST. Sistema de favoritos de guías. Mejora del buscador con índice dinámico.</div>
+</div>
+<div class="changelog-entry">
+<span class="changelog-version">v3.0</span>
+<div class="changelog-text"><strong>Sep 2024</strong> — Rediseño completo de la plataforma. Mapa de sistemas por vehículo. Índice de reparabilidad calculado.</div>
+</div>
+<div class="changelog-entry">
+<span class="changelog-version">v2.5</span>
+<div class="changelog-text"><strong>Mar 2024</strong> — Añadidas 14 guías de diagnóstico OBD-II. Sección de normativa Euro 6d actualizada con Reglamento 2018/858.</div>
+</div>
+<div class="changelog-entry">
+<span class="changelog-version">v2.0</span>
+<div class="changelog-text"><strong>Oct 2023</strong> — Tienda de herramientas. Primeros perfiles de vehículos adicionales (Golf GTI, 308, Focus).</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CONTACT MODAL -->
+<div class="contact-modal-overlay" id="contact-modal" style="display:none">
+<div class="contact-modal">
+<button class="modal-close" onclick="closeModal('contact-modal')"><i class="fa-solid fa-xmark"></i></button>
+<h3>Contacto</h3>
+<p>¿Tienes una corrección técnica, quieres colaborar con una guía o tienes una duda que no encuentras en la plataforma? Escríbenos.</p>
+<div class="contact-field">
+<label>Tu nombre</label>
+<input placeholder="Nombre o alias" type="text"/>
+</div>
+<div class="contact-field">
+<label>Email de contacto</label>
+<input placeholder="tu@email.com" type="email"/>
+</div>
+<div class="contact-field">
+<label>Motivo</label>
+<select>
+<option>Corrección técnica en una guía</option>
+<option>Propuesta de colaboración</option>
+<option>Error en la plataforma</option>
+<option>Consulta sobre normativa</option>
+<option>Otro</option>
+</select>
+</div>
+<div class="contact-field">
+<label>Mensaje</label>
+<textarea placeholder="Describe tu mensaje con el mayor detalle posible. Si es una corrección, incluye el ID de la guía y el paso concreto." rows="4"></textarea>
+</div>
+<button class="contact-submit" onclick="submitContact()"><i class="fa-solid fa-paper-plane"></i> Enviar mensaje</button>
+</div>
+</div>
+<!-- ===== HEADER ===== -->
+<header>
+<div class="header-inner">
+<div class="logo" onclick="navigate('inicio')">
+<span class="logo-main">Auto<span>Repara</span>.es</span>
+<span class="logo-sub">Mecánica · Normativa · Comunidad</span>
+</div>
+<nav id="desktop-nav">
+<a class="active" data-section="inicio" onclick="navigate('inicio')">Inicio</a>
+<a data-section="vehiculos" onclick="navigate('vehiculos')">Coches</a>
+<a data-section="motor" onclick="navigate('motor')">Mapa Motor</a>
+<a data-section="guias" onclick="navigate('guias')">Guías</a>
+<a data-section="tienda" onclick="navigate('tienda')">Tienda</a>
+<a data-section="normativa" onclick="navigate('normativa')">Normativa</a>
+</nav>
+<div class="header-actions">
+<button class="profile-trigger" id="profileTrigger" onclick="openProfilePanel()" title="Mi perfil y garaje">
+<i class="fa-solid fa-user-gear"></i>
+<span class="profile-trigger-label">Perfil</span>
+<span class="profile-alert-dot" id="profileAlertDot">0</span>
+</button>
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar tema">
+<i class="fa-solid fa-moon" id="themeIcon"></i>
+</button>
+</div>
+</div>
+</header>
+<!-- Mobile nav -->
+<div class="nav-mobile" id="mobile-nav">
+<a class="active" data-section="inicio" onclick="navigate('inicio')">Inicio</a>
+<a data-section="vehiculos" onclick="navigate('vehiculos')">Coches</a>
+<a data-section="motor" onclick="navigate('motor')">Motor</a>
+<a data-section="guias" onclick="navigate('guias')">Guías</a>
+<a data-section="tienda" onclick="navigate('tienda')">Tienda</a>
+<a data-section="normativa" onclick="navigate('normativa')">Normativa</a>
+</div>
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+<div class="breadcrumb" id="breadcrumb">
+<span onclick="navigate('inicio')">AutoRepara.es</span>
+<span class="sep">/</span>
+<span class="bc-plain" id="bc-current">Inicio</span>
+</div>
+</div>
+<!-- ===== INICIO ===== -->
+<div class="section active" id="section-inicio">
+<div class="container">
+<div class="hero">
+<div class="hero-label">Plataforma de conocimiento mecánico</div>
+<div class="live-badge"><span class="live-dot"></span><span id="live-count">247</span> usuarios leyendo ahora mismo</div>
+<h1>Repara tu coche.<br/><em>Entiéndelo.</em></h1>
+<p class="hero-subtitle">Guías paso a paso, diagramas de sistemas y normativa europea de homologación. Pensado para el propietario que quiere ir más allá del taller.</p>
+<div class="search-wrap">
+<input autocomplete="off" class="search-input" id="hero-search" oninput="handleHeroSearch(this.value)" placeholder="¿Qué quieres reparar o entender?" type="text"/>
+<button class="search-btn" onclick="doSearch()"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+<div class="search-results-dropdown" id="search-dropdown" style="display:none"></div>
+</div>
+<div class="cat-chips">
+<div class="cat-chip" onclick="navigate('motor');switchTab(0)">
+<i class="fa-solid fa-gear"></i> Motor
+        </div>
+<div class="cat-chip" onclick="navigate('guias');filterGuides('transmision')">
+<i class="fa-solid fa-circle-nodes"></i> Transmisión
+        </div>
+<div class="cat-chip" onclick="navigate('guias');filterGuides('frenos')">
+<i class="fa-solid fa-circle-dot"></i> Frenos
+        </div>
+<div class="cat-chip" onclick="navigate('guias');filterGuides('suspension')">
+<i class="fa-solid fa-car-side"></i> Suspensión
+        </div>
+<div class="cat-chip" onclick="navigate('guias');filterGuides('electrico')">
+<i class="fa-solid fa-bolt"></i> Eléctrico
+        </div>
+<div class="cat-chip" onclick="navigate('tienda')">
+<i class="fa-solid fa-cart-shopping"></i> Tienda de herramientas
+        </div>
+<div class="cat-chip" onclick="navigate('normativa')">
+<i class="fa-solid fa-scale-balanced"></i> Normativa
+        </div>
+</div>
+<div class="stats-banner">
+<div class="stat-cell">
+<div class="stat-cell-num" id="stat-guides">38</div>
+<div class="stat-cell-label">Guías publicadas</div>
+</div>
+<div class="stat-cell">
+<div class="stat-cell-num">6</div>
+<div class="stat-cell-label">Modelos documentados</div>
+</div>
+<div class="stat-cell">
+<div class="stat-cell-num" id="stat-users">12.4k</div>
+<div class="stat-cell-label">Usuarios mensuales</div>
+</div>
+<div class="stat-cell">
+<div class="stat-cell-num">100%</div>
+<div class="stat-cell-label">Contenido verificado</div>
+</div>
+<div class="stat-cell">
+<div class="stat-cell-num">2022</div>
+<div class="stat-cell-label">Fundada en</div>
+</div>
+</div>
+<div class="section-title" style="margin-bottom:16px">Vehículo de estudio</div>
+<div class="vehicle-card" onclick="openVehicle('seat-leon-fr')">
+<div>
+<div class="vehicle-card-label">Caso de estudio · EA888 Gen3</div>
+<h2>SEAT León FR 2.0 TSI</h2>
+<p class="vehicle-card-sub">VAG Group · Euro 6d-Temp · 245 cv (Cupra) — 190 cv (FR)</p>
+<br/>
+<p style="font-size:13px;color:var(--text-secondary);max-width:460px">
+            Documentación completa de sistemas, componentes, guías de reparación y puntuación de reparabilidad para el propietario europeo.
+          </p>
+</div>
+<div class="repair-score">
+<div class="repair-score-label">Reparabilidad</div>
+<div class="repair-score-num">6.4</div>
+<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin:4px 0 8px">/10</div>
+<div class="score-bar"><div class="score-fill"></div></div>
+<div style="margin-top:8px;font-size:11px;color:var(--text-muted);font-family:var(--font-mono)">Ver detalles →</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== VEHÍCULO ===== -->
+<div class="section" id="section-vehiculo">
+<div class="container">
+<div class="page-header">
+<div class="page-header-label">Ficha de vehículo · Grupo VAG</div>
+<h1>SEAT León FR<br/>2.0 TSI EA888 Gen3</h1>
+<p>AutoRepara.es / vehiculo / seat-leon-fr-2-0-tsi-ea888</p>
+</div>
+<div class="section-title">Ficha técnica</div>
+<div class="ficha-grid">
+<div class="ficha-item">
+<span class="ficha-label">Motor</span>
+<span class="ficha-value">EA888 <small>Gen3</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Cilindrada</span>
+<span class="ficha-value">1.984 <small>cc</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Potencia</span>
+<span class="ficha-value">190 <small>cv (FR)</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Par máximo</span>
+<span class="ficha-value">320 <small>Nm @ 1.600 rpm</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Turbo</span>
+<span class="ficha-value">IHI <small>IS20</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Distribución</span>
+<span class="ficha-value">Cadena <small>DOHC</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Emisiones</span>
+<span class="ficha-value">Euro <small>6d-Temp</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Aceite</span>
+<span class="ficha-value">VW 504/507 <small>0W-30</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Transmisión</span>
+<span class="ficha-value">DSG7 <small>DQ381</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Tracción</span>
+<span class="ficha-value">Delantera <small>4Drive opcional</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Peso</span>
+<span class="ficha-value">1.410 <small>kg</small></span>
+</div>
+<div class="ficha-item">
+<span class="ficha-label">Compresión</span>
+<span class="ficha-value">9.6 <small>: 1</small></span>
+</div>
+</div>
+<div class="section-title">Sistemas documentados</div>
+<div class="systems-grid">
+<div class="sys-chip" onclick="navigate('motor');switchTab(0)">
+<i class="fa-solid fa-wind"></i> Admisión de Aire
+      </div>
+<div class="sys-chip" onclick="navigate('motor');switchTab(1)">
+<i class="fa-solid fa-droplet"></i> Sistema de Combustible
+      </div>
+<div class="sys-chip" onclick="navigate('motor');switchTab(2)">
+<i class="fa-solid fa-temperature-half"></i> Refrigeración
+      </div>
+<div class="sys-chip" onclick="navigate('motor');switchTab(3)">
+<i class="fa-solid fa-oil-can"></i> Lubricación
+      </div>
+<div class="sys-chip" onclick="navigate('motor');switchTab(4)">
+<i class="fa-solid fa-smog"></i> Escape y Emisiones
+      </div>
+<div class="sys-chip" onclick="navigate('motor');switchTab(5)">
+<i class="fa-solid fa-link"></i> Distribución
+      </div>
+<div class="sys-chip" onclick="navigate('guias')">
+<i class="fa-solid fa-book-open"></i> Todas las guías
+      </div>
+</div>
+<div class="section-title">Índice de reparabilidad</div>
+<div class="repair-table-wrap">
+<div class="repair-row">
+<span class="repair-criterion">Accesibilidad a componentes</span>
+<span class="repair-score-val">7/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:70%"></div></div>
+</div>
+<div class="repair-row">
+<span class="repair-criterion">Disponibilidad de documentación técnica</span>
+<span class="repair-score-val">8/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:80%"></div></div>
+</div>
+<div class="repair-row">
+<span class="repair-criterion">Coste de piezas OEM vs. aftermarket</span>
+<span class="repair-score-val">6/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:60%"></div></div>
+</div>
+<div class="repair-row">
+<span class="repair-criterion">Herramientas especiales requeridas</span>
+<span class="repair-score-val">5/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:50%"></div></div>
+</div>
+<div class="repair-row">
+<span class="repair-criterion">Posibilidad de diagnóstico sin equipo oficial</span>
+<span class="repair-score-val">6/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:60%"></div></div>
+</div>
+<div class="repair-row repair-total">
+<span class="repair-criterion">PUNTUACIÓN TOTAL</span>
+<span class="repair-score-val">6.4/10</span>
+<div class="score-track"><div class="score-fill-row" style="width:64%"></div></div>
+</div>
+</div>
+<div class="alert alert-info">
+<i class="fa-solid fa-circle-info"></i>
+<div>Para ver las guías de reparación específicas para este vehículo, accede a la sección <strong onclick="navigate('guias')" style="cursor:pointer;color:var(--accent-orange)">Guías →</strong>. Para información sobre homologación de reformas, consulta <strong onclick="navigate('normativa')" style="cursor:pointer;color:var(--accent-orange)">Normativa →</strong>.</div>
+</div>
+</div>
+</div>
+<!-- ===== MOTOR ===== -->
+<div class="section" id="section-motor">
+<div class="container">
+<div class="page-header">
+<div class="page-header-label">Motor EA888 Gen3 · Sistemas documentados</div>
+<h1>Mapa de Sistemas<br/>del Motor</h1>
+<p>AutoRepara.es / vehiculo / seat-leon-fr / motor</p>
+</div>
+<div class="tabs-header" id="tabs-header">
+<button class="tab-btn active" onclick="switchTab(0)"><i class="fa-solid fa-wind"></i> Admisión</button>
+<button class="tab-btn" onclick="switchTab(1)"><i class="fa-solid fa-droplet"></i> Combustible</button>
+<button class="tab-btn" onclick="switchTab(2)"><i class="fa-solid fa-temperature-half"></i> Refrigeración</button>
+<button class="tab-btn" onclick="switchTab(3)"><i class="fa-solid fa-oil-can"></i> Lubricación</button>
+<button class="tab-btn" onclick="switchTab(4)"><i class="fa-solid fa-smog"></i> Escape / Emisiones</button>
+<button class="tab-btn" onclick="switchTab(5)"><i class="fa-solid fa-link"></i> Distribución</button>
+</div>
+<!-- TAB 0: ADMISIÓN -->
+<div class="tab-content active" id="tab-0">
+<div class="section-title">3.1 Sistema de Admisión de Aire</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Función</th>
+<th>Interactúa con</th>
+<th>Dificultad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filtro de aire</td>
+<td>Filtra partículas antes de la combustión. Garantiza que el aire que llega al motor esté limpio de polvo, insectos y contaminantes.</td>
+<td>Caja de filtro, sensor MAF</td>
+<td><span class="stars">★<span class="empty">★★★★</span></span> Fácil</td>
+</tr>
+<tr>
+<td>Sensor MAF (Mass Air Flow)</td>
+<td>Mide la masa de aire que entra al motor para calcular la cantidad de combustible a inyectar. Fundamental para la mezcla estequiométrica.</td>
+<td>ECU, cuerpo de aceleración, colector de admisión</td>
+<td><span class="stars">★★<span class="empty">★★★</span></span> Moderado</td>
+</tr>
+<tr>
+<td>Turbocompresor IHI IS20</td>
+<td>Comprime el aire de admisión para aumentar la masa de oxígeno disponible para la combustión. Permite potencias superiores a las de un motor atmosférico de igual cilindrada.</td>
+<td>Intercooler, válvula wastegate, colector de escape, cojinete de aceite</td>
+<td><span class="stars">★★★★<span class="empty">★</span></span> Requiere elevador y extracción de colector</td>
+</tr>
+<tr>
+<td>Intercooler (FMIC)</td>
+<td>Enfría el aire comprimido tras pasar por el turbo. El aire caliente es menos denso; el intercooler recupera densidad y previene el detonado.</td>
+<td>Turbocompresor, colector de admisión</td>
+<td><span class="stars">★★★<span class="empty">★★</span></span> Acceso frontal</td>
+</tr>
+<tr>
+<td>Cuerpo de aceleración (electrónico)</td>
+<td>Regula el flujo de aire al motor mediante una mariposa controlada por la ECU (drive-by-wire). No hay cable mecánico al pedal.</td>
+<td>Sensor TPS, ECU, colector de admisión</td>
+<td><span class="stars">★★<span class="empty">★★★</span></span> Requiere adaptación con VAG-COM tras sustitución</td>
+</tr>
+<tr>
+<td>Válvula DV (Diverter Valve)</td>
+<td>Recircula la presión de turbo cuando se cierra el acelerador para evitar golpe de ariete. La válvula stock IS20 usa un sistema de solenoide eléctrico.</td>
+<td>Turbocompresor, colector de admisión</td>
+<td><span class="stars">★<span class="empty">★★★★</span></span> Acceso directo</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="spec-box">
+<strong>Especificación del filtro de aire</strong>
+        Referencia OEM: 5Q0-129-620-E (caja de filtro completa) — Elemento filtrante: 5Q0-129-620<br/>
+        Intervalo de sustitución: cada 30.000 km o 2 años. En zonas con mucho polvo, cada 15.000 km.
+      </div>
+<div class="section-title" style="font-size:15px">Guías disponibles</div>
+<div class="guides-list">
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-filtro-aire')"><i class="fa-solid fa-book-open"></i> Sustitución del filtro de aire (15 min, sin herramientas especiales)</div>
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-maf')"><i class="fa-solid fa-book-open"></i> Diagnóstico de fallo del sensor MAF (código P0101)</div>
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-cuerpo-aceleracion')"><i class="fa-solid fa-book-open"></i> Limpieza del cuerpo de aceleración</div>
+</div>
+</div>
+<!-- TAB 1: COMBUSTIBLE -->
+<div class="tab-content" id="tab-1">
+<div class="section-title">3.2 Sistema de Combustible</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Función</th>
+<th>Interactúa con</th>
+<th>Homologación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bomba de combustible baja presión (ELMS)</td>
+<td>Envía combustible desde el depósito a la bomba de alta presión. Opera a entre 4 y 6 bar.</td>
+<td>Depósito, filtro de combustible, HPFP</td>
+<td>OEM / Equivalente E-mark</td>
+</tr>
+<tr>
+<td>Bomba de alta presión (HPFP)</td>
+<td>Presuriza el combustible hasta 200 bar para la inyección directa. Es accionada mecánicamente por el árbol de levas de admisión.</td>
+<td>Árbol de levas, inyectores, raíl de combustible</td>
+<td><span style="color:var(--accent-red);font-size:12px"><i class="fa-solid fa-triangle-exclamation"></i></span> Solo OEM recomendado</td>
+</tr>
+<tr>
+<td>Inyectores directos (GDI)</td>
+<td>Pulverizan el combustible directamente en la cámara de combustión a alta presión. Requieren adaptación (codificación) individualizada en la ECU.</td>
+<td>ECU, raíl de combustible, cámara de combustión</td>
+<td>Requieren codificación individual (IMA)</td>
+</tr>
+<tr>
+<td>Raíl de combustible</td>
+<td>Distribuye el combustible a presión constante a todos los inyectores. Incluye sensor de presión de raíl que la ECU monitoriza en tiempo real.</td>
+<td>HPFP, inyectores, sensor de presión</td>
+<td>OEM / equivalente certificado</td>
+</tr>
+<tr>
+<td>Regulador de presión del raíl</td>
+<td>Controla la presión del raíl de forma dinámica según demanda de la ECU, típicamente entre 50 y 200 bar según carga y régimen.</td>
+<td>ECU, raíl, HPFP</td>
+<td>Integrado en la HPFP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert alert-warning">
+<i class="fa-solid fa-triangle-exclamation"></i>
+<div><strong>Nota regulatoria:</strong> Las modificaciones en el sistema de combustible para aumento de potencia requieren homologación individual según el Real Decreto 866/2010. Las piezas de sustitución deben portar marcado CE o E-mark. La sustitución de inyectores por unidades de mayor caudal sin reprogramación homologada es una infracción.</div>
+</div>
+<div class="alert alert-danger">
+<i class="fa-solid fa-circle-xmark"></i>
+<div><strong>Problema conocido EA888 Gen3 pre-2017:</strong> La HPFP puede contaminar el aceite del motor con combustible, diluyéndolo. Si detectas olor a gasolina en el aceite o nivel de aceite en aumento, acude a revisión inmediata.</div>
+</div>
+</div>
+<!-- TAB 2: REFRIGERACIÓN -->
+<div class="tab-content" id="tab-2">
+<div class="section-title">3.3 Sistema de Refrigeración</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Función</th>
+<th>Interactúa con</th>
+<th>Señal de fallo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Radiador principal</td>
+<td>Disipa el calor del refrigerante mediante el flujo de aire a través de su panal. En el León FR el radiador está montado de forma inclinada para optimizar el espacio del turbo.</td>
+<td>Ventilador eléctrico, termostato, manguitos superior e inferior</td>
+<td>Sobrecalentamiento, fugas visibles, pérdida de refrigerante</td>
+</tr>
+<tr>
+<td>Termostato de mapa (programable)</td>
+<td>Regula la temperatura de operación del motor de forma variable según la carga. A plena carga abre antes (temperatura más baja) para proteger el motor.</td>
+<td>Bomba de agua, ECU (sensor de temperatura de refrigerante)</td>
+<td>Motor que no llega a temperatura, sobrecalentamiento intermitente</td>
+</tr>
+<tr>
+<td>Bomba de agua (accionamiento por correa)</td>
+<td>Circula el refrigerante por todo el circuito: bloque, culata, radiador, calefacción y turbocompresor.</td>
+<td>Correa auxiliar, bloque motor, termostato</td>
+<td>Fugas por el sellado, ruido de rodamiento, vibración</td>
+</tr>
+<tr>
+<td>Bomba de agua auxiliar (eléctrica, post-turbo)</td>
+<td>Circula refrigerante por el turbocompresor tras apagar el motor para evitar el "heat-soak" (cocción del aceite en el cojinete del turbo).</td>
+<td>Turbocompresor, ECU</td>
+<td>Temperatura turbo elevada tras apagado, fallo silencioso en muchos casos</td>
+</tr>
+<tr>
+<td>Depósito de expansión</td>
+<td>Compensa las variaciones de volumen del refrigerante al calentarse. Incluye sensor de nivel y tapón de presión calibrado (generalmente 1.4 bar).</td>
+<td>Circuito completo de refrigeración</td>
+<td>Nivel bajo recurrente (posible fuga interna), tapón defectuoso</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="spec-box">
+<strong>Refrigerante recomendado</strong>
+        VW TL 774-J (G13 — lila/violeta) · No mezclar con G11 (azul/verde) ni G12 (rojo)<br/>
+        Concentración: 40–60% agua destilada · Intervalo de renovación: cada 2 años o 30.000 km
+      </div>
+<div class="section-title" style="font-size:15px">Guías disponibles</div>
+<div class="guides-list">
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-purga-refrigeracion')"><i class="fa-solid fa-book-open"></i> Purga del sistema de refrigeración (procedimiento específico VAG)</div>
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-termostato')"><i class="fa-solid fa-book-open"></i> Sustitución del termostato (incluye drenaje parcial)</div>
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-sobrecalentamiento')"><i class="fa-solid fa-book-open"></i> Diagnóstico de sobrecalentamiento</div>
+</div>
+</div>
+<!-- TAB 3: LUBRICACIÓN -->
+<div class="tab-content" id="tab-3">
+<div class="section-title">3.4 Sistema de Lubricación</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Función</th>
+<th>Señales de fallo</th>
+<th>Intervalo de mantenimiento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bomba de aceite (volumen variable)</td>
+<td>Presuriza y circula el lubricante por todo el motor. El EA888 Gen3 incorpora una bomba de volumen variable que ajusta el caudal según las necesidades, mejorando la eficiencia.</td>
+<td>Luz de presión de aceite, ruido metálico en frío, código P0521</td>
+<td>Sin mantenimiento rutinario; sustituir si falla</td>
+</tr>
+<tr>
+<td>Filtro de aceite (cartucho)</td>
+<td>Retiene partículas metálicas, carbono y contaminantes en suspensión. El EA888 usa un filtro de cartucho (no de rosca) de 32mm con válvula antidrenaje.</td>
+<td>Cambiar junto con el aceite</td>
+<td>Cada 15.000 km o 12 meses (lo que antes ocurra)</td>
+</tr>
+<tr>
+<td>Cárter (seco/húmedo de acero prensado)</td>
+<td>Almacena el aceite del motor. El EA888 tiene un cárter de acero prensado con tapón de drenaje de plástico (¡no usar llave inglesa!).</td>
+<td>Fugas visibles bajo el vehículo, nivel bajo recurrente</td>
+<td>Inspeccionar tapón de drenaje en cada cambio de aceite</td>
+</tr>
+<tr>
+<td>Tensor hidráulico de cadena</td>
+<td>Mantiene la tensión correcta de la cadena de distribución usando la presión de aceite. Es crítico que el nivel de aceite sea el correcto para que funcione bien.</td>
+<td>Ruido de "cascabeleo" metálico en el arranque en frío (primeros 2–3 segundos)</td>
+<td>Sustituir junto con la cadena cuando sea necesario</td>
+</tr>
+<tr>
+<td>Separador de aceite del cárter (PCV)</td>
+<td>Separa el aceite de los gases de cárter antes de recircularlos al colector de admisión. Si falla, la admisión se embadurna de aceite con rapidez.</td>
+<td>Humo azul por el escape, consumo excesivo de aceite, válvulas sucias de carbonilla</td>
+<td>Inspeccionar cada 60.000 km</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="spec-box">
+<strong>Especificación de aceite requerida — EA888 Gen3</strong>
+        Especificación VAG: VW 504 00 / 507 00 · Viscosidad: 0W-30 o 5W-30 (long-life)<br/>
+        Capacidad: 4,5 L (sin filtro) — 4,9 L (con filtro nuevo)<br/>
+        Intervalo: 15.000 km o 12 meses · Usar SIEMPRE aceite de especificación correcta; el aceite genérico puede dañar el sistema de distribución.
+      </div>
+<div class="section-title" style="font-size:15px">Guías disponibles</div>
+<div class="guides-list">
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-aceite')"><i class="fa-solid fa-book-open"></i> Cambio de aceite y filtro EA888 Gen3 (VW 504/507)</div>
+</div>
+</div>
+<!-- TAB 4: ESCAPE Y EMISIONES -->
+<div class="tab-content" id="tab-4">
+<div class="section-title">3.5 Sistema de Escape y Control de Emisiones</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Función</th>
+<th>Normativa aplicable</th>
+<th>Modificabilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Colector de escape integrado (en culata)</td>
+<td>Conduce los gases de combustión hacia el turbocompresor. En el EA888 Gen3 el colector está integrado dentro de la culata para mejorar el calentamiento del motor y reducir el tiempo de respuesta del turbo.</td>
+<td>—</td>
+<td>Sustitución permitida con pieza E-mark o TÜV equivalente</td>
+</tr>
+<tr>
+<td>Catalizador de tres vías (TWC)</td>
+<td>Reduce las emisiones de CO, HC y NOx mediante reacciones redox sobre sustrato de metales nobles (platino, paladio, rodio). Temperatura de operación: 400–800°C.</td>
+<td>Euro 6d-Temp · RD 866/2010</td>
+<td><strong style="color:var(--accent-red)">No modificable · Eliminación = infracción grave</strong></td>
+</tr>
+<tr>
+<td>Sonda lambda precatalizador (wideband)</td>
+<td>Mide la relación aire/combustible de banda ancha para el control fino de la inyección. Señal enviada a la ECU en tiempo real.</td>
+<td>Diagnóstico OBD-II obligatorio en ITV</td>
+<td>Sustituible con pieza OEM equivalente</td>
+</tr>
+<tr>
+<td>Sonda lambda postcatalizador (narrowband)</td>
+<td>Monitoriza la eficiencia del catalizador. La ECU compara su señal con la sonda precatalizador para detectar degradación del catalizador.</td>
+<td>Diagnóstico OBD-II obligatorio en ITV</td>
+<td>Sustituible con pieza OEM equivalente</td>
+</tr>
+<tr>
+<td>Filtro de partículas de gasolina (GPF)</td>
+<td>Captura partículas sólidas de la combustión de gasolina. Se regenera automáticamente mediante post-inyección cuando se llena de partículas. Presente en versiones Euro 6d en adelante.</td>
+<td>Euro 6d-TEMP en adelante</td>
+<td><strong style="color:var(--accent-red)">No modificable en vía pública</strong></td>
+</tr>
+<tr>
+<td>Válvula EGR (Recirculación de Gases de Escape)</td>
+<td>Recircula una parte de los gases de escape hacia la admisión para reducir la temperatura de combustión y por tanto las emisiones de NOx.</td>
+<td>Euro 6d</td>
+<td><strong style="color:var(--accent-red)">Anulación = infracción grave + ITV denegada</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert alert-danger">
+<i class="fa-solid fa-circle-xmark"></i>
+<div><strong>Aviso legal:</strong> La eliminación o anulación del catalizador, GPF o EGR constituye una modificación no homologable y puede resultar en la pérdida de la ITV y sanciones administrativas graves. Estos componentes están protegidos por la normativa Euro 6d y el Reglamento UE 2018/858. El seguro puede quedar invalidado en caso de accidente.</div>
+</div>
+</div>
+<!-- TAB 5: DISTRIBUCIÓN -->
+<div class="tab-content" id="tab-5">
+<div class="section-title">3.6 Sistema de Distribución</div>
+<div class="comp-table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Componente</th>
+<th>Descripción técnica</th>
+<th>Intervalo de inspección</th>
+<th>Consecuencia de fallo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cadena de distribución (simple)</td>
+<td>Une el cigüeñal con los árboles de levas. El EA888 Gen3 usa una cadena simple de dientes en lugar de la cadena doble de generaciones anteriores. Unidades anteriores a 2017 presentan desgaste prematuro conocido.</td>
+<td>Inspección a 150.000 km; en unidades pre-2017 a 100.000 km</td>
+<td><span style="color:var(--accent-red)">Daño catastrófico e irreparable del motor (colisión de válvulas)</span></td>
+</tr>
+<tr>
+<td>Tensor hidráulico</td>
+<td>Mantiene la tensión de la cadena usando presión de aceite del motor. Es el primer elemento que falla en el desgaste de la distribución.</td>
+<td>Sustituir siempre junto con la cadena</td>
+<td>Salto de cadena, desfase de distribución, pérdida de compresión</td>
+</tr>
+<tr>
+<td>Guías de cadena (2 unidades)</td>
+<td>Plástico técnico de alta resistencia que guía el recorrido de la cadena. Con el tiempo se desgastan y los fragmentos pueden contaminar el aceite y obstruir conductos.</td>
+<td>Sustituir junto con la cadena</td>
+<td>Ruido, desgaste acelerado de cadena, contaminación del aceite</td>
+</tr>
+<tr>
+<td>Piñones de árbol de levas (con sistema VVT)</td>
+<td>Piñones de ajuste de fase variable (VVT — Variable Valve Timing). Permiten avanzar o retrasar la apertura de las válvulas según las necesidades del motor. Controlados hidráulicamente por la ECU.</td>
+<td>Inspección visual; vida útil larga si el aceite es correcto</td>
+<td>Desfase de distribución, pérdida de potencia, codes P0011/P0012/P0021/P0022</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert alert-warning">
+<i class="fa-solid fa-triangle-exclamation"></i>
+<div><strong>Problema conocido:</strong> El EA888 Gen3 en versiones anteriores a 2017 (especialmente 1.8 TSI y 2.0 TSI previos al restyling MQB) es conocido por desgaste prematuro de la cadena de distribución. Los síntomas incluyen un ruido metálico de "cascabeleo" en los primeros segundos del arranque en frío que desaparece al calentarse. Si detectas este síntoma, actúa de inmediato. Usar aceite de especificación VW 504/507 y cambios de aceite regulares es la mejor prevención.</div>
+</div>
+<div class="section-title" style="font-size:15px">Guías disponibles</div>
+<div class="guides-list">
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-ruido-cadena')"><i class="fa-solid fa-book-open"></i> Diagnóstico de ruido de cadena de distribución (TSI EA888)</div>
+<div class="guide-pill" onclick="navigate('guias');openGuide('g-cuando-cadena')"><i class="fa-solid fa-book-open"></i> Cuándo y por qué sustituir la cadena (análisis coste-beneficio)</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== GUÍAS ===== -->
+<div class="section" id="section-guias">
+<div class="container" id="guias-container">
+<!-- contenido dinámico -->
+</div>
+</div>
+<!-- ===== VEHÍCULOS EUROPEOS ===== -->
+<div class="section" id="section-vehiculos">
+<div class="container">
+<div class="page-header">
+<div class="page-header-label">Ejemplos comparables · Mercado europeo</div>
+<h1>Coches comunes<br/>bien documentados</h1>
+<p>AutoRepara.es / vehiculos-europeos</p>
+</div>
+<div class="alert alert-info">
+<i class="fa-solid fa-circle-info"></i>
+<div>Estos perfiles siguen la misma lógica del SEAT León FR: ficha técnica, sistemas habituales, señales de fallo y puntuación de reparabilidad pensada para propietarios que quieren mantener el coche con criterio.</div>
+</div>
+<div class="vehicle-grid" id="euro-vehicles-grid"></div>
+</div>
+</div>
+<!-- ===== TIENDA ===== -->
+<div class="section" id="section-tienda">
+<div class="container" id="tienda-container">
+<!-- contenido dinámico -->
+</div>
+</div>
+<!-- ===== NORMATIVA ===== -->
+<div class="section" id="section-normativa">
+<div class="container">
+<div class="page-header">
+<div class="page-header-label">Marco legal europeo · Homologación de vehículos</div>
+<h1>Normativa y<br/>Homologación</h1>
+<p>AutoRepara.es / normativa</p>
+</div>
+<div class="norm-hero">
+<h2>Marco regulatorio aplicable</h2>
+<p>En Europa, las modificaciones a un vehículo de uso en vía pública están reguladas por normativa nacional y europea. Cualquier reforma que afecte a las características técnicas homologadas del vehículo debe tramitarse formalmente para mantener la validez de la ITV y el seguro.</p>
+<div class="norm-laws">
+<span class="law-badge"><i class="fa-solid fa-file-contract"></i> Real Decreto 866/2010</span>
+<span class="law-badge"><i class="fa-solid fa-file-contract"></i> Reglamento UE 2018/858</span>
+<span class="law-badge"><i class="fa-solid fa-file-contract"></i> Normativa Euro 6d</span>
+<span class="law-badge"><i class="fa-solid fa-file-contract"></i> Directiva 2014/45/UE (ITV)</span>
+<span class="law-badge"><i class="fa-solid fa-file-contract"></i> Reglamento UNECE R83</span>
+</div>
+</div>
+<div class="section-title">Clasificación de modificaciones</div>
+<div class="norm-matrix">
+<div class="norm-col norm-col-green">
+<div class="norm-col-header"><i class="fa-solid fa-circle-check"></i> Permitido sin trámites</div>
+<ul class="norm-list">
+<li><i class="fa-solid fa-check"></i> Sustitución de piezas de desgaste por equivalentes OEM o E-mark</li>
+<li><i class="fa-solid fa-check"></i> Cambio de aceite, filtros, bujías, pastillas, discos</li>
+<li><i class="fa-solid fa-check"></i> Instalación de accesorios no estructurales (alfombrillas, fundas)</li>
+<li><i class="fa-solid fa-check"></i> Reparaciones de carrocería sin alterar la estructura</li>
+<li><i class="fa-solid fa-check"></i> Sustitución de neumáticos dentro del rango de la tarjeta técnica</li>
+<li><i class="fa-solid fa-check"></i> Instalación de llantas dentro del rango homologado del vehículo</li>
+<li><i class="fa-solid fa-check"></i> Cambio de amortiguadores por equivalentes o de mayor calidad (sin cambiar geometría)</li>
+<li><i class="fa-solid fa-check"></i> Instalación de kit de luces LED como sustitución directa de bulbos homologados</li>
+</ul>
+</div>
+<div class="norm-col norm-col-orange">
+<div class="norm-col-header"><i class="fa-solid fa-triangle-exclamation"></i> Requiere homologación individual</div>
+<ul class="norm-list">
+<li><i class="fa-solid fa-arrow-right"></i> Modificaciones en el sistema de combustible para aumentar la potencia</li>
+<li><i class="fa-solid fa-arrow-right"></i> Cambio de turbocompresor por uno de mayor capacidad</li>
+<li><i class="fa-solid fa-arrow-right"></i> Reprogramación de la ECU (tuning o chip)</li>
+<li><i class="fa-solid fa-arrow-right"></i> Llantas fuera del rango homologado (offset, diámetro, anchura)</li>
+<li><i class="fa-solid fa-arrow-right"></i> Suspensión rebajada sin kit homologado TÜV/E-mark</li>
+<li><i class="fa-solid fa-arrow-right"></i> Sistema de escape aftermarket (colectores, silenciadores)</li>
+<li><i class="fa-solid fa-arrow-right"></i> Instalación de barras antivuelco o jaulas de seguridad</li>
+<li><i class="fa-solid fa-arrow-right"></i> Cambio de combustible (ej: GLP, GNC) sin reforma tramitada</li>
+<li><i class="fa-solid fa-arrow-right"></i> Modificaciones en el sistema de frenos (discos de mayor diámetro, pinzas de mayor potencia)</li>
+</ul>
+</div>
+<div class="norm-col norm-col-red">
+<div class="norm-col-header"><i class="fa-solid fa-circle-xmark"></i> Prohibido en vía pública</div>
+<ul class="norm-list">
+<li><i class="fa-solid fa-xmark"></i> Eliminación o anulación del catalizador</li>
+<li><i class="fa-solid fa-xmark"></i> Eliminación del filtro de partículas GPF/DPF</li>
+<li><i class="fa-solid fa-xmark"></i> Anulación de la válvula EGR (por software o mecánica)</li>
+<li><i class="fa-solid fa-xmark"></i> Desconexión o eliminación de sondas lambda</li>
+<li><i class="fa-solid fa-xmark"></i> Sistemas que superen límites de emisiones Euro 6d</li>
+<li><i class="fa-solid fa-xmark"></i> Instalación de sistemas de iluminación no homologados (xenón en reflectores halógenos)</li>
+<li><i class="fa-solid fa-xmark"></i> Nitroso (NOS) en vía pública</li>
+</ul>
+</div>
+</div>
+<div class="section-title">Proceso de homologación individual de reformas</div>
+<div class="norm-detail-box">
+<h3><i class="fa-solid fa-list-check"></i> ¿Cómo tramitar una reforma de importancia?</h3>
+<p>Cuando la modificación que deseas realizar requiere homologación individual, debes seguir el procedimiento establecido en el Real Decreto 866/2010. Este proceso garantiza que la reforma cumple con los estándares de seguridad y emisiones.</p>
+<ol class="norm-step-list">
+<li><span class="step-num">1</span><span><strong>Proyecto técnico:</strong> Un ingeniero técnico industrial o superior elabora un proyecto de reforma con todos los cálculos técnicos, especificaciones de las piezas y declaración de que se cumplen las normativas aplicables.</span></li>
+<li><span class="step-num">2</span><span><strong>Laboratorio de Ensayos (Servicio Técnico):</strong> El proyecto se presenta a un laboratorio autorizado por el Ministerio de Industria que realiza las pruebas o comprobaciones pertinentes y emite un informe técnico favorable.</span></li>
+<li><span class="step-num">3</span><span><strong>Tramitación ante la DGT:</strong> Con el informe técnico favorable y la documentación del vehículo, se presenta la solicitud en la Jefatura Provincial de Tráfico para la aprobación administrativa.</span></li>
+<li><span class="step-num">4</span><span><strong>Inspección ITV:</strong> Una vez aprobada, el vehículo pasa por la ITV donde se verifican los cambios y se actualiza la tarjeta técnica del vehículo con las nuevas características homologadas.</span></li>
+<li><span class="step-num">5</span><span><strong>Actualización del seguro:</strong> Notificar a la compañía aseguradora de las modificaciones para que la póliza refleje el estado real del vehículo y la cobertura sea válida.</span></li>
+</ol>
+</div>
+<div class="section-title">Certificaciones de piezas</div>
+<div class="cert-row">
+<div class="cert-card">
+<div class="cert-title">E-mark</div>
+<p class="cert-desc">Marcado europeo de homologación de componentes. Garantiza que la pieza cumple con las directivas CEE/ECE aplicables y puede usarse en vehículos de vía pública en toda la UE. El número tras la "E" indica el país donde se realizó la homologación (ej: E1 = Alemania).</p>
+</div>
+<div class="cert-card">
+<div class="cert-title">CE</div>
+<p class="cert-desc">Declaración de conformidad europea. Aplicable a componentes eléctricos y electrónicos. No equivale al E-mark para piezas de seguridad activa o sistemas de emisiones. Suficiente para accesorios y electrónica de confort.</p>
+</div>
+<div class="cert-card">
+<div class="cert-title">TÜV</div>
+<p class="cert-desc">Certificación del organismo técnico alemán TÜV, ampliamente aceptada en Europa. Muchas piezas aftermarket de calidad (resortes, amortiguadores, llantas) incluyen informe TÜV que facilita enormemente la tramitación de la reforma en la ITV española.</p>
+</div>
+<div class="cert-card">
+<div class="cert-title">Solo Competición</div>
+<p class="cert-desc">Piezas válidas únicamente en circuito. No homologables para tráfico. Su instalación en un vehículo de calle puede invalidar la ITV, el seguro y generar sanciones administrativas. Suelen llevar la leyenda "For Off-Road / Competition Use Only".</p>
+</div>
+</div>
+<div class="alert alert-info" style="max-width:720px">
+<i class="fa-solid fa-circle-info"></i>
+<div>Para tramitar una reforma de importancia, debes acudir a un Servicio Técnico Autorizado (Laboratorio de Ensayos) que emita el informe técnico, y posteriormente presentarlo en una estación ITV para su reflejo en la tarjeta técnica del vehículo. La lista de laboratorios autorizados está disponible en el Ministerio de Industria y Turismo.</div>
+</div>
+</div>
+</div>
+<!-- ===== FOOTER ===== -->
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">
+<div class="logo" onclick="navigate('inicio')">
+<span class="logo-main">Auto<span>Repara</span>.es</span>
+<span class="logo-sub">Mecánica · Normativa · Comunidad</span>
+</div>
+<p>Plataforma de conocimiento mecánico para el propietario europeo. Guías, diagramas y normativa de homologación para que entiendas y repares tu vehículo dentro del marco legal.</p>
+</div>
+<div class="footer-col">
+<h4>Plataforma</h4>
+<ul>
+<li><a onclick="openModal('about-modal')" style="cursor:pointer">Sobre el proyecto</a></li>
+<li><a onclick="openModal('contact-modal')" style="cursor:pointer">Contribuir guías</a></li>
+<li><a onclick="showNewsletterModal()" style="cursor:pointer">Boletín de novedades</a></li>
+<li><a onclick="navigate('mejoras')" style="cursor:pointer">Mejoras recomendadas</a></li>
+<li><a onclick="openModal('about-modal')" style="cursor:pointer">Blog técnico</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Legal</h4>
+<ul>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Aviso legal</a></li>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Política de privacidad</a></li>
+<li><a onclick="showCookieModal()" style="cursor:pointer">Cookies</a></li>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Descargo de responsabilidad</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Recursos</h4>
+<ul>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Normativa EU 2018/858</a></li>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Real Decreto 866/2010</a></li>
+<li><a onclick="navigate('normativa')" style="cursor:pointer">Laboratorios autorizados</a></li>
+<li><a onclick="openModal('contact-modal')" style="cursor:pointer">Contacto</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p class="footer-disclaimer">
+      AutoRepara.es proporciona información técnica y educativa. El usuario es el único responsable de las reparaciones que realice en su vehículo. El contenido no sustituye al diagnóstico de un profesional cualificado. Las guías deben seguirse respetando las normativas de seguridad vigentes.
+    </p>
+<span class="footer-badge"><i class="fa-solid fa-shield-check"></i> Contenido validado con normativa vigente 2024</span>
+</div>
+</footer>
+<script src="assets/js/inline-script-01.js"></script>
+<script src="assets/js/inline-script-02.js"></script>
+
+<script id="vehiculos-dinamicos-script" src="assets/js/vehiculos-dinamicos-script.js"></script>
+<script src="assets/js/inline-script-04.js"></script>
+<!-- Supabase JS SDK: required for products, cart checkout and orders -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/inline-script-05.js"></script>
+
+<script id="shop-production-enhancements-script" src="assets/js/shop-production-enhancements-script.js"></script>
+<!-- USER PROFILE / PERSONAL GARAGE -->
+<div aria-hidden="true" class="profile-overlay" id="profileOverlay">
+<div aria-labelledby="profileModalTitle" aria-modal="true" class="profile-modal" role="dialog">
+<div class="profile-modal-header">
+<div>
+<div class="profile-modal-kicker">Experiencia personalizada</div>
+<div class="profile-modal-title" id="profileModalTitle">Mi perfil <span>AutoRepara</span></div>
+<p class="profile-modal-subtitle">Crea tu perfil, registra tus vehículos, controla reparaciones, kilometraje, vencimiento de ITV y avisos de mantenimiento desde este navegador.</p>
+</div>
+<button aria-label="Cerrar perfil" class="profile-close" onclick="closeProfilePanel()" type="button"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="profile-tabs" role="tablist">
+<button class="profile-tab active" data-profile-tab="resumen" onclick="switchProfileTab('resumen')" type="button"><i class="fa-solid fa-gauge-high"></i> Resumen</button>
+<button class="profile-tab" data-profile-tab="vehiculos" onclick="switchProfileTab('vehiculos')" type="button"><i class="fa-solid fa-car-side"></i> Vehículos</button>
+<button class="profile-tab" data-profile-tab="reparaciones" onclick="switchProfileTab('reparaciones')" type="button"><i class="fa-solid fa-screwdriver-wrench"></i> Reparaciones</button>
+<button class="profile-tab" data-profile-tab="alertas" onclick="switchProfileTab('alertas')" type="button"><i class="fa-solid fa-bell"></i> Alertas</button>
+</div>
+<div class="profile-body">
+<section class="profile-panel active" id="profile-panel-resumen">
+<div class="profile-summary-row" id="profileSummaryStats"></div>
+<div class="profile-grid">
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-id-card"></i> Datos del perfil</span></div>
+<form class="profile-form-grid" id="profileOwnerForm" onsubmit="saveOwnerProfile(event)">
+<div class="profile-field">
+<label for="profileOwnerName">Nombre</label>
+<input autocomplete="name" id="profileOwnerName" placeholder="Tu nombre"/>
+</div>
+<div class="profile-field">
+<label for="profileOwnerEmail">Email</label>
+<input autocomplete="email" id="profileOwnerEmail" placeholder="email@ejemplo.com" type="email"/>
+</div>
+<div class="profile-field full">
+<label for="profileOwnerNotes">Notas personales</label>
+<textarea id="profileOwnerNotes" placeholder="Preferencias de mantenimiento, taller habitual, tipo de conducción..."></textarea>
+</div>
+<div class="profile-actions">
+<button class="profile-btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar perfil</button>
+<button class="profile-btn" onclick="requestProfileNotifications()" type="button"><i class="fa-solid fa-bell"></i> Activar recordatorios</button>
+</div>
+</form>
+</div>
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-triangle-exclamation"></i> Próximos avisos</span></div>
+<div class="alert-list" id="profileQuickAlerts"></div>
+</div>
+</div>
+</section>
+<section class="profile-panel" id="profile-panel-vehiculos">
+<div class="profile-grid">
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-car"></i> Crear / editar vehículo</span></div>
+<form class="profile-form-grid" id="profileVehicleForm" onsubmit="saveVehicleProfile(event)">
+<input id="vehicleEditId" type="hidden"/>
+<div class="profile-field">
+<label for="vehicleBrand">Marca</label>
+<input id="vehicleBrand" placeholder="SEAT, Volkswagen, Peugeot..." required=""/>
+</div>
+<div class="profile-field">
+<label for="vehicleModel">Modelo</label>
+<input id="vehicleModel" placeholder="León, Golf, 308..." required=""/>
+</div>
+<div class="profile-field">
+<label for="vehiclePlate">Matrícula</label>
+<input id="vehiclePlate" placeholder="0000 ABC" required="" style="text-transform:uppercase"/>
+</div>
+<div class="profile-field">
+<label for="vehicleYear">Año</label>
+<input id="vehicleYear" max="2100" min="1980" placeholder="2005" type="number"/>
+</div>
+<div class="profile-field">
+<label for="vehicleMileage">Kilometraje actual</label>
+<input id="vehicleMileage" min="0" placeholder="145000" required="" step="1" type="number"/>
+</div>
+<div class="profile-field">
+<label for="vehicleItvDate">Caducidad ITV</label>
+<input id="vehicleItvDate" type="date"/>
+</div>
+<div class="profile-field full">
+<label for="vehiclePhoto">Foto del vehículo</label>
+<div class="profile-photo-upload">
+<div class="profile-photo-preview" id="vehiclePhotoPreview"><i class="fa-solid fa-camera"></i></div>
+<div>
+<input accept="image/*" id="vehiclePhoto" onchange="handleVehiclePhotoChange(event)" type="file"/>
+<input id="vehiclePhotoData" type="hidden"/>
+<p class="profile-photo-help">Sube una foto propia de tu coche para personalizar el garaje. Se guarda localmente en este navegador junto con el perfil.</p>
+<button class="profile-btn" onclick="clearVehiclePhoto()" style="margin-top:8px" type="button"><i class="fa-solid fa-xmark"></i> Quitar foto</button>
+</div>
+</div>
+</div>
+<div class="profile-field">
+<label for="vehicleOilInterval">Intervalo aceite/km</label>
+<input id="vehicleOilInterval" min="1000" step="500" type="number" value="15000"/>
+</div>
+<div class="profile-field">
+<label for="vehicleGeneralInterval">Revisión general/km</label>
+<input id="vehicleGeneralInterval" min="1000" step="500" type="number" value="30000"/>
+</div>
+<div class="profile-field full">
+<label for="vehicleNotes">Notas del vehículo</label>
+<textarea id="vehicleNotes" placeholder="Motor, versión, averías conocidas, neumáticos, referencias de aceite..."></textarea>
+</div>
+<div class="profile-actions">
+<button class="profile-btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar vehículo</button>
+<button class="profile-btn" onclick="resetVehicleForm()" type="button"><i class="fa-solid fa-plus"></i> Nuevo</button>
+</div>
+</form>
+</div>
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-warehouse"></i> Mi garaje</span></div>
+<div class="garage-list" id="profileGarageList"></div>
+</div>
+</div>
+</section>
+<section class="profile-panel" id="profile-panel-reparaciones">
+<div class="profile-grid">
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-clipboard-list"></i> Añadir reparación</span></div>
+<form class="profile-form-grid" id="profileRepairForm" onsubmit="saveRepairLog(event)">
+<div class="profile-field full">
+<label for="repairVehicleId">Vehículo</label>
+<select id="repairVehicleId" required=""></select>
+</div>
+<div class="repair-planner-box">
+<div class="repair-planner-head">
+<div class="repair-planner-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Planificar reparación</div>
+</div>
+<div class="profile-field full">
+<label for="repairPlanQuery">Tipo de reparación a realizar</label>
+<input id="repairPlanQuery" oninput="updateRepairPlanSuggestion()" placeholder="Ej: cambio de aceite, filtro de aire, purgar refrigerante, diagnosis MAF..."/>
+<input id="repairGuideId" type="hidden"/>
+<input id="repairGuideTitle" type="hidden"/>
+<input id="repairGuideTools" type="hidden"/>
+<input id="repairGuideParts" type="hidden"/>
+</div>
+<div class="repair-plan-result" id="repairPlanResult"></div>
+</div>
+<div class="profile-field">
+<label for="repairDate">Fecha</label>
+<input id="repairDate" required="" type="date"/>
+</div>
+<div class="profile-field">
+<label for="repairMileage">Kilometraje</label>
+<input id="repairMileage" min="0" required="" step="1" type="number"/>
+</div>
+<div class="profile-field">
+<label for="repairCategory">Tipo</label>
+<select id="repairCategory" required="">
+<option value="Aceite y filtros">Aceite y filtros</option>
+<option value="Revisión general">Revisión general</option>
+<option value="Frenos">Frenos</option>
+<option value="Neumáticos">Neumáticos</option>
+<option value="Distribución">Distribución</option>
+<option value="Diagnosis">Diagnosis</option>
+<option value="ITV">ITV</option>
+<option value="Otra reparación">Otra reparación</option>
+</select>
+</div>
+<div class="profile-field">
+<label for="repairCost">Coste estimado/real</label>
+<input id="repairCost" min="0" placeholder="0.00" step="0.01" type="number"/>
+</div>
+<div class="profile-field full">
+<label for="repairTitle">Título</label>
+<input id="repairTitle" placeholder="Cambio de aceite 5W30 + filtro" required=""/>
+</div>
+<div class="profile-field full">
+<label for="repairNotes">Notas</label>
+<textarea id="repairNotes" placeholder="Piezas usadas, referencias, taller, síntomas, par de apriete, observaciones..."></textarea>
+</div>
+<div class="profile-actions">
+<button class="profile-btn primary" type="submit"><i class="fa-solid fa-plus"></i> Guardar reparación</button>
+</div>
+</form>
+</div>
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-clock-rotate-left"></i> Historial</span></div>
+<div class="repair-list" id="profileRepairList"></div>
+</div>
+</div>
+</section>
+<section class="profile-panel" id="profile-panel-alertas">
+<div class="profile-card">
+<div class="profile-card-title"><span><i class="fa-solid fa-bell"></i> Alertas de mantenimiento</span></div>
+<div class="alert-list" id="profileAlertsList"></div>
+<p class="profile-hint">Los recordatorios se muestran al abrir la página y pueden mostrarse como notificación del navegador si das permiso. Para avisos por email o móvil incluso con la web cerrada haría falta añadir autenticación y almacenamiento de perfiles en Supabase.</p>
+</div>
+</section>
+</div>
+</div>
+</div>
+<script id="profile-garage-script" src="assets/js/profile-garage-script.js"></script>
+<script id="profile-vehicle-personalization-script" src="assets/js/profile-vehicle-personalization-script.js"></script>
+<script id="vehicle-shop-catalog-script" src="assets/js/vehicle-shop-catalog-script.js"></script>
+<script id="profile-summary-live-sync" src="assets/js/profile-summary-live-sync.js"></script>
+
+<script id="supabase-auth-profile-script" src="assets/js/supabase-auth-profile-script.js"></script>
+
+<script id="shop-product-images-summary-script" src="assets/js/shop-product-images-summary-script.js"></script>
+
+
+
+<script id="kit-recomendado-popup-stable-script" src="assets/js/kit-recomendado-popup-stable-script.js"></script>
+<script id="kit-cart-direct-open-fix" src="assets/js/kit-cart-direct-open-fix.js"></script>
+<script id="kit-carrito-robust-final-patch" src="assets/js/kit-carrito-robust-final-patch.js"></script>
+<script id="kit-base-product-hard-exclusion-final" src="assets/js/kit-base-product-hard-exclusion-final.js"></script>
+<script id="kit-oil-family-final-patch" src="assets/js/kit-oil-family-final-patch.js"></script>
+</body>
+</html>
