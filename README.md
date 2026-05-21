@@ -1,696 +1,979 @@
-# AutoRepara.es — Website and Supabase Store Documentation
+# AutoRepara.es
 
-AutoRepara.es is a web project designed as a technical knowledge platform for European car owners who want to understand, diagnose and perform basic mechanical maintenance tasks. The site combines educational repair guides, vehicle technical profiles, a motor-system map, a tool store, and a Supabase-powered product/order backend.
+AutoRepara.es is a web-based automotive maintenance and repair platform focused on European vehicles.  
+The project combines technical vehicle documentation, step-by-step repair guides, a Supabase-powered shop, user authentication, personal vehicle profiles, repair tracking, ITV reminders, and dynamic kit recommendations.
 
-The project is mainly built with:
-
-- HTML
-- CSS
-- JavaScript
-- Supabase as database/backend
-- GitHub Pages as static hosting
+The website is built as a static frontend that can be deployed on GitHub Pages while using Supabase as the backend for shop data, orders, authentication, user vehicles, repairs, and storage.
 
 ---
 
-## 1. General Website Overview
+## Table of Contents
 
-The website is structured as a single-page application using plain HTML, CSS and JavaScript. Instead of loading separate pages, the site switches between internal sections using JavaScript navigation.
-
-Main sections include:
-
-- Home page
-- Vehicle profile section
-- Engine system map
-- Repair guides
-- European vehicle examples
-- Store
-- Regulations / legal information
-- Footer and support modals
-
-The design uses a dark technical interface with orange accent colors, card-based layouts, responsive grids, and interactive elements such as tabs, modals, accordions and dynamic search.
-
----
-
-## 2. Home Page
-
-The home page introduces AutoRepara.es as a mechanical knowledge platform for car owners.
-
-Main features:
-
-- Hero section with project introduction.
-- Global search bar.
-- Category chips for quick access to common mechanical topics.
-- Featured vehicle card.
-- Statistics banner.
-- Navigation to repair guides, vehicle systems and store.
-
-The home page is intended to act as the main entry point for users who want either to search for a repair guide or access the store quickly.
+1. [Project Overview](#project-overview)
+2. [Current Project Status](#current-project-status)
+3. [Main Technologies](#main-technologies)
+4. [Frontend Structure](#frontend-structure)
+5. [Core Website Sections](#core-website-sections)
+6. [Vehicle Profiles](#vehicle-profiles)
+7. [Motor System Maps](#motor-system-maps)
+8. [Repair Guides](#repair-guides)
+9. [Shop System](#shop-system)
+10. [Cart, Taxes, Shipping and Checkout](#cart-taxes-shipping-and-checkout)
+11. [Recommended Kit Popup](#recommended-kit-popup)
+12. [Vehicle-Based Shop Organization](#vehicle-based-shop-organization)
+13. [Supabase Backend](#supabase-backend)
+14. [Supabase Auth and User Profiles](#supabase-auth-and-user-profiles)
+15. [Personal Garage](#personal-garage)
+16. [Repair History and Guide Association](#repair-history-and-guide-association)
+17. [ITV and Maintenance Reminders](#itv-and-maintenance-reminders)
+18. [Vehicle Photos with Supabase Storage](#vehicle-photos-with-supabase-storage)
+19. [SQL Setup Files](#sql-setup-files)
+20. [Deployment with GitHub Pages](#deployment-with-github-pages)
+21. [Testing Checklist](#testing-checklist)
+22. [Known Limitations](#known-limitations)
+23. [Future Improvements](#future-improvements)
 
 ---
 
-## 3. Navigation System
+## Project Overview
 
-The website uses JavaScript-based navigation. Each main section is stored in the same HTML file and shown or hidden dynamically.
+AutoRepara.es is designed to help vehicle owners understand, maintain and document repairs for their own cars.
 
-The navigation system:
+The platform provides:
 
-- Adds the `active` class to the selected section.
-- Updates the breadcrumb text.
-- Scrolls the page to the top when changing sections.
-- Works with desktop navigation and mobile navigation.
-- Connects internal buttons, guide links, store links and vehicle links.
+- vehicle technical profiles;
+- engine system maps;
+- detailed maintenance and repair guides;
+- tools and materials linked to the shop;
+- Supabase-based product catalog;
+- cart and order system;
+- kit recommendations;
+- user authentication;
+- personal vehicle garage;
+- repair history;
+- ITV expiration alerts;
+- mileage-based maintenance warnings;
+- vehicle photo uploads.
 
-This avoids page reloads and keeps the project simple enough to host on GitHub Pages.
-
----
-
-## 4. Global Search
-
-The global search bar allows users to search across major website content.
-
-It can surface results such as:
-
-- Repair guides
-- Vehicle sections
-- Engine system topics
-- Store-related content
-- Common maintenance topics
-
-The search dropdown displays matching results and sends the user to the appropriate section when clicked.
+The goal is to create a practical and educational experience for users who want to perform basic vehicle maintenance or understand what a mechanic is doing.
 
 ---
 
-## 5. Vehicle Profiles
-
-The website includes vehicle profile pages inspired by the original SEAT León format.
-
-Each vehicle profile may include:
-
-- Vehicle name and generation.
-- Engine reference.
-- Technical specifications.
-- Repairability score.
-- Strengths.
-- Common weak points.
-- Maintenance notes.
-- Vehicle image.
-- Links to its engine system map.
-
-Vehicle profiles are intended to help users understand the mechanical layout and maintenance complexity of common European cars.
-
----
-
-## 6. European Vehicle Examples
-
-The website includes several common vehicles from the European market.
-
-Examples include:
-
-- SEAT León
-- Volkswagen Golf
-- Peugeot 308
-- Renault Mégane
-- Ford Focus
-- Toyota Corolla Hybrid
-- BMW 320d
-
-Each vehicle is presented as a card with key information, repairability notes and access to a detailed profile or motor-system map.
-
----
-
-## 7. Engine System Map
-
-The engine system map explains the main mechanical systems of a selected vehicle.
-
-Typical systems include:
-
-- Intake system
-- Fuel system
-- Cooling system
-- Lubrication system
-- Exhaust and emissions system
-- Timing/distribution system
-
-The system map uses tabs so the user can switch between different mechanical areas. Each tab includes component tables, explanations and related guides.
-
-The goal is to help users understand how different engine systems interact with each other.
-
----
-
-## 8. Repair Guides
-
-The repair guide section contains step-by-step mechanical tutorials.
-
-The guides include:
-
-- Title
-- Difficulty level
-- Estimated time
-- Related system
-- Required materials
-- Tools
-- Safety warnings
-- Step-by-step instructions
-- Related videos
-- Recommended store products
-
-The guides have been expanded with longer explanations so users can better understand not only what to do, but why each step matters.
-
----
-
-## 9. Expandable Guide Steps
-
-Guide steps are implemented as expandable accordion sections.
-
-Each step can include:
-
-- Main instruction
-- Detailed explanation
-- Recommended checks
-- Common mistakes to avoid
-- Safety notes
-- Quality checks
-- Tool list
-
-This keeps long guides readable. Users can open only the step they are working on instead of scrolling through a very long page.
-
-Accessibility improvements include:
-
-- Expand/collapse buttons.
-- `aria-expanded` states.
-- Keyboard-friendly interaction.
-- Structured step content.
-
----
-
-## 10. Guide Tools Linked to the Store
-
-Tools mentioned inside repair guides are linked to the store when possible.
-
-For example, if a guide mentions an OBD-II reader, torque wrench or basic repair kit, the user can access related products from the store.
-
-This creates a connection between educational content and the e-commerce section without requiring the user to manually search for each tool.
-
----
-
-## 11. Store Overview
-
-The store is designed as a simple and intuitive tool shop for repair and maintenance products.
-
-Store features include:
-
-- Product cards.
-- Product categories.
-- Product variants or sizes.
-- Price display.
-- Stock display.
-- Product descriptions.
-- Add-to-cart buttons.
-- Product search.
-- Product filters.
-- Sorting options.
-- Product detail modal.
-- Side cart.
-- Order form.
-
-The store is connected to Supabase, so product data is no longer hardcoded only in the HTML.
-
----
-
-## 12. Product Search and Filtering
-
-The store includes frontend filtering tools that do not require database changes.
-
-Users can:
-
-- Search by product name.
-- Search by description.
-- Filter by category.
-- Filter by stock availability.
-- Sort by price.
-- Sort by stock.
-- Sort by relevance/default order.
-
-The product data is loaded from Supabase and then filtered in JavaScript on the client side.
-
----
-
-## 13. Product Detail Modal
-
-Each product can be opened in a more detailed modal view.
-
-The modal can show:
-
-- Product name.
-- Category.
-- Long description.
-- Available variants.
-- Price.
-- Stock.
-- Key features.
-- Add-to-cart action.
-
-This improves the shopping experience without requiring a separate product page.
-
----
-
-## 14. Side Cart
-
-The cart has been improved into a side drawer/cart panel.
-
-The side cart includes:
-
-- List of selected products.
-- Selected variant.
-- Quantity.
-- Unit price.
-- Line subtotal.
-- Cart total.
-- Remove item option.
-- Quantity update controls.
-- Checkout button.
-
-The cart is stored in `localStorage`, meaning it remains available after refreshing the page on the same browser.
-
----
-
-## 15. Basic Order Flow
-
-The order flow works as follows:
-
-1. The user loads products from Supabase.
-2. The user adds one or more products to the cart.
-3. The cart stores selected products and variants in the browser.
-4. The user opens the checkout/order form.
-5. The user enters basic customer information.
-6. JavaScript sends the order to Supabase.
-7. Supabase creates the order and order items.
-8. Stock is reduced for the purchased variants.
-9. The website displays an order confirmation.
-
-The order confirmation includes a more complete summary with the order ID and selected products.
-
----
-
-## 16. Supabase Backend Overview
-
-Supabase is used as the backend and database layer for the store.
-
-Supabase provides:
-
-- PostgreSQL database.
-- Public API access through the Supabase JavaScript client.
-- Row Level Security policies.
-- SQL functions.
-- Product storage.
-- Variant storage.
-- Order storage.
-- Order item storage.
-
-The website uses the Supabase client directly from JavaScript, which allows the static GitHub Pages site to communicate with the database.
-
----
-
-## 17. Supabase Configuration in the HTML
-
-The HTML contains the Supabase project configuration:
-
-```js
-const SUPABASE_URL = 'https://akvixlkljvtqmhkqxmpj.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_PUBLIC_ANON_OR_PUBLISHABLE_KEY';
+## Current Project Status
+
+Current implementation status:
+
+```txt
+Frontend: implemented
+Refactored structure: implemented
+Supabase product catalog: implemented
+Supabase orders: implemented
+Cart: implemented
+VAT calculation: implemented
+Shipping calculation: implemented
+Recommended kits: implemented
+Vehicle-based shop organization: implemented
+Supabase Auth: implemented
+User vehicle profiles: implemented
+Vehicle repair history: implemented
+Guide association with repairs: implemented
+Vehicle photo upload: implemented
+ITV reminders: implemented
+Expanded repair guides: implemented
+GitHub Pages deployment: supported
 ```
 
-Only the public anon/publishable key should be used in frontend code.
+---
 
-Never place the Supabase `service_role` key inside the HTML. The `service_role` key bypasses Row Level Security and must only be used on a secure server.
+## Main Technologies
+
+The project uses:
+
+- HTML5;
+- CSS3;
+- JavaScript;
+- Supabase JavaScript Client;
+- Supabase Database;
+- Supabase Auth;
+- Supabase Storage;
+- PostgreSQL functions and RLS policies;
+- GitHub Pages;
+- Font Awesome;
+- Google Fonts.
+
+No frontend framework is required.
 
 ---
 
-## 18. Database Tables
+## Frontend Structure
 
-The Supabase database uses these main tables:
+The project has been refactored to avoid a single extremely large HTML file.
+
+Recommended structure:
+
+```txt
+autorepara/
+├─ index.html
+├─ README.md
+├─ assets/
+│  ├─ css/
+│  │  └─ styles.css
+│  ├─ js/
+│  │  ├─ inline-script-01.js
+│  │  ├─ inline-script-02.js
+│  │  ├─ supabase-auth-profile-script.js
+│  │  ├─ vehicle-shop-catalog-script.js
+│  │  ├─ kit-recomendado-popup-stable-script.js
+│  │  └─ other-js-modules.js
+│  └─ images/
+│     └─ vehicles/
+└─ supabase/
+   └─ sql-files
+```
+
+The refactor separates:
+
+- CSS into `assets/css/styles.css`;
+- JavaScript into multiple files under `assets/js/`;
+- vehicle images into `assets/images/vehicles/`;
+- SQL setup files into a dedicated Supabase folder.
+
+This makes the project easier to maintain and avoids a 10,000-line single HTML file.
+
+---
+
+## Core Website Sections
+
+The website includes the following main sections:
+
+### Home
+
+The landing page introduces AutoRepara.es and includes:
+
+- hero section;
+- search bar;
+- category shortcuts;
+- featured vehicle card;
+- navigation to the main platform sections.
+
+### Vehicles
+
+Shows documented European vehicles with technical information and repairability context.
+
+### Motor Map
+
+Displays the selected vehicle's engine system map.
+
+### Guides
+
+Contains maintenance and repair guides.
+
+### Regulations
+
+Explains legal and safety considerations around vehicle maintenance.
+
+### Shop
+
+Displays products from Supabase and allows users to add items to the cart.
+
+### Profile
+
+Allows users to register, log in, create vehicle profiles, add repairs, upload photos and see reminders.
+
+---
+
+## Vehicle Profiles
+
+The platform includes technical profiles for common European vehicles.
+
+Documented vehicles include:
+
+- SEAT León / León 2005;
+- Volkswagen Golf 1.5 TSI;
+- Peugeot 308 PureTech;
+- Renault Mégane TCe;
+- Ford Focus EcoBoost;
+- Toyota Corolla Hybrid;
+- BMW 320d.
+
+Each vehicle can include:
+
+- brand and model;
+- engine type;
+- fuel type;
+- technical data;
+- maintenance risks;
+- repairability score;
+- recommended systems;
+- related guides;
+- shop recommendations.
+
+---
+
+## Motor System Maps
+
+Each documented vehicle includes a specific engine system map.
+
+Typical systems:
+
+- intake;
+- fuel;
+- cooling;
+- lubrication;
+- exhaust and emissions;
+- timing/distribution;
+- ignition;
+- electrical/diagnostic where applicable.
+
+Each system shows:
+
+- components;
+- function;
+- maintenance notes;
+- related parts;
+- related guides.
+
+---
+
+## Repair Guides
+
+The guide system has been expanded and now includes a larger set of real guide entries inside the JavaScript data.
+
+Current guide examples include:
+
+1. Air filter replacement.
+2. MAF sensor diagnosis.
+3. Throttle body cleaning.
+4. Cooling system bleeding.
+5. Thermostat replacement.
+6. Overheating diagnosis.
+7. Oil and oil filter change.
+8. Timing chain noise diagnosis.
+9. When to replace the timing chain.
+10. Cabin filter replacement.
+11. Front brake pad replacement.
+12. Front brake disc replacement.
+13. 12V battery inspection and replacement.
+14. Spark plug replacement on gasoline engines.
+15. Diesel fuel filter replacement.
+16. Wheel change and tyre inspection.
+17. Pre-ITV inspection.
+18. Windscreen wiper blade replacement.
+19. AdBlue refill and SCR warnings.
+20. Basic brake fluid check/change.
+
+Guide features:
+
+- guide cards;
+- difficulty rating;
+- estimated time;
+- system category;
+- tools;
+- materials;
+- videos;
+- expandable steps;
+- safety warnings;
+- common mistakes;
+- recommended checks;
+- shop links for tools and materials.
+
+The guides are stored in frontend JavaScript data and rendered dynamically.
+
+---
+
+## Shop System
+
+The shop is connected to Supabase.
+
+Products are loaded from the database instead of being hardcoded only in the HTML.
+
+Product information can include:
+
+- product name;
+- category;
+- description;
+- price;
+- image URL;
+- stock;
+- active status;
+- variants;
+- product family.
+
+The shop supports:
+
+- product search;
+- category filters;
+- stock filters;
+- vehicle-based organization;
+- recommended products;
+- product cards;
+- add-to-cart buttons;
+- product summaries;
+- verified product images through `image_url`.
+
+If a product has no verified `image_url`, the UI avoids showing incorrect generated images.
+
+---
+
+## Product Summaries
+
+Each product card includes a short summary that explains what the product does.
+
+The summary logic prioritizes:
+
+1. the real Supabase product description;
+2. a product-specific fallback summary;
+3. a safe generic summary only when no better data exists.
+
+This avoids mismatched summaries such as brake descriptions appearing on oil products or filter descriptions appearing on tools.
+
+---
+
+## Cart, Taxes, Shipping and Checkout
+
+The cart includes a more realistic price breakdown.
+
+Implemented totals:
+
+- products without VAT;
+- VAT at 21%;
+- products with VAT;
+- shipping cost;
+- final total to pay.
+
+Current shipping rules:
+
+```txt
+Standard shipping: €4.90
+Free shipping: from €60.00 in products including VAT
+VAT: 21%
+```
+
+The cart also shows a message when the user is close to free shipping, encouraging them to add more products when it is financially convenient.
+
+Example:
+
+```txt
+Add €8.50 more to get free shipping.
+```
+
+The final checkout summary reflects the tax and shipping breakdown.
+
+---
+
+## Recommended Kit Popup
+
+When the user adds a product to the cart, the shop shows a recommended kit popup.
+
+The popup includes:
+
+- complementary products;
+- small visual discounts;
+- a “frequently bought together” style message;
+- an option to add individual recommendations;
+- an option to add the full kit and go to the cart.
+
+The kit system has been refined to avoid incorrect duplicates.
+
+Important kit rules:
+
+- the base product added by the user must not appear again in the kit;
+- equivalent generic versions of the same product must not appear;
+- if the base product is oil, another oil must not be recommended;
+- products are grouped by product family;
+- the system prefers specific complementary products over general ones;
+- general products are used only when specific ones are not available.
+
+Example:
+
+If the user buys:
+
+```txt
+VW 508/509 oil
+```
+
+The kit should not recommend:
+
+```txt
+VW 504/507 oil
+```
+
+Instead, it may recommend:
+
+- oil filter;
+- drain pan;
+- funnel;
+- gloves;
+- cleaning product.
+
+---
+
+## Vehicle-Based Shop Organization
+
+The shop can be organized by the selected vehicle.
+
+The user can select:
+
+- a documented vehicle;
+- a vehicle created in their own profile.
+
+The shop then reorganizes products according to the selected vehicle’s likely needs.
+
+Categories include:
+
+- oil;
+- filters;
+- brakes;
+- cooling;
+- diagnostic;
+- ITV;
+- tools;
+- general maintenance.
+
+The category chips are clickable, allowing automatic organization by category.
+
+For custom user vehicles, the system can estimate compatibility based on:
+
+- brand;
+- model;
+- year;
+- engine keywords;
+- notes;
+- fuel type clues.
+
+Detected keywords can include:
+
+```txt
+TDI
+HDI
+CDTI
+TSI
+TCe
+EcoBoost
+Hybrid
+Diesel
+Gasoline
+```
+
+Compatibility warnings are shown when recommendations are estimated instead of exact.
+
+---
+
+## Supabase Backend
+
+Supabase is used as the backend for:
+
+- product catalog;
+- product variants;
+- orders;
+- order items;
+- kit discount rules;
+- user authentication;
+- user vehicles;
+- repair history;
+- vehicle reminders;
+- vehicle photos.
+
+---
+
+## Main Shop Database Tables
+
+Typical shop tables:
+
+```txt
+products
+product_variants
+orders
+order_items
+kit_discount_rules
+kit_discount_rule_items
+```
 
 ### `products`
 
-Stores general product information.
+Stores shop products.
 
-Typical fields:
+Expected fields can include:
 
-- `id`
-- `slug`
-- `name`
-- `category`
-- `description`
-- `price`
-- `image_url`
-- `active`
-- `created_at`
+```txt
+id
+name
+slug
+category
+description
+price
+image_url
+active
+created_at
+```
 
 ### `product_variants`
 
-Stores product sizes, measures or versions.
+Stores variants or selectable product versions.
 
-Typical fields:
+Expected fields can include:
 
-- `id`
-- `product_id`
-- `label`
-- `price`
-- `stock`
-- `active`
-- `created_at`
+```txt
+id
+product_id
+label
+price
+stock
+created_at
+```
+
+In the current project, `product_variants` may not include an `active` column, so availability can be controlled by stock.
 
 ### `orders`
 
 Stores customer orders.
 
-Typical fields:
+Expected fields:
 
-- `id`
-- `customer_name`
-- `customer_email`
-- `customer_phone`
-- `customer_address`
-- `total`
-- `status`
-- `created_at`
+```txt
+id
+customer_name
+customer_email
+customer_phone
+customer_address
+total
+status
+created_at
+```
 
 ### `order_items`
 
-Stores each product line inside an order.
+Stores products inside orders.
 
-Typical fields:
+Expected fields:
 
-- `id`
-- `order_id`
-- `product_id`
-- `variant_id`
-- `product_name`
-- `variant_label`
-- `quantity`
-- `unit_price`
-- `line_total`
-- `created_at`
-
----
-
-## 19. Product Loading from Supabase
-
-Products are loaded from Supabase using JavaScript.
-
-The frontend requests active products and their variants, then renders them inside the store grid.
-
-The process is:
-
-1. Connect to Supabase using the project URL and public key.
-2. Query `products` where `active = true`.
-3. Join or load related `product_variants`.
-4. Store the result in a frontend array.
-5. Render product cards.
-6. Apply filters and sorting locally.
-
-This allows the store to update when products are changed in Supabase.
+```txt
+id
+order_id
+product_id
+variant_id
+product_name
+variant_label
+quantity
+unit_price
+line_total
+created_at
+kit_rule_id
+kit_slug
+kit_name
+original_unit_price
+discount_amount
+added_as_kit_item
+```
 
 ---
 
-## 20. Stock Handling
+## Kit Discount SQL
 
-Stock is stored in `product_variants`.
+The project includes SQL support for kit discounts.
 
-When a user buys a product variant:
+The kit discount system adds:
 
-- The order is created.
-- The order items are inserted.
-- The selected variant stock is reduced.
+```txt
+kit_discount_rules
+kit_discount_rule_items
+```
 
-The frontend should never be trusted as the only source of truth for stock or prices. The database should validate important operations.
+It also adds kit metadata to `order_items`.
 
----
+The SQL includes:
 
-## 21. Row Level Security
+- product family detection;
+- kit price calculation;
+- recommended kit product lookup;
+- RLS policies for reading active kit rules;
+- seed rules for common repair types.
 
-Row Level Security protects the database from unauthorized actions.
+Kit rule examples:
 
-Recommended policy behavior:
+- oil service kit;
+- brake service kit;
+- cooling service kit;
+- diagnostic starter kit;
+- ignition service kit;
+- basic maintenance kit.
 
-- Public users can read active products.
-- Public users can read active variants.
-- Public users can create orders through the allowed order flow.
-- Public users should not update product prices.
-- Public users should not manually change stock.
-- Public users should not delete products or orders.
+The SQL was adapted for the existing project database where:
 
-This is important because the website is hosted publicly and uses a frontend Supabase key.
-
----
-
-## 22. SQL Order Function
-
-The project can use a SQL function such as `create_order()` to handle order creation safely.
-
-The function should:
-
-- Receive customer data and cart items.
-- Validate product and variant IDs.
-- Read prices from the database.
-- Calculate totals server-side.
-- Check stock availability.
-- Insert the order.
-- Insert order items.
-- Reduce stock.
-- Return the created order ID.
-
-This prevents users from modifying prices directly in the browser.
+- `products.id` is stored as `text`;
+- `products.slug` may need to be added;
+- `product_variants.active` may not exist.
 
 ---
 
-## 23. Cart Storage
+## Supabase Auth and User Profiles
 
-The cart is stored in the browser using `localStorage`.
+The project includes Supabase Auth integration for user accounts.
 
-Benefits:
+Auth features:
 
-- The cart survives page reloads.
-- No login is required.
-- The implementation remains simple.
-- It works well for a basic store.
+- register with email and password;
+- log in;
+- log out;
+- detect current session;
+- react to auth state changes;
+- protect user data with RLS.
 
-Limitations:
+The profile is no longer intended to depend only on `localStorage`.
 
-- The cart is only stored on the current browser/device.
-- It is not shared between devices.
-- It is not linked to a user account.
-
----
-
-## 24. Recommended Products in Guides
-
-The guides can display related store products based on the guide content.
-
-For example:
-
-- Oil change guides can recommend oil filter tools, drain pans or basic repair kits.
-- Diagnostic guides can recommend OBD-II readers.
-- Cooling system guides can recommend funnels, clamps or coolant tools.
-- Timing or chain guides can recommend torque tools and inspection tools.
-
-This is handled in JavaScript by matching guide keywords with product names, descriptions or categories.
-
-No extra database tables are required.
+Authenticated profile data is stored in Supabase, allowing users to access their vehicle data from another browser or device after logging in.
 
 ---
 
-## 25. Trust Blocks in the Store
+## Personal Garage
 
-The store includes trust-building UI blocks.
+Authenticated users can create personal vehicles.
+
+A user vehicle can include:
+
+- brand;
+- model;
+- license plate;
+- year;
+- mileage;
+- ITV expiration date;
+- notes;
+- vehicle photo.
+
+Vehicle data is linked to the authenticated user through `user_id`.
+
+---
+
+## Repair History and Guide Association
+
+Users can register repairs for each vehicle.
+
+Repair records can include:
+
+- repair date;
+- mileage;
+- repair type;
+- cost;
+- notes;
+- associated guide;
+- associated tools;
+- associated materials.
+
+When the user enters a repair type, the system can suggest:
+
+- a guide;
+- required tools;
+- materials;
+- shop products.
+
+Once saved, the guide remains associated with that repair record.
+
+---
+
+## ITV and Maintenance Reminders
+
+The profile system can show reminders based on:
+
+- ITV expiration date;
+- current mileage;
+- repair history;
+- general maintenance intervals.
 
 Examples:
 
-- Technical support.
-- Carefully selected tools.
-- Competitive prices.
-- Stock visibility.
-- Secure order request.
-- Repair-focused product selection.
+- ITV expired;
+- ITV expires soon;
+- oil change due;
+- brake check recommended;
+- tyre inspection recommended;
+- general service due.
 
-These blocks improve user confidence without requiring backend changes.
+Currently, reminders are calculated mainly in the frontend when the user opens the profile.
 
----
-
-## 26. Order Confirmation
-
-After a successful order, the website shows a confirmation message.
-
-The confirmation can include:
-
-- Order ID.
-- Customer name.
-- Product summary.
-- Total amount.
-- Next steps.
-- Message explaining that the order will be reviewed or confirmed.
-
-The order ID comes from Supabase.
+A future version could send emails with Supabase Edge Functions and an external email provider.
 
 ---
 
-## 27. GitHub Pages Deployment
+## Vehicle Photos with Supabase Storage
 
-The website can be hosted on GitHub Pages because it is a static frontend.
+Vehicle photos can be uploaded through Supabase Storage.
 
-Deployment steps:
-
-1. Rename the final HTML file to `index.html`.
-2. Upload it to the root of the GitHub repository.
-3. Go to repository settings.
-4. Open the Pages section.
-5. Select deployment from the `main` branch and `/root` folder.
-6. Save the configuration.
-7. Wait for GitHub Pages to publish the site.
-
-The final URL usually follows this structure:
+Recommended bucket:
 
 ```txt
-https://your-username.github.io/your-repository-name/
+vehicle-photos
+```
+
+The image path or URL is stored in the vehicle record.
+
+A recommended storage path format is:
+
+```txt
+user-id/timestamp-file-name
+```
+
+This keeps user files separated.
+
+---
+
+## SQL Setup Files
+
+The project can include several SQL setup files:
+
+```txt
+01_schema.sql
+02_seed_products.sql
+03_vehicle_shop_catalog.sql
+supabase_user_profile_auth.sql
+supabase_kit_discounts.sql
+supabase_kit_discounts_fixed.sql
+supabase_kit_discounts_text_ids_no_variant_active.sql
+```
+
+These files may create or update:
+
+- products;
+- variants;
+- orders;
+- order items;
+- user vehicles;
+- repairs;
+- reminders;
+- storage policies;
+- RLS policies;
+- kit discount rules;
+- kit rule items;
+- helper functions.
+
+---
+
+## Row Level Security
+
+RLS should be enabled for all user-owned data.
+
+Important policies:
+
+- users can only read their own vehicles;
+- users can only insert their own vehicles;
+- users can only update their own vehicles;
+- users can only delete their own vehicles;
+- users can only manage repairs linked to their own account;
+- public users can read active products;
+- public users can read active kit rules;
+- users cannot modify product prices from the frontend.
+
+Typical RLS condition:
+
+```sql
+auth.uid() = user_id
 ```
 
 ---
 
-## 28. Supabase Setup Steps
+## Supabase Email Rate Limit Note
 
-Basic Supabase setup:
+During development, Supabase Auth may return:
 
-1. Create a Supabase project.
-2. Open SQL Editor.
-3. Run `schema.sql` to create tables, policies and functions.
-4. Run `seed_products.sql` to insert initial products.
-5. Check products using SQL queries.
-6. Copy the project URL.
-7. Copy the anon/publishable key.
-8. Paste both values into the HTML Supabase configuration.
-9. Upload the HTML to GitHub Pages.
-10. Test product loading, cart and order creation.
+```txt
+email rate limit exceeded
+```
+
+This happens when too many sign-up emails are triggered.
+
+Recommended development actions:
+
+1. Disable email confirmation temporarily.
+2. Wait for the rate limit window to reset.
+3. Create users manually from:
+
+```txt
+Authentication → Users → Add user
+```
+
+4. Use the login form instead of repeatedly creating accounts.
+
+For production, configure a custom SMTP provider.
 
 ---
 
-## 29. Useful SQL Checks
+## Deployment with GitHub Pages
 
-Check tables:
+The project is compatible with GitHub Pages.
 
-```sql
-select table_schema, table_name
-from information_schema.tables
-where table_schema = 'public'
-order by table_name;
+Important: because the project is refactored, upload the full folder structure, not only `index.html`.
+
+The repository should include:
+
+```txt
+index.html
+assets/
+README.md
 ```
 
-Check products:
+GitHub Pages configuration:
 
-```sql
-select * from public.products;
-```
-
-Check variants:
-
-```sql
-select * from public.product_variants;
-```
-
-Check orders:
-
-```sql
-select *
-from public.orders
-order by created_at desc;
-```
-
-Check order items:
-
-```sql
-select *
-from public.order_items
-order by created_at desc;
-```
-
-Check products with stock:
-
-```sql
-select
-  p.name,
-  v.label,
-  v.price,
-  v.stock
-from public.products p
-join public.product_variants v on v.product_id = p.id
-order by p.name, v.label;
+```txt
+Settings → Pages
+Source: Deploy from a branch
+Branch: main
+Folder: /root
 ```
 
 ---
 
-## 30. Current Limitations
+## Supabase Frontend Configuration
 
-The current version is suitable for a basic store, but it is not yet a complete commercial e-commerce system.
+The frontend needs:
+
+```js
+const SUPABASE_URL = 'https://your-project.supabase.co';
+const SUPABASE_ANON_KEY = 'your-public-anon-or-publishable-key';
+```
+
+Only the public anon/publishable key should be used in frontend code.
+
+Never expose the `service_role` key in the browser.
+
+---
+
+## Testing Checklist
+
+### General Website
+
+- Navigation works.
+- Theme toggle works.
+- Search works.
+- Guides open correctly.
+- Motor maps render correctly.
+- Vehicle profiles render correctly.
+
+### Guides
+
+- All guides appear.
+- Guide steps expand/collapse.
+- Tools and materials appear.
+- Related shop links work.
+- Newly added guides appear in the guides grid.
+
+### Shop
+
+- Products load from Supabase.
+- Product summaries are correct.
+- Images only show when verified.
+- Search works.
+- Category filters work.
+- Vehicle organization works.
+- Category chips are clickable.
+- Products can be added to cart.
+
+### Cart
+
+- Cart opens correctly.
+- Items are added correctly.
+- Quantities work.
+- Product subtotal is correct.
+- VAT is shown.
+- Shipping is shown.
+- Free shipping threshold works.
+- Final total includes VAT and shipping.
+- Checkout works.
+
+### Recommended Kits
+
+- Popup appears after adding a product.
+- Base product is not repeated.
+- Equivalent generic product is not repeated.
+- Oil does not recommend another oil.
+- Kit button adds all valid kit products.
+- Kit button opens the cart.
+- Discounts are visible.
+
+### Auth/Profile
+
+- User can register.
+- User can log in.
+- User can log out.
+- Rate limit messages are handled.
+- Vehicle can be created.
+- Vehicle appears after reload.
+- Vehicle appears after login on another device.
+- Vehicle photo can be uploaded.
+- Repairs can be created.
+- Repairs stay linked to the vehicle.
+- Guide association is saved.
+- ITV alerts appear.
+
+### Supabase
+
+- Products exist.
+- Variants exist.
+- Orders are saved.
+- Order items are saved.
+- User vehicles are saved.
+- Repairs are saved.
+- RLS is enabled.
+- Storage bucket exists.
+- Kit rules exist.
+- Kit rule items exist.
+
+---
+
+## Known Limitations
 
 Current limitations:
 
-- No real payment gateway.
-- No user accounts.
-- No admin panel inside the website.
-- No invoice generation.
-- No shipping carrier integration.
-- No email automation.
-- No advanced order status workflow.
-
-These can be added later.
-
----
-
-## 31. Future Improvements
-
-Recommended future improvements:
-
-- Payment integration.
-- Admin dashboard.
-- Product image upload through Supabase Storage.
-- User accounts.
-- Order status tracking.
-- Email confirmation.
-- PDF invoice generation.
-- Discount codes.
-- Related product system stored in database.
-- Analytics dashboard.
-- Stock alert system.
+- no real payment gateway;
+- no admin dashboard;
+- no automatic email reminders yet;
+- vehicle compatibility is estimated unless exact catalog data exists;
+- no professional parts catalog API;
+- no shipping provider integration;
+- no invoice generation;
+- no product reviews;
+- no order history page for users yet.
 
 ---
 
-## 32. Security Notes
+## Future Improvements
 
-Important security rules:
+Possible next steps:
 
-- Never expose the Supabase `service_role` key in frontend code.
-- Keep Row Level Security enabled.
-- Do not trust prices sent from the browser.
-- Validate stock and totals in the database or secure backend.
-- Restrict write policies carefully.
-- Use HTTPS hosting.
-- Clean test orders before production.
+- add Stripe or PayPal payments;
+- create an admin dashboard;
+- add user order history;
+- add email reminders for ITV and maintenance;
+- add Supabase Edge Functions;
+- connect a real parts compatibility API;
+- add invoices and PDF reports;
+- add product reviews;
+- add favorite guides;
+- add multilingual support;
+- improve mobile UI;
+- add professional product images;
+- add real shipping calculation;
+- add stock management dashboard.
 
 ---
 
-## 33. Project Summary
+## Final Summary
 
-AutoRepara.es is now more than a static educational website. It includes:
+AutoRepara.es is a complete automotive maintenance and repair web prototype.
 
-- Repair education.
-- Vehicle technical profiles.
-- Engine system explanations.
-- Expandable detailed guides.
-- A Supabase-connected store.
-- Dynamic product loading.
-- Product variants.
-- Stock control.
-- Cart functionality.
-- Basic order creation.
-- GitHub Pages deployment compatibility.
+It includes:
 
-The project remains lightweight because it uses a static frontend and Supabase as backend, avoiding the need for a traditional custom server during the first production stage.
+- educational repair content;
+- vehicle-specific documentation;
+- expanded repair guides;
+- Supabase-powered shop;
+- cart and order system;
+- tax and shipping calculation;
+- kit recommendations;
+- kit discounts;
+- user authentication;
+- personal vehicle garage;
+- repair tracking;
+- ITV reminders;
+- vehicle photos;
+- vehicle-based product organization.
+
+The project is suitable as a strong full-stack web development portfolio project and can be extended into a more complete production platform with payments, admin tools, email automation and professional vehicle parts compatibility data.
