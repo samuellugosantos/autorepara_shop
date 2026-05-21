@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: kit-base-product-hard-exclusion-final */
-
 (function(){
   const CART_KEY = 'autorepara_cart_v1';
 

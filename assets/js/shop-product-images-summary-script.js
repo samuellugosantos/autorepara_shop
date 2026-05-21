@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: shop-product-images-summary-script */
-
 (function(){
   function normalizeText(value){
     return String(value || '')

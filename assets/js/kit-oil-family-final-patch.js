@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: kit-oil-family-final-patch */
-
 (function(){
   function normalize(value){
     return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');

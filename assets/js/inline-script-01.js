@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html */
-
 // =====================================================
 // NUEVAS FUNCIONALIDADES — AutoRepara.es v3.2
 // =====================================================

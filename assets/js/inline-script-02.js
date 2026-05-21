@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html */
-
 // =====================================================
 // DATOS DE GUÍAS EXPANDIDAS
 // =====================================================

@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: profile-summary-live-sync */
-
 (function(){
   const PROFILE_KEY = 'autorepara_user_profile_v1';
 

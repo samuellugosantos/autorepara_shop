@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: profile-garage-script */
-
 (function(){
   const STORAGE_KEY = 'autorepara_user_profile_v1';
   const LAST_NOTIFY_KEY = 'autorepara_profile_last_notify_v1';

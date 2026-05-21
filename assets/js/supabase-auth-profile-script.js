@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: supabase-auth-profile-script */
-
 (function(){
   const LOCAL_PROFILE_KEY = 'autorepara_user_profile_v1';
   const SELECTED_VEHICLE_KEY = 'autorepara_cloud_selected_vehicle_v1';
@@ -27,10 +25,24 @@
   function safeToast(message, type='info'){
     try {
       if(typeof showToast === 'function') {
-        if(showToast.length >= 3) showToast(type === 'success' ? 'success' : 'info', type === 'success' ? 'fa-check-circle' : 'fa-circle-info', message);
+        if(showToast.length >= 3) showToast(type === 'success' ? 'success' : type === 'error' ? 'error' : 'info', type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-info', message);
         else showToast(message, type);
       }
     } catch(e) {}
+  }
+  function setAuthStatus(message, kind='info'){
+    const status = document.getElementById('profileAuthStatus');
+    if(!status) return;
+    const icon = kind === 'success' ? 'fa-cloud-check' : kind === 'error' ? 'fa-triangle-exclamation' : kind === 'loading' ? 'fa-circle-notch fa-spin' : 'fa-circle-info';
+    status.innerHTML = `<i class="fa-solid ${icon}"></i><span>${escapeHtml(message)}</span>`;
+  }
+  function setAuthBusy(isBusy){
+    ['profileLoginBtn','profileRegisterBtn'].forEach(id => { const btn = document.getElementById(id); if(btn) btn.disabled = !!isBusy; });
+  }
+  function readAuthCredentials(){
+    const email = document.getElementById('profileAuthEmail')?.value.trim();
+    const password = document.getElementById('profileAuthPassword')?.value;
+    return { email, password };
   }
   function blankState(){ return { owner: { name:'', email: currentUser?.email || '', notes:'' }, selectedVehicleId: localStorage.getItem(SELECTED_VEHICLE_KEY) || '', vehicles: [], repairs: [] }; }
 
@@ -47,8 +59,8 @@
       <form id="profileAuthForm" class="profile-auth-form" onsubmit="event.preventDefault(); loginProfileUser();">
         <input id="profileAuthEmail" type="email" autocomplete="email" placeholder="Email" required>
         <input id="profileAuthPassword" type="password" autocomplete="current-password" placeholder="Contraseña" required>
-        <button type="submit" class="profile-btn primary"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
-        <button type="button" class="profile-btn" onclick="registerProfileUser()"><i class="fa-solid fa-user-plus"></i> Crear cuenta</button>
+        <button id="profileLoginBtn" type="submit" class="profile-btn primary"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+        <button id="profileRegisterBtn" type="button" class="profile-btn"><i class="fa-solid fa-user-plus"></i> Crear cuenta</button>
       </form>
       <div class="profile-auth-actions" id="profileAuthActions" style="display:none">
         <button type="button" class="profile-btn" onclick="importLocalProfileToSupabase()"><i class="fa-solid fa-cloud-arrow-up"></i> Importar datos locales</button>
@@ -98,22 +110,53 @@
   }
 
   window.loginProfileUser = async function(){
-    const client = getClient(); if(!client) return safeToast('Supabase no está configurado', 'info');
-    const email = document.getElementById('profileAuthEmail')?.value.trim();
-    const password = document.getElementById('profileAuthPassword')?.value;
-    if(!email || !password) return safeToast('Introduce email y contraseña', 'info');
-    const { error } = await client.auth.signInWithPassword({ email, password });
-    if(error) return safeToast(error.message || 'No se pudo iniciar sesión', 'info');
+    const client = getClient();
+    if(!client){ setAuthStatus('Supabase no está configurado o no se ha cargado la librería.', 'error'); return safeToast('Supabase no está configurado', 'error'); }
+    const { email, password } = readAuthCredentials();
+    if(!email || !password){ setAuthStatus('Introduce email y contraseña.', 'error'); return safeToast('Introduce email y contraseña', 'info'); }
+    setAuthBusy(true);
+    setAuthStatus('Iniciando sesión...', 'loading');
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    setAuthBusy(false);
+    if(error){ setAuthStatus(error.message || 'No se pudo iniciar sesión.', 'error'); return safeToast(error.message || 'No se pudo iniciar sesión', 'error'); }
+    currentUser = data?.user || null;
+    setAuthStatus('Sesión iniciada correctamente.', 'success');
     safeToast('Sesión iniciada', 'success');
+    await reloadCloudProfile();
   };
   window.registerProfileUser = async function(){
-    const client = getClient(); if(!client) return safeToast('Supabase no está configurado', 'info');
-    const email = document.getElementById('profileAuthEmail')?.value.trim();
-    const password = document.getElementById('profileAuthPassword')?.value;
-    if(!email || !password || password.length < 6) return safeToast('Usa un email válido y una contraseña de al menos 6 caracteres', 'info');
-    const { error } = await client.auth.signUp({ email, password });
-    if(error) return safeToast(error.message || 'No se pudo crear la cuenta', 'info');
-    safeToast('Cuenta creada. Revisa el email si Supabase solicita confirmación.', 'success');
+    const client = getClient();
+    if(!client){ setAuthStatus('Supabase no está configurado o no se ha cargado la librería.', 'error'); return safeToast('Supabase no está configurado', 'error'); }
+    const { email, password } = readAuthCredentials();
+    if(!email || !password || password.length < 6){ setAuthStatus('Usa un email válido y una contraseña de al menos 6 caracteres.', 'error'); return safeToast('Usa un email válido y una contraseña de al menos 6 caracteres', 'info'); }
+    setAuthBusy(true);
+    setAuthStatus('Creando cuenta...', 'loading');
+    const { data, error } = await client.auth.signUp({ email, password });
+    if(error){ setAuthBusy(false); setAuthStatus(error.message || 'No se pudo crear la cuenta.', 'error'); return safeToast(error.message || 'No se pudo crear la cuenta', 'error'); }
+
+    // If email confirmation is disabled, Supabase returns a session and the user is already logged in.
+    if(data?.session?.user){
+      currentUser = data.session.user;
+      setAuthBusy(false);
+      setAuthStatus('Cuenta creada y sesión iniciada correctamente.', 'success');
+      safeToast('Cuenta creada', 'success');
+      await reloadCloudProfile();
+      return;
+    }
+
+    // If confirmation is enabled, try a normal login. If Supabase blocks it, show a clear message.
+    const loginAttempt = await client.auth.signInWithPassword({ email, password });
+    setAuthBusy(false);
+    if(loginAttempt?.data?.user){
+      currentUser = loginAttempt.data.user;
+      setAuthStatus('Cuenta creada y sesión iniciada correctamente.', 'success');
+      safeToast('Cuenta creada', 'success');
+      await reloadCloudProfile();
+    } else {
+      const msg = loginAttempt?.error?.message || 'Cuenta creada. Revisa el email para confirmar la cuenta antes de iniciar sesión.';
+      setAuthStatus(msg, 'info');
+      safeToast(msg, 'info');
+    }
   };
   window.logoutProfileUser = async function(){
     const client = getClient(); if(!client) return;
@@ -484,6 +527,19 @@
     if(typeof originalSwitchProfileTab === 'function') originalSwitchProfileTab(tab);
     setTimeout(renderCloudProfile, 40);
   };
+  document.addEventListener('click', function(event){
+    const registerBtn = event.target.closest('#profileRegisterBtn');
+    if(registerBtn){ event.preventDefault(); window.registerProfileUser(); return; }
+    const loginBtn = event.target.closest('#profileLoginBtn');
+    if(loginBtn){ /* form submit handles this */ return; }
+  });
+  document.addEventListener('submit', function(event){
+    if(event.target && event.target.id === 'profileAuthForm'){
+      event.preventDefault();
+      window.loginProfileUser();
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', async () => {
     injectAuthUi();
     const help = document.querySelector('.profile-photo-help');

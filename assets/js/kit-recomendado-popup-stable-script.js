@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: kit-recomendado-popup-stable-script */
-
 (function(){
   const CART_KEY = 'autorepara_cart_v1';
   const LOCAL_PROFILE_KEY = 'autorepara_user_profile_v1';

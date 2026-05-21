@@ -959,7 +959,7 @@
 <div>
 <div class="profile-modal-kicker">Experiencia personalizada</div>
 <div class="profile-modal-title" id="profileModalTitle">Mi perfil <span>AutoRepara</span></div>
-<p class="profile-modal-subtitle">Crea tu perfil, registra tus vehículos, controla reparaciones, kilometraje, vencimiento de ITV y avisos de mantenimiento desde este navegador.</p>
+<p class="profile-modal-subtitle">Crea tu perfil, registra tus vehículos, controla reparaciones, kilometraje, vencimiento de ITV y avisos de mantenimiento desde tu cuenta.</p>
 </div>
 <button aria-label="Cerrar perfil" class="profile-close" onclick="closeProfilePanel()" type="button"><i class="fa-solid fa-xmark"></i></button>
 </div>
@@ -1037,7 +1037,7 @@
 <div>
 <input accept="image/*" id="vehiclePhoto" onchange="handleVehiclePhotoChange(event)" type="file"/>
 <input id="vehiclePhotoData" type="hidden"/>
-<p class="profile-photo-help">Sube una foto propia de tu coche para personalizar el garaje. Se guarda localmente en este navegador junto con el perfil.</p>
+<p class="profile-photo-help">Sube una foto propia de tu coche para personalizar el garaje. Si has iniciado sesión, se guarda en tu perfil.</p>
 <button class="profile-btn" onclick="clearVehiclePhoto()" style="margin-top:8px" type="button"><i class="fa-solid fa-xmark"></i> Quitar foto</button>
 </div>
 </div>
@@ -1137,7 +1137,7 @@
 <div class="profile-card">
 <div class="profile-card-title"><span><i class="fa-solid fa-bell"></i> Alertas de mantenimiento</span></div>
 <div class="alert-list" id="profileAlertsList"></div>
-<p class="profile-hint">Los recordatorios se muestran al abrir la página y pueden mostrarse como notificación del navegador si das permiso. Para avisos por email o móvil incluso con la web cerrada haría falta añadir autenticación y almacenamiento de perfiles en Supabase.</p>
+<p class="profile-hint">Los recordatorios se muestran al abrir la página y pueden mostrarse como notificación del navegador si das permiso. Los avisos se recalculan al abrir el perfil. Para avisos por email o móvil incluso con la web cerrada se puede ampliar con funciones programadas de Supabase.</p>
 </div>
 </section>
 </div>
@@ -1159,5 +1159,6 @@
 <script id="kit-carrito-robust-final-patch" src="assets/js/kit-carrito-robust-final-patch.js"></script>
 <script id="kit-base-product-hard-exclusion-final" src="assets/js/kit-base-product-hard-exclusion-final.js"></script>
 <script id="kit-oil-family-final-patch" src="assets/js/kit-oil-family-final-patch.js"></script>
+<script id="cart-tax-shipping-final-patch" src="assets/js/cart-tax-shipping-final-patch.js"></script>
 </body>
 </html>

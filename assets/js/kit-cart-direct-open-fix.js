@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html | original script id: kit-cart-direct-open-fix */
-
 (function(){
   function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
   function normalizeText(value){

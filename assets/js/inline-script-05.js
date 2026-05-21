@@ -1,5 +1,3 @@
-/* Extracted from index_tienda_popup_recuperado_sin_aceite_extra.html */
-
 /* ===================================================
    AUTOREPARA · SUPABASE SHOP IMPLEMENTATION
    1) Replace SUPABASE_URL and SUPABASE_ANON_KEY.
@@ -324,8 +322,14 @@ async function submitOrder(event) {
   }
 }
 window.showToastOriginal = window.showToast;
-function showToast(message, type = 'info') {
-  if (typeof window.showToastOriginal === 'function') return window.showToastOriginal(message, type);
+function showToast(arg1, arg2 = 'info', arg3 = null, duration = 4000) {
+  // Compatible toast wrapper. Supports both old signature:
+  // showToast(type, icon, message) and new signature: showToast(message, type).
+  if (typeof window.showToastOriginal === 'function' && arg3 !== null) {
+    return window.showToastOriginal(arg1, arg2, arg3, duration);
+  }
+  const message = arg1;
+  const type = arg2 || 'info';
   let container = document.getElementById('toast-container');
   if (!container) {
     container = document.createElement('div');
