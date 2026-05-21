@@ -24,3 +24,6 @@
 - Vehicle images embedded as base64 were moved to `assets/images/vehicles/`.
 - JavaScript syntax was validated with `node --check`.
 - Cart totals now display net products, VAT, shipping, and final total.
+
+
+Guide data checked: 20 repair guides are loaded from assets/js/inline-script-02.js.
