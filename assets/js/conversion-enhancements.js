@@ -102,7 +102,11 @@
         note.innerHTML = `<strong>Uso recomendado:</strong> pensado para mantenimiento doméstico con guía, variantes claras y validación de stock antes del pedido.`;
         desc.insertAdjacentElement('afterend', note);
       }
-      if(!card.querySelector('.compatibility-badge-row')){
+      const existingFitBadge = card.querySelector('.vehicle-fit-badge');
+      const oldCompatibilityRow = card.querySelector('.compatibility-badge-row');
+      if(existingFitBadge){
+        if(oldCompatibilityRow) oldCompatibilityRow.remove();
+      } else if(!oldCompatibilityRow){
         const row = document.createElement('div');
         row.className = 'compatibility-badge-row';
         const text = normalize(card.textContent);

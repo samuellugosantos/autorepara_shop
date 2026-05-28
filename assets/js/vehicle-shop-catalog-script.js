@@ -153,11 +153,46 @@
     return productIsUniversal(product);
   }
   function productIsDirectFit(product, value = currentVehicleSelection()) {
-    if (value === 'all') return false;
-    const key = selectedKnownKey(value);
+    return productVehicleStatus(product, value).match === true;
+  }
+  function productVehicleStatus(product, value = currentVehicleSelection()) {
+    const need = inferNeed(product);
     const text = productText(product);
-    if (key) return text.includes(normalizeText(key));
-    return profileSpecificScore(product, value) > 0;
+    const productVehicleKeys = Array.isArray(product.vehicleKeys) ? product.vehicleKeys.map(normalizeText) : [];
+    const universal = productIsUniversal(product) || productVehicleKeys.includes('universal');
+
+    if (value === 'all') {
+      return { match: false, type: 'category', className: 'secondary', icon: 'fa-layer-group', label: need, need };
+    }
+
+    const key = selectedKnownKey(value);
+    if (key) {
+      const normalizedKey = normalizeText(key);
+      const cfg = VEHICLE_SHOP_DATA.vehicles[key] || {};
+      const groups = (cfg.groups || []).map(normalizeText).filter(Boolean);
+      const exact = productVehicleKeys.includes(normalizedKey) || text.includes(normalizedKey);
+      const groupMatch = groups.some(g => productVehicleKeys.includes(g) || text.includes(g));
+
+      if (exact) {
+        return { match: true, type: 'exact', className: '', icon: 'fa-circle-check', label: 'Compatible con este vehículo', need };
+      }
+      if (groupMatch && !universal) {
+        return { match: true, type: 'family', className: '', icon: 'fa-circle-check', label: 'Compatible por familia', need };
+      }
+      if (universal) {
+        return { match: true, type: 'universal', className: 'secondary', icon: 'fa-wrench', label: 'Universal compatible', need };
+      }
+      return { match: false, type: 'verify', className: 'estimated', icon: 'fa-triangle-exclamation', label: 'Verificar compatibilidad', need };
+    }
+
+    const score = profileSpecificScore(product, value);
+    if (score > 0 && !universal) {
+      return { match: true, type: 'estimated', className: 'estimated', icon: 'fa-magnifying-glass-chart', label: 'Coincidencia estimada', need };
+    }
+    if (universal) {
+      return { match: true, type: 'universal', className: 'secondary', icon: 'fa-wrench', label: 'Universal compatible', need };
+    }
+    return { match: false, type: 'verify', className: 'estimated', icon: 'fa-triangle-exclamation', label: 'Verificar compatibilidad', need };
   }
   function inferNeed(product) {
     const text = productText(product);
@@ -254,23 +289,12 @@
   function renderProductCardEnhanced(product) {
     const html = originalRenderProductCard(product);
     const vehicleValue = currentVehicleSelection();
-    const direct = productIsDirectFit(product, vehicleValue);
-    const universal = vehicleValue !== 'all' && productIsUniversal(product);
-    const estimated = isGenericProfileSelection(vehicleValue) && direct;
-    const badgeClass = estimated ? 'estimated' : (direct && !universal ? '' : 'secondary');
-    const icon = estimated ? 'fa-magnifying-glass-chart' : (direct && !universal ? 'fa-circle-check' : 'fa-wrench');
-    const label = vehicleValue === 'all'
-      ? inferNeed(product)
-      : estimated
-        ? 'Coincidencia estimada'
-        : direct && !universal
-          ? 'Específico'
-          : 'Universal compatible';
-    const badge = vehicleValue !== 'all'
-      ? `<div class="vehicle-fit-badge ${badgeClass}"><i class="fa-solid ${icon}"></i>${label} · ${escapeHtml(inferNeed(product))}</div>`
-      : `<div class="vehicle-fit-badge secondary"><i class="fa-solid fa-layer-group"></i>${escapeHtml(inferNeed(product))}</div>`;
-    let out = html.replace('<h3>', `${badge}<h3>`).replace('class="product-card"', `class="product-card" data-vehicle-match="${direct ? 'true' : 'false'}"`);
-    if (estimated) {
+    const status = productVehicleStatus(product, vehicleValue);
+    const badge = `<div class="vehicle-fit-badge ${status.className}" data-compat-status="${escapeHtml(status.type)}"><i class="fa-solid ${status.icon}"></i>${escapeHtml(status.label)} · ${escapeHtml(status.need)}</div>`;
+    let out = html
+      .replace('<h3>', `${badge}<h3>`)
+      .replace('class="product-card"', `class="product-card" data-vehicle-match="${status.match ? 'true' : 'false'}" data-compat-status="${escapeHtml(status.type)}"`);
+    if (status.type === 'estimated') {
       out = out.replace('<p class="product-description">', '<p class="product-description"><strong style="color:#93c5fd">Compatibilidad estimada: </strong>');
     }
     if (product.localOnly) {
