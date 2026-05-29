@@ -1,10 +1,17 @@
 (function(){
   function getOverlay(){ return document.getElementById('profileOverlay'); }
-  function getModal(){ return document.querySelector('#profileOverlay .profile-modal'); }
+  function getBody(){ return document.querySelector('#profileOverlay .profile-body'); }
 
   function setBodyLock(){
     const overlay = getOverlay();
     document.body.classList.toggle('profile-modal-open', !!overlay && overlay.classList.contains('open'));
+  }
+
+  function ensureProfileTabsVisible(){
+    const tabs = document.querySelector('#profileOverlay .profile-tabs');
+    const body = getBody();
+    if(tabs){ tabs.style.display = 'flex'; tabs.removeAttribute('hidden'); }
+    if(body){ body.style.overflowY = 'auto'; body.removeAttribute('hidden'); }
   }
 
   function enhanceSummaryCards(){
@@ -27,114 +34,74 @@
       card.setAttribute('title', action.title);
       const run = () => {
         if(typeof window.switchProfileTab === 'function') window.switchProfileTab(action.tab);
-        if(index === 3) {
-          setTimeout(() => {
-            const mileage = document.getElementById('vehicleMileage');
-            if(mileage) mileage.focus({ preventScroll: false });
-          }, 120);
+        if(index === 3){
+          setTimeout(() => document.getElementById('vehicleMileage')?.focus({ preventScroll:false }), 120);
         }
       };
       card.addEventListener('click', run);
-      card.addEventListener('keydown', (event) => {
-        if(event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          run();
-        }
+      card.addEventListener('keydown', event => {
+        if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); run(); }
       });
     });
   }
 
-  function ensureProfileTabsVisible(){
-    const tabs = document.querySelector('#profileOverlay .profile-tabs');
-    const body = document.querySelector('#profileOverlay .profile-body');
-    if(tabs) {
-      tabs.style.display = 'flex';
-      tabs.removeAttribute('hidden');
-    }
-    if(body) {
-      body.style.overflowY = 'auto';
-    }
+  function afterProfileUiChange(){
+    setBodyLock();
+    ensureProfileTabsVisible();
+    enhanceSummaryCards();
+    if(typeof window.ensureProfileSidebarLayout === 'function') window.ensureProfileSidebarLayout();
   }
 
   function patchOpenClose(){
-    if(typeof window.openProfilePanel === 'function' && !window.openProfilePanel.__scrollTabsFixed){
+    if(typeof window.openProfilePanel === 'function' && !window.openProfilePanel.__scrollTabsFixedSafe){
       const originalOpen = window.openProfilePanel;
       const wrappedOpen = function(){
-        const result = originalOpen.apply(this, arguments);
-        setTimeout(() => {
-          setBodyLock();
-          ensureProfileTabsVisible();
-          enhanceSummaryCards();
-        }, 80);
+        let result;
+        try { result = originalOpen.apply(this, arguments); }
+        catch(error) { console.error('Profile open failed:', error); }
+        setTimeout(afterProfileUiChange, 80);
         return result;
       };
-      wrappedOpen.__scrollTabsFixed = true;
+      wrappedOpen.__scrollTabsFixedSafe = true;
       window.openProfilePanel = wrappedOpen;
     }
-    if(typeof window.closeProfilePanel === 'function' && !window.closeProfilePanel.__scrollTabsFixed){
+
+    if(typeof window.closeProfilePanel === 'function' && !window.closeProfilePanel.__scrollTabsFixedSafe){
       const originalClose = window.closeProfilePanel;
       const wrappedClose = function(){
-        const result = originalClose.apply(this, arguments);
+        let result;
+        try { result = originalClose.apply(this, arguments); }
+        catch(error) { console.error('Profile close failed:', error); }
         setTimeout(setBodyLock, 40);
         return result;
       };
-      wrappedClose.__scrollTabsFixed = true;
+      wrappedClose.__scrollTabsFixedSafe = true;
       window.closeProfilePanel = wrappedClose;
     }
-    if(typeof window.switchProfileTab === 'function' && !window.switchProfileTab.__scrollTabsFixed){
+
+    if(typeof window.switchProfileTab === 'function' && !window.switchProfileTab.__scrollTabsFixedSafe){
       const originalSwitch = window.switchProfileTab;
       const wrappedSwitch = function(tab){
-        const result = originalSwitch.apply(this, arguments);
+        let result;
+        try { result = originalSwitch.apply(this, arguments); }
+        catch(error) { console.error('Profile tab switch failed:', error); }
         setTimeout(() => {
-          ensureProfileTabsVisible();
-          enhanceSummaryCards();
-          const body = document.querySelector('#profileOverlay .profile-body');
+          afterProfileUiChange();
+          const body = getBody();
           if(body) body.scrollTop = 0;
         }, 70);
         return result;
       };
-      wrappedSwitch.__scrollTabsFixed = true;
+      wrappedSwitch.__scrollTabsFixedSafe = true;
       window.switchProfileTab = wrappedSwitch;
     }
   }
 
-  function setupScrollContainment(){
-    const overlay = getOverlay();
-    if(!overlay || overlay.dataset.scrollContainmentFixed === '1') return;
-    overlay.dataset.scrollContainmentFixed = '1';
-
-    overlay.addEventListener('wheel', (event) => {
-      const modal = getModal();
-      if(!modal || !modal.contains(event.target)) {
-        event.preventDefault();
-      }
-    }, { passive: false });
-
-    overlay.addEventListener('touchmove', (event) => {
-      const modal = getModal();
-      if(!modal || !modal.contains(event.target)) {
-        event.preventDefault();
-      }
-    }, { passive: false });
-
-    const observer = new MutationObserver(() => {
-      setBodyLock();
-      ensureProfileTabsVisible();
-      enhanceSummaryCards();
-    });
-    observer.observe(overlay, { attributes: true, attributeFilter: ['class'], subtree: true, childList: true });
-  }
-
   function init(){
     patchOpenClose();
-    setupScrollContainment();
-    setBodyLock();
-    ensureProfileTabsVisible();
-    enhanceSummaryCards();
+    afterProfileUiChange();
   }
 
   document.addEventListener('DOMContentLoaded', init);
   window.addEventListener('load', init);
-  setTimeout(init, 300);
-  setTimeout(init, 1000);
 })();
