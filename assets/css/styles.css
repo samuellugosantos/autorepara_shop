@@ -3718,3 +3718,110 @@ footer {
 .vehicle-fit-badge[data-compat-status="verify"]{border-color:rgba(234,179,8,.45);background:rgba(234,179,8,.12);color:#fde68a}
 .vehicle-fit-badge[data-compat-status="incompatible"]{border-color:rgba(239,68,68,.45);background:rgba(239,68,68,.12);color:#fca5a5}
 .product-card.requires-fit-check{border-style:dashed}
+
+/* ===================================================
+   PROFILE MODAL SCROLL/TABS FIX
+   Keeps scrolling inside the profile popup and makes
+   summary counters usable after Supabase Auth login.
+=================================================== */
+body.profile-modal-open {
+  overflow: hidden !important;
+}
+.profile-overlay.open {
+  overflow: hidden !important;
+  overscroll-behavior: contain;
+  align-items: center;
+  justify-content: center;
+}
+.profile-modal {
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(1120px, calc(100vw - 32px)) !important;
+  max-height: min(92vh, 920px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+.profile-modal-header,
+.profile-auth-box,
+.profile-tabs {
+  flex: 0 0 auto;
+}
+.profile-tabs {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg-card);
+}
+.profile-tab {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+}
+.profile-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.profile-panel.active {
+  display: block !important;
+}
+.profile-summary-row {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.profile-summary-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 15px;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.profile-summary-card span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.profile-summary-card strong {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 28px);
+  color: var(--accent-orange);
+  line-height: 1;
+}
+.profile-summary-card.is-clickable {
+  cursor: pointer;
+}
+.profile-summary-card.is-clickable:hover,
+.profile-summary-card.is-clickable:focus-visible {
+  border-color: var(--accent-orange);
+  background: var(--accent-orange-dim);
+  transform: translateY(-1px);
+  outline: none;
+}
+@media (max-width: 768px) {
+  .profile-overlay.open {
+    padding: 10px;
+    align-items: stretch;
+  }
+  .profile-modal {
+    width: 100% !important;
+    max-height: calc(100vh - 20px) !important;
+  }
+  .profile-modal-header {
+    padding: 18px;
+  }
+  .profile-body {
+    padding: 18px !important;
+  }
+}
