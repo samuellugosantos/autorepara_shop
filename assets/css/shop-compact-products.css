@@ -1,0 +1,220 @@
+/* ===================================================
+   SHOP COMPACT PRODUCT LAYOUT
+   Purpose: reduce visual noise in the shop product list.
+   Product details remain available through the product modal.
+=================================================== */
+
+#tienda-container .store-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  margin-top: 16px !important;
+}
+
+#tienda-container .product-card {
+  min-width: 0 !important;
+  padding: 13px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden !important;
+}
+
+#tienda-container .product-card:hover {
+  transform: translateY(-2px) !important;
+}
+
+#tienda-container .product-image-wrap,
+#tienda-container .product-image-pending,
+#tienda-container .product-image-missing {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 0 !important;
+  max-height: 118px !important;
+  margin: 0 0 4px !important;
+  border-radius: var(--radius) !important;
+}
+
+#tienda-container .product-image-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+#tienda-container .product-image-tag {
+  display: none !important;
+}
+
+#tienda-container .product-image-pending {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 10px !important;
+  text-align: center !important;
+  font-size: 11px !important;
+}
+
+#tienda-container .product-image-pending strong,
+#tienda-container .product-image-pending br {
+  display: none !important;
+}
+
+#tienda-container .product-kicker {
+  margin: 0 !important;
+  font-size: 9px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#tienda-container .product-card h3 {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+  margin: 0 !important;
+  min-height: 38px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+#tienda-container .product-price {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+#tienda-container .stock-pill,
+#tienda-container .product-stock {
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 3px 8px !important;
+  font-size: 9px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#tienda-container .product-brief {
+  margin: 0 !important;
+  padding: 8px 9px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  min-height: 48px !important;
+}
+
+#tienda-container .product-brief strong {
+  display: none !important;
+}
+
+#tienda-container .product-description {
+  margin: 0 !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+#tienda-container .product-card:has(.product-brief) .product-description {
+  display: none !important;
+}
+
+#tienda-container .product-features {
+  display: none !important;
+}
+
+#tienda-container .product-secondary-note {
+  display: none !important;
+}
+
+#tienda-container .vehicle-fit-badge,
+#tienda-container [data-compat-status] {
+  max-width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 9px !important;
+  padding: 4px 7px !important;
+  margin: 0 !important;
+}
+
+#tienda-container .product-size-select {
+  margin: auto 0 0 !important;
+  padding: 8px 9px !important;
+  min-height: 36px !important;
+  font-size: 12px !important;
+}
+
+#tienda-container .product-card-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 7px !important;
+  margin-top: 0 !important;
+}
+
+#tienda-container .btn-product-detail,
+#tienda-container .btn-cart,
+#tienda-container .favorite-product-btn {
+  min-height: 36px !important;
+  padding: 8px 9px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+#tienda-container .favorite-product-btn {
+  grid-column: 1 / -1 !important;
+  order: 3 !important;
+  min-height: 32px !important;
+}
+
+#tienda-container .shop-trust-row,
+#tienda-container .shop-kit-panel,
+#tienda-container .shop-recent-panel,
+#tienda-container .shop-help-panel,
+#tienda-container .shop-intent-panel,
+#tienda-container .vehicle-shop-panel {
+  margin-bottom: 18px !important;
+}
+
+#tienda-container .shop-kit-grid,
+#tienda-container .shop-recent-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+  gap: 10px !important;
+}
+
+@media (max-width: 1180px) {
+  #tienda-container .store-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 840px) {
+  #tienda-container .store-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 540px) {
+  #tienda-container .store-grid {
+    grid-template-columns: 1fr !important;
+  }
+  #tienda-container .product-card {
+    padding: 14px !important;
+  }
+  #tienda-container .product-card h3 {
+    min-height: 0 !important;
+  }
+}
